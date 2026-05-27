@@ -122,13 +122,26 @@ if (form) {
       return;
     }
 
-    // simulate submit (replace with real endpoint later)
     const btn = form.querySelector('button[type="submit"]');
     const originalText = btn.textContent;
     btn.textContent = currentLang === 'ro' ? 'Se trimite...' : 'Sending...';
     btn.disabled = true;
 
-    await new Promise(r => setTimeout(r, 1200));
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      });
+    } catch {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      const errMsg = currentLang === 'ro'
+        ? 'A apărut o eroare. Încearcă din nou.'
+        : 'Something went wrong. Please try again.';
+      showToast(errMsg, 'error');
+      return;
+    }
 
     btn.textContent = originalText;
     btn.disabled = false;
