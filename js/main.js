@@ -166,6 +166,27 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// ---- COOKIE BANNER ----
+(function () {
+  const banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  if (!localStorage.getItem('cookie-consent')) {
+    setTimeout(() => banner.classList.add('visible'), 600);
+  } else {
+    banner.classList.add('hidden');
+  }
+  document.getElementById('cookie-accept').addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'all');
+    banner.classList.remove('visible');
+    setTimeout(() => banner.classList.add('hidden'), 350);
+  });
+  document.getElementById('cookie-decline').addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'essential');
+    banner.classList.remove('visible');
+    setTimeout(() => banner.classList.add('hidden'), 350);
+  });
+})();
+
 // ---- INIT ----
 // Set initial display for mobile menu
 document.getElementById('mobile-menu').style.display = 'none';
