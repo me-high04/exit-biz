@@ -246,7 +246,9 @@
       btn.textContent = 'Creează dosarul →';
       btn.disabled = false;
 
-      if (!error) {
+      if (error) {
+        alert('Eroare: ' + error.message);
+      } else {
         document.getElementById('modal-overlay').classList.remove('open');
         document.getElementById('modal-form').reset();
         await loadDosare();
