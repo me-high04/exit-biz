@@ -38,8 +38,8 @@ create policy "Utilizator actualizează propriul profil"
 -- 5. Politici dosare
 create policy "Client vede dosarele proprii"
   on dosare for select using (
-    client_email = (select email from auth.users where id = auth.uid())
-    or (select role from profiles where id = auth.uid()) = 'admin'
+    client_email = auth.email()
+    or public.is_admin()
   );
 
 create policy "Admin inserează dosare"
