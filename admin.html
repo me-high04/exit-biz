@@ -197,7 +197,10 @@
 
     async function loadDosare() {
       const { data, error } = await db.from('dosare').select('*').order('created_at', { ascending: false });
-      if (error) { console.error(error); return; }
+      if (error) {
+        document.getElementById('table-container').innerHTML = `<div class="loading" style="color:#e53e3e">Eroare: ${error.message}</div>`;
+        return;
+      }
       allDosare = data || [];
       document.getElementById('table-container').innerHTML = renderTable(allDosare);
       updateStats(allDosare);
