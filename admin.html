@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — ExitBiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .db-nav { background: var(--text-primary); padding: 0 2rem; height: var(--nav-height); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .db-nav .logo { color: #fff; }
+    .db-nav .logo span { color: var(--green-mid); }
+    .db-nav-right { display: flex; align-items: center; gap: 1rem; }
+    .admin-badge { font-size: 11px; font-weight: 500; background: var(--green); color: #fff; padding: 3px 10px; border-radius: 99px; }
+    .admin-main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .admin-header h1 { font-size: 24px; font-weight: 300; color: var(--text-primary); }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-box { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+    .stat-box .num { font-size: 32px; font-weight: 600; color: var(--text-primary); line-height: 1; }
+    .stat-box .lbl { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+    .stat-box.green .num { color: var(--green); }
+    .dosare-table { width: 100%; border-collapse: collapse; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .dosare-table th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); border-bottom: 1px solid var(--border); background: var(--bg-surface); }
+    .dosare-table td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .dosare-table tr:last-child td { border-bottom: none; }
+    .dosare-table tr:hover td { background: var(--bg); }
+    .status-select { font-size: 13px; padding: 5px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); background: var(--bg); cursor: pointer; }
+    .status-select:focus { outline: none; border-color: var(--green); }
+    .text-muted { color: var(--text-secondary); }
+    .dosar-name { font-weight: 500; color: var(--text-primary); }
+    .dosar-email { font-size: 12px; color: var(--text-secondary); }
+    .badge { font-size: 11px; padding: 3px 8px; border-radius: 99px; font-weight: 500; }
+    .badge-suspendare { background: #dbeafe; color: #1e40af; }
+    .badge-dizolvare { background: #fde8d8; color: #9a3412; }
+    .badge-radiere { background: #f3e8ff; color: #6b21a8; }
+    .badge-cabinet { background: var(--green-light); color: var(--green-dark); }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg-white); border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    .modal h2 { font-size: 20px; font-weight: 400; margin-bottom: 1.5rem; color: var(--text-primary); }
+    .modal-form { display: flex; flex-direction: column; gap: 14px; }
+    .modal-form label { font-size: 13px; font-weight: 500; color: var(--text-primary); display: block; margin-bottom: 5px; }
+    .modal-form input, .modal-form select, .modal-form textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font-body); background: var(--bg); color: var(--text-primary); }
+    .modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus { outline: none; border-color: var(--green); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 6px; }
+    .modal-actions .btn-ghost { flex: 1; justify-content: center; }
+    .modal-actions .btn-primary { flex: 2; justify-content: center; }
+    .loading { text-align: center; padding: 3rem; color: var(--text-secondary); }
+    .btn-sm { padding: 7px 16px; font-size: 13px; }
+    .btn-danger { background: #e53e3e; color: #fff; border: none; padding: 5px 10px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; font-family: var(--font-body); }
+    .btn-danger:hover { background: #c53030; }
+    .notes-input { width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font-body); background: var(--bg); resize: none; }
+    .notes-input:focus { outline: none; border-color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <nav class="db-nav">
+    <a href="/" class="logo">exit<span>biz</span></a>
+    <div class="db-nav-right">
+      <span class="admin-badge">Admin</span>
+      <button class="btn-ghost btn-sm" id="logout-btn" style="color:#fff; border-color:rgba(255,255,255,0.3);">Ieși din cont</button>
+    </div>
+  </nav>
+
+  <div class="admin-main">
+    <div class="admin-header">
+      <h1>Panou administrare</h1>
+      <button class="btn-primary" id="new-dosar-btn">+ Dosar nou</button>
+    </div>
+
+    <div class="stats-row" id="stats-row">
+      <div class="stat-box"><div class="num" id="stat-total">—</div><div class="lbl">Total dosare</div></div>
+      <div class="stat-box"><div class="num" id="stat-active">—</div><div class="lbl">În procesare</div></div>
+      <div class="stat-box green"><div class="num" id="stat-done">—</div><div class="lbl">Finalizate</div></div>
+    </div>
+
+    <div id="table-container">
+      <div class="loading">Se încarcă dosarele...</div>
+    </div>
+  </div>
+
+  <!-- MODAL: Dosar nou -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2>Dosar nou</h2>
+      <form class="modal-form" id="modal-form">
+        <div>
+          <label>Numele clientului *</label>
+          <input type="text" id="f-name" placeholder="Ion Popescu" required />
+        </div>
+        <div>
+          <label>Email client *</label>
+          <input type="email" id="f-email" placeholder="ion@firma.ro" required />
+        </div>
+        <div>
+          <label>CUI / Nr. Reg. Com.</label>
+          <input type="text" id="f-cui" placeholder="RO12345678" />
+        </div>
+        <div>
+          <label>Tip serviciu *</label>
+          <select id="f-service" required>
+            <option value="">— Selectează —</option>
+            <option value="suspendare">Suspendare activitate</option>
+            <option value="dizolvare">Dizolvare voluntară</option>
+            <option value="radiere">Radiere ONRC</option>
+            <option value="cabinet">Cabinet profesionist</option>
+          </select>
+        </div>
+        <div>
+          <label>Notă internă (opțional)</label>
+          <textarea id="f-notes" rows="2" placeholder="Detalii suplimentare..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" id="modal-cancel">Anulează</button>
+          <button type="submit" class="btn-primary" id="modal-submit">Creează dosarul →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    const SERVICE_LABELS = {
+      suspendare: 'Suspendare activitate',
+      dizolvare:  'Dizolvare voluntară',
+      radiere:    'Radiere ONRC',
+      cabinet:    'Cabinet profesionist'
+    };
+
+    const STATUS_OPTIONS = [
+      { value: 'nou',          label: 'Cerere primită' },
+      { value: 'documente',    label: 'Documente generate' },
+      { value: 'depus_onrc',   label: 'Dosar depus ONRC' },
+      { value: 'in_procesare', label: 'În procesare' },
+      { value: 'finalizat',    label: 'Finalizat' }
+    ];
+
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function renderTable(dosare) {
+      if (!dosare.length) {
+        return `<div class="loading">Nu există dosare. Adaugă primul dosar cu butonul de sus.</div>`;
+      }
+      const rows = dosare.map(d => `
+        <tr data-id="${d.id}">
+          <td>
+            <div class="dosar-name">${d.client_name}</div>
+            <div class="dosar-email">${d.client_email}</div>
+          </td>
+          <td>${d.cui || '<span class="text-muted">—</span>'}</td>
+          <td><span class="badge badge-${d.service_type}">${SERVICE_LABELS[d.service_type] || d.service_type}</span></td>
+          <td>
+            <select class="status-select" data-id="${d.id}" onchange="updateStatus('${d.id}', this.value)">
+              ${STATUS_OPTIONS.map(o => `<option value="${o.value}" ${o.value === d.status ? 'selected' : ''}>${o.label}</option>`).join('')}
+            </select>
+          </td>
+          <td>
+            <input class="notes-input" type="text" value="${d.notes || ''}" placeholder="Notă..." onblur="updateNotes('${d.id}', this.value)" style="width:140px" />
+          </td>
+          <td class="text-muted" style="font-size:12px">${formatDate(d.created_at)}</td>
+          <td><button class="btn-danger" onclick="deleteDosar('${d.id}')">✕</button></td>
+        </tr>`).join('');
+
+      return `
+        <table class="dosare-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>CUI</th>
+              <th>Serviciu</th>
+              <th>Status</th>
+              <th>Notă</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    function updateStats(dosare) {
+      document.getElementById('stat-total').textContent = dosare.length;
+      document.getElementById('stat-active').textContent = dosare.filter(d => !['nou', 'finalizat'].includes(d.status)).length;
+      document.getElementById('stat-done').textContent = dosare.filter(d => d.status === 'finalizat').length;
+    }
+
+    let allDosare = [];
+
+    async function loadDosare() {
+      const { data, error } = await db.from('dosare').select('*').order('created_at', { ascending: false });
+      if (error) { console.error(error); return; }
+      allDosare = data || [];
+      document.getElementById('table-container').innerHTML = renderTable(allDosare);
+      updateStats(allDosare);
+    }
+
+    async function updateStatus(id, status) {
+      await db.from('dosare').update({ status }).eq('id', id);
+      const d = allDosare.find(x => x.id === id);
+      if (d) { d.status = status; updateStats(allDosare); }
+    }
+
+    async function updateNotes(id, notes) {
+      await db.from('dosare').update({ notes }).eq('id', id);
+    }
+
+    async function deleteDosar(id) {
+      if (!confirm('Ești sigur că vrei să ștergi acest dosar?')) return;
+      await db.from('dosare').delete().eq('id', id);
+      allDosare = allDosare.filter(d => d.id !== id);
+      document.getElementById('table-container').innerHTML = renderTable(allDosare);
+      updateStats(allDosare);
+    }
+
+    // Modal
+    document.getElementById('new-dosar-btn').onclick = () => document.getElementById('modal-overlay').classList.add('open');
+    document.getElementById('modal-cancel').onclick = () => document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-overlay').onclick = (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); };
+
+    document.getElementById('modal-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('modal-submit');
+      btn.textContent = 'Se creează...';
+      btn.disabled = true;
+
+      const { error } = await db.from('dosare').insert({
+        client_name: document.getElementById('f-name').value.trim(),
+        client_email: document.getElementById('f-email').value.trim().toLowerCase(),
+        cui: document.getElementById('f-cui').value.trim() || null,
+        service_type: document.getElementById('f-service').value,
+        notes: document.getElementById('f-notes').value.trim() || null
+      });
+
+      btn.textContent = 'Creează dosarul →';
+      btn.disabled = false;
+
+      if (!error) {
+        document.getElementById('modal-overlay').classList.remove('open');
+        document.getElementById('modal-form').reset();
+        await loadDosare();
+      }
+    });
+
+    document.getElementById('logout-btn').onclick = async () => {
+      await db.auth.signOut();
+      window.location.href = 'login.html';
+    };
+
+    async function init() {
+      const { data: { session } } = await db.auth.getSession();
+      if (!session) { window.location.href = 'login.html'; return; }
+
+      const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+      if (profile?.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
+
+      await loadDosare();
+    }
+
+    init();
+  </script>
+</body>
+</html>

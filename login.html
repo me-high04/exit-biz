@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intră în cont — ExitBiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg); }
+    .auth-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem 2rem; width: 100%; max-width: 420px; box-shadow: 0 8px 40px rgba(0,0,0,0.07); }
+    .auth-logo { display: block; text-align: center; font-family: var(--font-display); font-size: 24px; font-weight: 300; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .auth-logo span { color: var(--green); font-weight: 600; }
+    .auth-title { text-align: center; font-size: 20px; font-weight: 400; margin-bottom: 0.4rem; color: var(--text-primary); }
+    .auth-sub { text-align: center; font-size: 14px; color: var(--text-secondary); margin-bottom: 2rem; }
+    .auth-tabs { display: flex; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 1.75rem; overflow: hidden; }
+    .auth-tab { flex: 1; padding: 9px; font-size: 14px; font-weight: 500; border: none; background: none; cursor: pointer; color: var(--text-secondary); transition: background 0.15s, color 0.15s; font-family: var(--font-body); }
+    .auth-tab.active { background: var(--green); color: #fff; }
+    .auth-form { display: flex; flex-direction: column; gap: 14px; }
+    .auth-form label { font-size: 13px; font-weight: 500; color: var(--text-primary); display: block; margin-bottom: 5px; }
+    .auth-form input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font-body); background: var(--bg); color: var(--text-primary); transition: border-color 0.15s; }
+    .auth-form input:focus { outline: none; border-color: var(--green); }
+    .auth-form input.error { border-color: #e53e3e; }
+    .auth-btn { margin-top: 6px; }
+    .auth-error { background: #fff5f5; border: 1px solid #fed7d7; color: #c53030; border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; display: none; }
+    .auth-error.show { display: block; }
+    .auth-success { background: var(--green-light); border: 1px solid var(--green); color: var(--green-dark); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; display: none; }
+    .auth-success.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <a href="/" class="auth-logo">exit<span>biz</span></a>
+      <p style="text-align:center; font-size:13px; color:var(--text-secondary); margin-bottom:1.75rem;">Urmărește statusul dosarului tău</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="showTab('login')">Intră în cont</button>
+        <button class="auth-tab" id="tab-signup" onclick="showTab('signup')">Înregistrare</button>
+      </div>
+
+      <div id="error-box" class="auth-error"></div>
+      <div id="success-box" class="auth-success"></div>
+
+      <!-- LOGIN -->
+      <form class="auth-form" id="form-login">
+        <div>
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="ion@firma.ro" required />
+        </div>
+        <div>
+          <label for="login-password">Parolă</label>
+          <input type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-primary btn-full auth-btn" id="login-btn">Intră în cont →</button>
+      </form>
+
+      <!-- SIGNUP -->
+      <form class="auth-form" id="form-signup" style="display:none">
+        <div>
+          <label for="signup-name">Numele tău</label>
+          <input type="text" id="signup-name" placeholder="Ion Popescu" required />
+        </div>
+        <div>
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" placeholder="ion@firma.ro" required />
+        </div>
+        <div>
+          <label for="signup-password">Parolă</label>
+          <input type="password" id="signup-password" placeholder="Minim 6 caractere" required />
+        </div>
+        <button type="submit" class="btn-primary btn-full auth-btn" id="signup-btn">Creează cont →</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    function showTab(tab) {
+      document.getElementById('form-login').style.display = tab === 'login' ? 'flex' : 'none';
+      document.getElementById('form-signup').style.display = tab === 'signup' ? 'flex' : 'none';
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+      hideMessages();
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-box');
+      el.textContent = msg;
+      el.classList.add('show');
+      document.getElementById('success-box').classList.remove('show');
+    }
+
+    function showSuccess(msg) {
+      const el = document.getElementById('success-box');
+      el.textContent = msg;
+      el.classList.add('show');
+      document.getElementById('error-box').classList.remove('show');
+    }
+
+    function hideMessages() {
+      document.getElementById('error-box').classList.remove('show');
+      document.getElementById('success-box').classList.remove('show');
+    }
+
+    async function redirectByRole() {
+      const { data: { user } } = await db.auth.getUser();
+      if (!user) return;
+      const { data: profile } = await db.from('profiles').select('role').eq('id', user.id).single();
+      if (profile?.role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    // Check if already logged in
+    db.auth.getSession().then(({ data: { session } }) => {
+      if (session) redirectByRole();
+    });
+
+    // Login
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      btn.textContent = 'Se încarcă...';
+      btn.disabled = true;
+      hideMessages();
+
+      const { error } = await db.auth.signInWithPassword({
+        email: document.getElementById('login-email').value.trim(),
+        password: document.getElementById('login-password').value
+      });
+
+      if (error) {
+        showError('Email sau parolă incorectă.');
+        btn.textContent = 'Intră în cont →';
+        btn.disabled = false;
+      } else {
+        await redirectByRole();
+      }
+    });
+
+    // Signup
+    document.getElementById('form-signup').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('signup-btn');
+      btn.textContent = 'Se creează contul...';
+      btn.disabled = true;
+      hideMessages();
+
+      const { error } = await db.auth.signUp({
+        email: document.getElementById('signup-email').value.trim(),
+        password: document.getElementById('signup-password').value,
+        options: { data: { full_name: document.getElementById('signup-name').value.trim() } }
+      });
+
+      if (error) {
+        showError(error.message);
+        btn.textContent = 'Creează cont →';
+        btn.disabled = false;
+      } else {
+        showSuccess('Cont creat! Verifică emailul pentru confirmare, apoi intră în cont.');
+        btn.textContent = 'Creează cont →';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
