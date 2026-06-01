@@ -24,8 +24,8 @@ exports.handler = async (event) => {
   const statusLabel = STATUS_LABELS[status] || status;
   const dashboardUrl = 'https://exitbiz.netlify.app/login.html';
 
-  const baseStyle = `font-family:'Helvetica Neue',Arial,sans-serif;color:#1a1a1a;`;
-  const green = '#1D9E75';
+  const baseStyle = `font-family:'Helvetica Neue',Arial,sans-serif;color:#0F172A;`;
+  const green = '#1E40AF';
 
   let subject, html;
 
@@ -34,18 +34,18 @@ exports.handler = async (event) => {
     html = `
       <div style="${baseStyle}max-width:560px;margin:0 auto;padding:32px 16px;">
         <div style="text-align:center;margin-bottom:32px;">
-          <span style="font-size:22px;font-weight:300;color:#1a1a1a;">exit<strong style="color:${green}">biz</strong></span>
+          <span style="font-size:22px;font-weight:300;color:#0F172A;">exit<strong style="color:${green}">biz</strong></span>
         </div>
         <h1 style="font-size:24px;font-weight:400;margin-bottom:8px;">Bun venit, ${client_name}!</h1>
-        <p style="color:#5a5a5a;line-height:1.6;margin-bottom:24px;">
+        <p style="color:#475569;line-height:1.6;margin-bottom:24px;">
           Dosarul tău pentru <strong>${serviceLabel}</strong> a fost creat și este în așteptare.
           Echipa noastră îl va procesa în cel mai scurt timp.
         </p>
-        <div style="background:#f4f4f1;border-radius:12px;padding:20px;margin-bottom:24px;">
-          <p style="margin:0;font-size:14px;color:#5a5a5a;">Serviciu solicitat</p>
-          <p style="margin:4px 0 0;font-size:18px;font-weight:500;">${serviceLabel}</p>
+        <div style="background:#EFF6FF;border-radius:12px;padding:20px;margin-bottom:24px;border:1px solid #DBEAFE;">
+          <p style="margin:0;font-size:14px;color:#475569;">Serviciu solicitat</p>
+          <p style="margin:4px 0 0;font-size:18px;font-weight:500;color:#0F172A;">${serviceLabel}</p>
         </div>
-        <p style="color:#5a5a5a;line-height:1.6;margin-bottom:24px;">
+        <p style="color:#475569;line-height:1.6;margin-bottom:24px;">
           Creează-ți contul pentru a urmări statusul dosarului tău în timp real:
         </p>
         <div style="text-align:center;margin-bottom:32px;">
@@ -53,7 +53,7 @@ exports.handler = async (event) => {
             Intră în contul tău →
           </a>
         </div>
-        <p style="font-size:12px;color:#8a8a8a;text-align:center;">
+        <p style="font-size:12px;color:#94A3B8;text-align:center;">
           Ai întrebări? Scrie-ne pe WhatsApp: 0734 625 532
         </p>
       </div>`;
@@ -62,22 +62,22 @@ exports.handler = async (event) => {
     html = `
       <div style="${baseStyle}max-width:560px;margin:0 auto;padding:32px 16px;">
         <div style="text-align:center;margin-bottom:32px;">
-          <span style="font-size:22px;font-weight:300;color:#1a1a1a;">exit<strong style="color:${green}">biz</strong></span>
+          <span style="font-size:22px;font-weight:300;color:#0F172A;">exit<strong style="color:${green}">biz</strong></span>
         </div>
         <h1 style="font-size:24px;font-weight:400;margin-bottom:8px;">Veste nouă, ${client_name}!</h1>
-        <p style="color:#5a5a5a;line-height:1.6;margin-bottom:24px;">
+        <p style="color:#475569;line-height:1.6;margin-bottom:24px;">
           Statusul dosarului tău pentru <strong>${serviceLabel}</strong> a fost actualizat.
         </p>
-        <div style="background:#E1F5EE;border:1px solid ${green};border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;">
-          <p style="margin:0;font-size:13px;color:#0F6E56;">Status nou</p>
-          <p style="margin:6px 0 0;font-size:22px;font-weight:600;color:#0F6E56;">${statusLabel}</p>
+        <div style="background:#DBEAFE;border:1px solid ${green};border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;">
+          <p style="margin:0;font-size:13px;color:#1E3A8A;">Status nou</p>
+          <p style="margin:6px 0 0;font-size:22px;font-weight:600;color:#1E3A8A;">${statusLabel}</p>
         </div>
         <div style="text-align:center;margin-bottom:32px;">
           <a href="${dashboardUrl}" style="background:${green};color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:500;font-size:15px;">
             Vezi detalii în dashboard →
           </a>
         </div>
-        <p style="font-size:12px;color:#8a8a8a;text-align:center;">
+        <p style="font-size:12px;color:#94A3B8;text-align:center;">
           Ai întrebări? Scrie-ne pe WhatsApp: 0734 625 532
         </p>
       </div>`;
