@@ -151,9 +151,21 @@
       if (error || !dosare?.length) {
         container.innerHTML = `
           <div class="empty-state">
-            <h2>Nu ai dosare active momentan</h2>
-            <p>Dacă ai trimis deja o cerere, echipa noastră va crea dosarul tău în curând.</p>
-            <a href="/#contact" class="btn-primary">Trimite o cerere →</a>
+            <div style="font-size:48px;margin-bottom:1rem;">📋</div>
+            <h2>Niciun dosar activ momentan</h2>
+            <p>Dosarul tău va apărea aici imediat ce echipa ExitBiz îl creează.</p>
+            <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:1.5rem auto;max-width:380px;text-align:left;">
+              <p style="font-size:13px;font-weight:600;margin-bottom:0.75rem;color:var(--text-primary);">Cum funcționează?</p>
+              <div style="display:flex;flex-direction:column;gap:0.6rem;">
+                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">1.</span> Trimiți cererea prin formularul de pe site</div>
+                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">2.</span> Echipa noastră creează dosarul și primești email de confirmare</div>
+                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">3.</span> Urmărești statusul în timp real chiar aici</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+              <a href="/" class="btn-primary">Trimite o cerere →</a>
+              <a href="https://wa.me/40734625532" target="_blank" class="btn-ghost">Scrie-ne pe WhatsApp</a>
+            </div>
           </div>`;
         return;
       }

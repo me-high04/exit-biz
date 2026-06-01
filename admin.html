@@ -206,10 +206,26 @@
       updateStats(allDosare);
     }
 
+    async function sendEmail(payload) {
+      try {
+        await fetch('/.netlify/functions/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) { console.warn('Email send failed:', e); }
+    }
+
     async function updateStatus(id, status) {
       await db.from('dosare').update({ status }).eq('id', id);
       const d = allDosare.find(x => x.id === id);
-      if (d) { d.status = status; updateStats(allDosare); }
+      if (d) {
+        d.status = status;
+        updateStats(allDosare);
+        if (status !== 'nou') {
+          sendEmail({ type: 'status_update', to: d.client_email, client_name: d.client_name, service_type: d.service_type, status });
+        }
+      }
     }
 
     async function updateNotes(id, notes) {
@@ -249,6 +265,10 @@
       if (error) {
         alert('Eroare: ' + error.message);
       } else {
+        const name = document.getElementById('f-name').value.trim();
+        const email = document.getElementById('f-email').value.trim().toLowerCase();
+        const service = document.getElementById('f-service').value;
+        sendEmail({ type: 'welcome', to: email, client_name: name, service_type: service });
         document.getElementById('modal-overlay').classList.remove('open');
         document.getElementById('modal-form').reset();
         await loadDosare();
