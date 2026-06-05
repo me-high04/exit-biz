@@ -79,7 +79,7 @@
           <li><span class="check-icon">✓</span> <span data-ro="Procesăm dosare în toată România" data-en="Processing cases across Romania">Procesăm dosare în toată România</span></li>
         </ul>
         <div class="hero-actions">
-          <a href="#contact" class="btn-primary btn-large" data-ro="Vreau să închid firma →" data-en="I want to close my company →">Vreau să închid firma →</a>
+          <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-large" data-ro="Vreau să închid firma →" data-en="I want to close my company →">Vreau să închid firma →</button>
           <a href="#cum-functioneaza" class="btn-ghost" data-ro="Cum funcționează?" data-en="How does it work?">Cum funcționează?</a>
         </div>
       </div>
@@ -217,33 +217,14 @@
             <h2 data-ro="Gata să închizi firma?" data-en="Ready to close your company?">Gata să închizi firma?</h2>
             <p data-ro="Completează formularul și te contactăm în mai puțin de 24 de ore." data-en="Fill in the form and we'll get back to you within 24 hours.">Completează formularul și te contactăm în mai puțin de 24 de ore.</p>
           </div>
-          <form class="contact-form" id="contact-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name" data-ro="Numele tău" data-en="Your name">Numele tău</label>
-                <input type="text" id="name" name="name" placeholder="Ion Popescu" required />
-              </div>
-              <div class="form-group">
-                <label for="email" data-ro="Email" data-en="Email">Email</label>
-                <input type="email" id="email" name="email" placeholder="ion@firma.ro" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="service" data-ro="Ce tip de serviciu cauți?" data-en="What type of service do you need?">Ce tip de serviciu cauți?</label>
-              <select id="service" name="service">
-                <option value="" data-ro="— Selectează —" data-en="— Select —">— Selectează —</option>
-                <option value="suspendare" data-ro="Suspendare activitate" data-en="Activity suspension">Suspendare activitate</option>
-                <option value="dizolvare" data-ro="Dizolvare voluntară" data-en="Voluntary dissolution">Dizolvare voluntară</option>
-                <option value="radiere" data-ro="Radiere ONRC" data-en="ONRC strike-off">Radiere ONRC</option>
-                <option value="cabinet" data-ro="Cabinet profesionist" data-en="Professional office">Cabinet profesionist</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="message" data-ro="Mesaj (opțional)" data-en="Message (optional)">Mesaj (opțional)</label>
-              <textarea id="message" name="message" rows="3" placeholder="Descrie pe scurt situația firmei tale..."></textarea>
-            </div>
-            <button type="submit" class="btn-primary btn-large btn-full" data-ro="Trimite cererea →" data-en="Send request →">Trimite cererea →</button>
-          </form>
+          <div class="cta-tally-side">
+            <ul class="cta-benefits">
+              <li><span class="check-icon">✓</span> <span data-ro="Răspuns în mai puțin de 24 de ore" data-en="Response within 24 hours">Răspuns în mai puțin de 24 de ore</span></li>
+              <li><span class="check-icon">✓</span> <span data-ro="Fără angajamente — consultație gratuită" data-en="No commitments — free consultation">Fără angajamente — consultație gratuită</span></li>
+              <li><span class="check-icon">✓</span> <span data-ro="Date protejate, servere în Europa" data-en="Protected data, servers in Europe">Date protejate, servere în Europa</span></li>
+            </ul>
+            <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-large btn-full" data-ro="Completează formularul →" data-en="Fill in the form →">Completează formularul →</button>
+          </div>
         </div>
       </div>
     </section>
@@ -302,6 +283,7 @@
     </div>
   </div>
 
+  <script async src="https://tally.so/widgets/embed.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

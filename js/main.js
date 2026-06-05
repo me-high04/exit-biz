@@ -116,68 +116,6 @@ function showToast(message, type = 'success') {
   }, 4000);
 }
 
-// ---- FORM VALIDATION & SUBMIT ----
-const form = document.getElementById('contact-form');
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    let valid = true;
-
-    // clear previous errors
-    form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-
-    const name = document.getElementById('name');
-    const email = document.getElementById('email');
-
-    if (!name.value.trim()) {
-      name.classList.add('error');
-      valid = false;
-    }
-    if (!email.value.trim() || !email.value.includes('@')) {
-      email.classList.add('error');
-      valid = false;
-    }
-
-    if (!valid) {
-      const msg = currentLang === 'ro'
-        ? 'Te rugăm să completezi câmpurile obligatorii.'
-        : 'Please fill in the required fields.';
-      showToast(msg, 'error');
-      return;
-    }
-
-    const btn = form.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.textContent = currentLang === 'ro' ? 'Se trimite...' : 'Sending...';
-    btn.disabled = true;
-
-    try {
-      const res = await fetch('https://formspree.io/f/mpqewnoe', {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (!res.ok) throw new Error('failed');
-    } catch {
-      btn.textContent = originalText;
-      btn.disabled = false;
-      const errMsg = currentLang === 'ro'
-        ? 'A apărut o eroare. Încearcă din nou.'
-        : 'Something went wrong. Please try again.';
-      showToast(errMsg, 'error');
-      return;
-    }
-
-    btn.textContent = originalText;
-    btn.disabled = false;
-    form.reset();
-
-    const successMsg = currentLang === 'ro'
-      ? '✓ Cererea a fost trimisă! Te contactăm în 24 de ore.'
-      : '✓ Request sent! We\'ll get back to you within 24 hours.';
-    showToast(successMsg, 'success');
-  });
-}
 
 // ---- SMOOTH SCROLL FOR ANCHOR LINKS ----
 document.querySelectorAll('a[href^="#"]').forEach(a => {

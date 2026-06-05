@@ -790,6 +790,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .cui-modal h3 { font-size: 20px; font-weight: 400; margin-bottom: 0.75rem; color: var(--text-primary); }
 .cui-modal p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
 
+/* ---- CTA TALLY SIDE ---- */
+.cta-tally-side { display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; }
+.cta-benefits { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.cta-benefits li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-secondary); }
+
 /* ---- FAQ ---- */
 .faq-item {
   background: var(--bg-white);
