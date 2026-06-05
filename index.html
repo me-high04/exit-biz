@@ -17,9 +17,23 @@
     <div class="nav-inner">
       <a href="/" class="logo">exit<span>biz</span></a>
       <nav class="nav-links" id="nav-links">
-        <a href="#servicii" class="nav-link" data-ro="Servicii" data-en="Services">Servicii</a>
-        <a href="#cum-functioneaza" class="nav-link" data-ro="Cum funcționează" data-en="How it works">Cum funcționează</a>
-        <a href="#preturi" class="nav-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger" data-ro="Servicii ▾" data-en="Services ▾">Servicii ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="servicii/radiere-pfa.html" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
+            <a href="servicii/inchidere-srl.html" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
+            <a href="servicii/srl-cu-lichidator.html" data-ro="SRL cu Lichidator" data-en="SRL with Liquidator">SRL cu Lichidator</a>
+            <a href="servicii/analiza-preliminara.html" data-ro="Analiză Preliminară" data-en="Preliminary Analysis">Analiză Preliminară</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger" data-ro="Parteneri ▾" data-en="Partners ▾">Parteneri ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="parteneri/contabili.html" data-ro="Contabili" data-en="Accountants">Contabili</a>
+            <a href="parteneri/lichidatori.html" data-ro="Lichidatori" data-en="Liquidators">Lichidatori</a>
+          </div>
+        </div>
+        <a href="blog/index.html" class="nav-link" data-ro="Blog" data-en="Blog">Blog</a>
         <button class="lang-btn" id="lang-btn" aria-label="Switch language">EN</button>
         <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode">🌙</button>
         <a href="login.html" class="btn-ghost btn-account" data-ro="Contul meu" data-en="My account">Contul meu</a>
@@ -33,10 +47,16 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#servicii" class="mobile-link" data-ro="Servicii" data-en="Services">Servicii</a>
-    <a href="#cum-functioneaza" class="mobile-link" data-ro="Cum funcționează" data-en="How it works">Cum funcționează</a>
-    <a href="#preturi" class="mobile-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
-    <a href="login.html" class="mobile-link" data-ro="Contul meu" data-en="My account">Contul meu</a>
+    <div class="mobile-section-title">Servicii</div>
+    <a href="servicii/radiere-pfa.html" class="mobile-link">Radiere PFA</a>
+    <a href="servicii/inchidere-srl.html" class="mobile-link">Închidere SRL</a>
+    <a href="servicii/srl-cu-lichidator.html" class="mobile-link">SRL cu Lichidator</a>
+    <a href="servicii/analiza-preliminara.html" class="mobile-link">Analiză Preliminară</a>
+    <div class="mobile-section-title">Parteneri</div>
+    <a href="parteneri/contabili.html" class="mobile-link">Contabili</a>
+    <a href="parteneri/lichidatori.html" class="mobile-link">Lichidatori</a>
+    <a href="blog/index.html" class="mobile-link">Blog</a>
+    <a href="login.html" class="mobile-link">Contul meu</a>
     <a href="#contact" class="btn-primary mobile-cta" data-ro="Începe acum" data-en="Get started">Începe acum</a>
   </div>
 
