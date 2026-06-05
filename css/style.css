@@ -693,6 +693,103 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .legal-content ul li { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
 .legal-content a { color: var(--green); text-decoration: underline; }
 
+/* ---- CUI LOOKUP WIDGET ---- */
+.cui-lookup-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+  max-width: 420px;
+}
+.cui-lookup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green);
+  margin-bottom: 0.75rem;
+}
+.cui-lookup-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.cui-lookup-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.cui-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+.cui-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-hover);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: border-color 0.15s;
+}
+.cui-input:focus { outline: none; border-color: var(--green); }
+.cui-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cui-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  color: var(--text-secondary);
+}
+
+/* CUI Modal */
+.cui-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.cui-modal-overlay.open { display: flex; }
+.cui-modal {
+  background: var(--bg-white);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  position: relative;
+}
+.cui-modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 16px;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.cui-modal-icon { font-size: 40px; margin-bottom: 1rem; }
+.cui-modal h3 { font-size: 20px; font-weight: 400; margin-bottom: 0.75rem; color: var(--text-primary); }
+.cui-modal p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
+
 /* ---- FAQ ---- */
 .faq-item {
   background: var(--bg-white);

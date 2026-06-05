@@ -5,9 +5,7 @@
 // ---- DARK MODE ----
 (function () {
   const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = saved || (prefersDark ? 'dark' : 'light');
-  if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
 
   window.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('theme-btn');

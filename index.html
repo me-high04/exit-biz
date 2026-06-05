@@ -71,11 +71,10 @@
         </div>
         <h1 class="hero-title">
           <span class="line-1" data-ro="Închide firma ta" data-en="Close your company">Închide firma ta</span>
-          <em class="line-2" data-ro="fără să te deplasezi nicăieri." data-en="without going anywhere.">fără să te deplasezi nicăieri.</em>
+          <em class="line-2" data-ro="fără bătăi de cap." data-en="without the hassle.">fără bătăi de cap.</em>
         </h1>
         <ul class="hero-checks">
-          <li><span class="check-icon">✓</span> <span data-ro="100% online, fără deplasări la ghișee" data-en="100% online, no office visits">100% online, fără deplasări la ghișee</span></li>
-          <li><span class="check-icon">✓</span> <span data-ro="Documente generate automat, gata de semnat" data-en="Documents generated automatically, ready to sign">Documente generate automat, gata de semnat</span></li>
+          <li><span class="check-icon">✓</span> <span data-ro="Documente pregătite de noi, gata de semnat" data-en="Documents prepared by us, ready to sign">Documente pregătite de noi, gata de semnat</span></li>
           <li><span class="check-icon">✓</span> <span data-ro="Urmărire dosar în timp real" data-en="Real-time case tracking">Urmărire dosar în timp real</span></li>
           <li><span class="check-icon">✓</span> <span data-ro="Procesăm dosare în toată România" data-en="Processing cases across Romania">Procesăm dosare în toată România</span></li>
         </ul>
@@ -85,30 +84,32 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="doc-card doc-1">
-          <div class="doc-icon">📄</div>
-          <div class="doc-info">
-            <div class="doc-name" data-ro="Decizie suspendare" data-en="Suspension decision">Decizie suspendare</div>
-            <div class="doc-status status-done" data-ro="Generat" data-en="Generated">Generat</div>
+        <div class="cui-lookup-card">
+          <div class="cui-lookup-header">
+            <div class="cui-lookup-dot"></div>
+            <span data-ro="Diagnostic firmă" data-en="Company diagnostic">Diagnostic firmă</span>
+          </div>
+          <p class="cui-lookup-sub" data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată." data-en="Enter your company CUI to see your firm's situation and the recommended procedure.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
+          <div class="cui-input-row">
+            <input type="text" class="cui-input" id="cui-input" placeholder="Ex: RO12345678" maxlength="12" />
+            <button class="btn-primary" onclick="document.getElementById('cui-modal').classList.add('open')" data-ro="Verifică" data-en="Check">Verifică</button>
+          </div>
+          <div class="cui-tags">
+            <span class="cui-tag" data-ro="Tip firmă" data-en="Company type">Tip firmă</span>
+            <span class="cui-tag" data-ro="Status fiscal" data-en="Tax status">Status fiscal</span>
+            <span class="cui-tag" data-ro="Procedură recomandată" data-en="Recommended procedure">Procedură recomandată</span>
           </div>
         </div>
-        <div class="doc-card doc-2">
-          <div class="doc-icon">🏛️</div>
-          <div class="doc-info">
-            <div class="doc-name" data-ro="Dosar ONRC" data-en="ONRC file">Dosar ONRC</div>
-            <div class="doc-status status-progress" data-ro="În procesare" data-en="In progress">În procesare</div>
-          </div>
-        </div>
-        <div class="doc-card doc-3">
-          <div class="doc-icon">✅</div>
-          <div class="doc-info">
-            <div class="doc-name" data-ro="Radiere completă" data-en="Strike-off complete">Radiere completă</div>
-            <div class="doc-status status-done" data-ro="Finalizat" data-en="Completed">Finalizat</div>
-          </div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-num">7</div>
-          <div class="hero-stat-label" data-ro="zile în medie" data-en="days on average">zile în medie</div>
+      </div>
+
+      <!-- CUI MODAL -->
+      <div class="cui-modal-overlay" id="cui-modal">
+        <div class="cui-modal">
+          <button class="cui-modal-close" onclick="document.getElementById('cui-modal').classList.remove('open')">✕</button>
+          <div class="cui-modal-icon">🔍</div>
+          <h3 data-ro="Funcționalitate în curând" data-en="Coming soon">Funcționalitate în curând</h3>
+          <p data-ro="Diagnosticul automat al firmei va fi disponibil în curând. Până atunci, completează formularul și te ajutăm noi să stabilim procedura potrivită." data-en="Automatic company diagnostic coming soon. For now, fill in the contact form and we'll help you determine the right procedure.">Diagnosticul automat al firmei va fi disponibil în curând. Până atunci, completează formularul și te ajutăm noi să stabilim procedura potrivită.</p>
+          <a href="#contact" class="btn-primary" onclick="document.getElementById('cui-modal').classList.remove('open')" data-ro="Completează formularul →" data-en="Fill in the form →">Completează formularul →</a>
         </div>
       </div>
     </section>
@@ -117,23 +118,18 @@
     <div class="stats-bar">
       <div class="stats-inner">
         <div class="stat-item">
-          <div class="stat-num">100%</div>
-          <div class="stat-label" data-ro="Online, fără deplasări" data-en="Online, no visits">Online, fără deplasări</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
           <div class="stat-num">7 zile</div>
           <div class="stat-label" data-ro="Timp mediu de procesare" data-en="Average processing time">Timp mediu de procesare</div>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <div class="stat-num">ONRC</div>
-          <div class="stat-label" data-ro="Integrare oficială" data-en="Official integration">Integrare oficială</div>
+          <div class="stat-num">RO / EN</div>
+          <div class="stat-label" data-ro="Suport bilingv" data-en="Bilingual support">Suport bilingv</div>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <div class="stat-num">RO / EN</div>
-          <div class="stat-label" data-ro="Suport bilingv" data-en="Bilingual support">Suport bilingv</div>
+          <div class="stat-num">24h</div>
+          <div class="stat-label" data-ro="Timp răspuns cerere" data-en="Request response time">Timp răspuns cerere</div>
         </div>
       </div>
     </div>
@@ -150,24 +146,24 @@
           <div class="step-card">
             <div class="step-number">01</div>
             <div class="step-content">
-              <h3 data-ro="Completezi formularul" data-en="Fill in the form">Completezi formularul</h3>
-              <p data-ro="Introduci datele firmei și ce tip de procedură dorești. Durează sub 5 minute." data-en="Enter your company details and the type of procedure you need. Takes under 5 minutes.">Introduci datele firmei și ce tip de procedură dorești. Durează sub 5 minute.</p>
+              <h3 data-ro="Vedem cum arată firma ta" data-en="We assess your company">Vedem cum arată firma ta</h3>
+              <p data-ro="Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește." data-en="We analyze your company's situation and assess the complexity of the process. We tell you exactly which procedure suits you.">Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește.</p>
             </div>
           </div>
           <div class="step-arrow">→</div>
           <div class="step-card">
             <div class="step-number">02</div>
             <div class="step-content">
-              <h3 data-ro="Primești documentele" data-en="Receive your documents">Primești documentele</h3>
-              <p data-ro="Generăm automat toate actele necesare, completate și gata de semnat." data-en="We automatically generate all required documents, filled in and ready to sign.">Generăm automat toate actele necesare, completate și gata de semnat.</p>
+              <h3 data-ro="Alegi pachetul potrivit" data-en="Choose the right package">Alegi pachetul potrivit</h3>
+              <p data-ro="Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse." data-en="You select the service that suits you and pay simply and securely. No hidden costs.">Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse.</p>
             </div>
           </div>
           <div class="step-arrow">→</div>
           <div class="step-card">
             <div class="step-number">03</div>
             <div class="step-content">
-              <h3 data-ro="Urmărești progresul" data-en="Track your progress">Urmărești progresul</h3>
-              <p data-ro="Dashboard personal cu statusul dosarului în timp real. Noi ne ocupăm de rest." data-en="Personal dashboard with real-time file status. We handle the rest.">Dashboard personal cu statusul dosarului în timp real. Noi ne ocupăm de rest.</p>
+              <h3 data-ro="Ne punem pe treabă" data-en="We get to work">Ne punem pe treabă</h3>
+              <p data-ro="Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal." data-en="We handle everything. You track progress in real time from your personal dashboard.">Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal.</p>
             </div>
           </div>
         </div>
@@ -285,7 +281,7 @@
   </footer>
 
   <!-- WHATSAPP BUTTON -->
-  <a href="https://wa.me/40734625532" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contactează-ne pe WhatsApp">
+  <a href="https://wa.me/40772129941" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contactează-ne pe WhatsApp">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
