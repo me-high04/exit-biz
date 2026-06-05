@@ -152,11 +152,12 @@ if (form) {
     btn.disabled = true;
 
     try {
-      await fetch('/', {
+      const res = await fetch('https://formspree.io/f/mpqewnoe', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
       });
+      if (!res.ok) throw new Error('failed');
     } catch {
       btn.textContent = originalText;
       btn.disabled = false;
