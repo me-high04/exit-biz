@@ -550,7 +550,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .toast {
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
+  left: 2rem;
   background: var(--surface-dark);
   color: #fff;
   padding: 14px 20px;
