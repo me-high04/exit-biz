@@ -92,7 +92,7 @@
           <p class="cui-lookup-sub" data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată." data-en="Enter your company CUI to see your firm's situation and the recommended procedure.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
           <div class="cui-input-row">
             <input type="text" class="cui-input" id="cui-input" placeholder="Ex: RO12345678" maxlength="12" />
-            <button class="btn-primary" onclick="document.getElementById('cui-modal').classList.add('open')" data-ro="Verifică" data-en="Check">Verifică</button>
+            <button class="btn-primary" id="cui-btn" onclick="verificaFirma()" data-ro="Verifică" data-en="Check">Verifică</button>
           </div>
           <div class="cui-tags">
             <span class="cui-tag" data-ro="Tip firmă" data-en="Company type">Tip firmă</span>
@@ -105,11 +105,11 @@
       <!-- CUI MODAL -->
       <div class="cui-modal-overlay" id="cui-modal">
         <div class="cui-modal">
-          <button class="cui-modal-close" onclick="document.getElementById('cui-modal').classList.remove('open')">✕</button>
-          <div class="cui-modal-icon">🔍</div>
-          <h3 data-ro="Funcționalitate în curând" data-en="Coming soon">Funcționalitate în curând</h3>
-          <p data-ro="Diagnosticul automat al firmei va fi disponibil în curând. Până atunci, completează formularul și te ajutăm noi să stabilim procedura potrivită." data-en="Automatic company diagnostic coming soon. For now, fill in the contact form and we'll help you determine the right procedure.">Diagnosticul automat al firmei va fi disponibil în curând. Până atunci, completează formularul și te ajutăm noi să stabilim procedura potrivită.</p>
-          <a href="#contact" class="btn-primary" onclick="document.getElementById('cui-modal').classList.remove('open')" data-ro="Completează formularul →" data-en="Fill in the form →">Completează formularul →</a>
+          <button class="cui-modal-close" onclick="inchideModal()">✕</button>
+          <div id="cui-modal-body">
+            <div class="cui-modal-icon">🔍</div>
+            <h3>Se încarcă...</h3>
+          </div>
         </div>
       </div>
     </section>

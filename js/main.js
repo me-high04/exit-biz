@@ -150,6 +150,111 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 })();
 
+// ---- CUI FIRMA LOOKUP ----
+function inchideModal() {
+  document.getElementById('cui-modal').classList.remove('open');
+}
+
+function getProcedura(denumire) {
+  const d = (denumire || '').toUpperCase();
+  if (/\bPFA\b|\bII\b|\bIF\b/.test(d)) {
+    return { tip: 'Radiere PFA', link: 'servicii/radiere-pfa.html', desc: 'Procedură simplificată pentru PFA, II sau IF.' };
+  }
+  if (/\bSA\b|\bRA\b|\bSNC\b|\bSCS\b/.test(d)) {
+    return { tip: 'SRL cu Lichidator', link: 'servicii/srl-cu-lichidator.html', desc: 'Procedură de lichidare cu lichidator autorizat.' };
+  }
+  if (/\bSRL\b/.test(d)) {
+    return { tip: 'Închidere SRL', link: 'servicii/inchidere-srl.html', desc: 'Dizolvare și radiere pentru SRL.' };
+  }
+  return { tip: 'Analiză Preliminară', link: 'servicii/analiza-preliminara.html', desc: 'Evaluăm situația firmei și stabilim procedura potrivită.' };
+}
+
+async function verificaFirma() {
+  const cuiInput = document.getElementById('cui-input');
+  const cui = (cuiInput?.value || '').replace(/[^0-9]/g, '');
+
+  if (!cui || cui.length < 2) {
+    cuiInput?.focus();
+    return;
+  }
+
+  const modal = document.getElementById('cui-modal');
+  const body = document.getElementById('cui-modal-body');
+  if (!modal || !body) return;
+
+  modal.classList.add('open');
+  body.innerHTML = `
+    <div class="cui-modal-icon" style="animation: pulse 1s infinite">🔍</div>
+    <h3>Se verifică CUI ${cui}...</h3>
+    <p style="color:var(--text-secondary);font-size:14px">Interogăm baza de date ANAF</p>`;
+
+  try {
+    const res = await fetch(`/.netlify/functions/firma-info?cui=${cui}`);
+    const data = await res.json();
+    const firma = data?.found?.[0];
+
+    if (!firma) {
+      body.innerHTML = `
+        <div class="cui-modal-icon">❌</div>
+        <h3>Firma nu a fost găsită</h3>
+        <p>CUI-ul <strong>${cui}</strong> nu există în baza de date ANAF sau este invalid.</p>
+        <button class="btn-ghost" onclick="inchideModal()" style="width:100%;justify-content:center;margin-top:0.5rem">Încearcă din nou</button>`;
+      return;
+    }
+
+    const procedura = getProcedura(firma.denumire);
+    const stareColor = firma.stare === 'ACTIVA' ? 'var(--green)' : '#e53e3e';
+    const tvaStatus = firma.scpTVA ? '✓ Plătitor TVA' : '✗ Neplătitor TVA';
+
+    body.innerHTML = `
+      <div style="text-align:left;width:100%">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px;">
+          <h3 style="margin:0;font-size:18px;font-weight:500">${firma.denumire}</h3>
+          <span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:${stareColor}22;color:${stareColor}">${firma.stare || '—'}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem;">
+          <div style="background:var(--bg-surface);border-radius:8px;padding:10px 12px;">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">CUI</div>
+            <div style="font-size:14px;font-weight:500;">RO${firma.cui}</div>
+          </div>
+          <div style="background:var(--bg-surface);border-radius:8px;padding:10px 12px;">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">TVA</div>
+            <div style="font-size:14px;font-weight:500;">${tvaStatus}</div>
+          </div>
+          <div style="background:var(--bg-surface);border-radius:8px;padding:10px 12px;grid-column:1/-1;">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">Adresă</div>
+            <div style="font-size:13px;">${firma.adresa || '—'}</div>
+          </div>
+        </div>
+        <div style="background:var(--green-light);border:1px solid var(--green);border-radius:10px;padding:14px;margin-bottom:1.25rem;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--green);margin-bottom:6px;">Procedură recomandată</div>
+          <div style="font-size:16px;font-weight:600;color:var(--green-dark);margin-bottom:4px;">${procedura.tip}</div>
+          <div style="font-size:13px;color:var(--text-secondary);">${procedura.desc}</div>
+        </div>
+        <a href="${procedura.link}" class="btn-primary btn-full" style="justify-content:center;margin-bottom:8px">Află mai multe →</a>
+        <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-ghost btn-full" style="justify-content:center" onclick="inchideModal()">Contactează-ne direct</button>
+      </div>`;
+
+    if (window.Tally) window.Tally.loadEmbeds();
+  } catch {
+    body.innerHTML = `
+      <div class="cui-modal-icon">⚠️</div>
+      <h3>Eroare de conexiune</h3>
+      <p>Nu am putut verifica firma. Încearcă din nou sau contactează-ne direct.</p>
+      <button class="btn-ghost" onclick="inchideModal()" style="width:100%;justify-content:center;margin-top:0.5rem">Închide</button>`;
+  }
+}
+
+// Close modal on overlay click
+document.getElementById('cui-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) inchideModal();
+});
+
+// Enter key in CUI input
+document.getElementById('cui-input')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') verificaFirma();
+});
+
 // ---- INIT ----
 // Set initial display for mobile menu
 document.getElementById('mobile-menu').style.display = 'none';
