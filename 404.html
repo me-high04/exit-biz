@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagina nu a fost găsită — ExitBiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .notfound-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: var(--bg);
+    }
+    .notfound-card {
+      text-align: center;
+      max-width: 480px;
+    }
+    .notfound-code {
+      font-size: clamp(80px, 15vw, 140px);
+      font-weight: 600;
+      color: var(--green);
+      line-height: 1;
+      letter-spacing: -4px;
+      margin-bottom: 0.5rem;
+      opacity: 0.15;
+    }
+    .notfound-card h1 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+    .notfound-card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .notfound-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notfound-page">
+    <div class="notfound-card">
+      <div class="notfound-code">404</div>
+      <h1>Pagina nu a fost găsită</h1>
+      <p>Se pare că această pagină nu există sau a fost mutată. Nu-ți face griji — te ajutăm să ajungi unde trebuie.</p>
+      <div class="notfound-actions">
+        <a href="/" class="btn-primary btn-large">← Înapoi acasă</a>
+        <a href="https://wa.me/40772129941" target="_blank" rel="noopener" class="btn-ghost btn-large">Scrie-ne pe WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
