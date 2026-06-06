@@ -27,17 +27,18 @@
 })();
 
 // ---- LANGUAGE TOGGLE ----
-let currentLang = 'ro';
+let currentLang = localStorage.getItem('lang') || 'ro';
 
-function setLanguage(lang) {
+function setLanguage(lang, save = true) {
   currentLang = lang;
   document.querySelectorAll('[data-ro]').forEach(el => {
     el.textContent = el.dataset[lang] || el.dataset['ro'];
   });
   const btn = document.getElementById('lang-btn');
-  btn.textContent = lang === 'ro' ? 'EN' : 'RO';
+  if (btn) btn.textContent = lang === 'ro' ? 'EN' : 'RO';
   document.documentElement.lang = lang;
-  // update placeholders
+  if (save) localStorage.setItem('lang', lang);
+
   const placeholders = {
     ro: { name: 'Ion Popescu', email: 'ion@firma.ro', message: 'Descrie pe scurt situația firmei tale...' },
     en: { name: 'John Smith', email: 'john@company.com', message: 'Briefly describe your company situation...' }
@@ -51,9 +52,15 @@ function setLanguage(lang) {
   if (msgEl) msgEl.placeholder = p.message;
 }
 
-document.getElementById('lang-btn').addEventListener('click', () => {
-  setLanguage(currentLang === 'ro' ? 'en' : 'ro');
-});
+// Aplică limba salvată la încărcarea paginii
+if (currentLang !== 'ro') setLanguage(currentLang, false);
+
+const langBtn = document.getElementById('lang-btn');
+if (langBtn) {
+  langBtn.addEventListener('click', () => {
+    setLanguage(currentLang === 'ro' ? 'en' : 'ro');
+  });
+}
 
 // ---- NAV SCROLL EFFECT ----
 const nav = document.querySelector('.nav');

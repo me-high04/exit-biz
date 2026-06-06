@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Pagini private — nu se indexează
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /multumim.html
+Disallow: /supabase-setup.sql
+Disallow: /netlify/
+
+Sitemap: https://exitbiz.netlify.app/sitemap.xml
