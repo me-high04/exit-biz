@@ -136,19 +136,24 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
   transition: color 0.2s;
 }
 .nav-link:hover { color: var(--text-primary); }
+/* ---- LANGUAGE SELECTOR ---- */
+.lang-selector { display: flex; gap: 0; background: var(--bg-surface); border-radius: var(--radius-sm); padding: 2px; }
 .lang-btn {
-  font-size: 12px;
-  font-family: var(--font-body);
-  font-weight: 500;
-  padding: 5px 12px;
-  border: 1px solid var(--border-hover);
-  border-radius: 99px;
-  color: var(--text-secondary);
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   background: transparent;
-  letter-spacing: 0.3px;
+  border: none;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  border-radius: calc(var(--radius-sm) - 2px);
+  transition: color 0.15s, background 0.15s;
+  font-family: var(--font-body);
 }
+.lang-btn:hover { color: var(--text-secondary); }
+.lang-btn.active { background: var(--bg-white); color: var(--green); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 /* ---- NAV DROPDOWN ---- */
 .nav-dropdown { position: relative; }
 .nav-dropdown-trigger {

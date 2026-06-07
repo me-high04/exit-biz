@@ -34,10 +34,14 @@ function setLanguage(lang, save = true) {
   document.querySelectorAll('[data-ro]').forEach(el => {
     el.textContent = el.dataset[lang] || el.dataset['ro'];
   });
-  const btn = document.getElementById('lang-btn');
-  if (btn) btn.textContent = lang === 'ro' ? 'EN' : 'RO';
   document.documentElement.lang = lang;
   if (save) localStorage.setItem('lang', lang);
+
+  // Update active state on lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.lang === lang) btn.classList.add('active');
+  });
 
   const placeholders = {
     ro: { name: 'Ion Popescu', email: 'ion@firma.ro', message: 'Descrie pe scurt situația firmei tale...' },
@@ -53,14 +57,22 @@ function setLanguage(lang, save = true) {
 }
 
 // Aplică limba salvată la încărcarea paginii
-if (currentLang !== 'ro') setLanguage(currentLang, false);
+window.addEventListener('DOMContentLoaded', () => {
+  if (currentLang !== 'ro') setLanguage(currentLang, false);
 
-const langBtn = document.getElementById('lang-btn');
-if (langBtn) {
-  langBtn.addEventListener('click', () => {
-    setLanguage(currentLang === 'ro' ? 'en' : 'ro');
+  // Set active class on loaded buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.lang === currentLang) btn.classList.add('active');
   });
-}
+
+  // Attach click listeners
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setLanguage(btn.dataset.lang);
+    });
+  });
+});
 
 // ---- NAV SCROLL EFFECT ----
 const nav = document.querySelector('.nav');
