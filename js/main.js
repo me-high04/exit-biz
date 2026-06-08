@@ -57,7 +57,8 @@ function setLanguage(lang, save = true) {
 }
 
 // Aplică limba salvată la încărcarea paginii
-window.addEventListener('DOMContentLoaded', () => {
+// Script-ul e la finalul <body> deci DOM e deja gata — nu e nevoie de DOMContentLoaded
+function initLang() {
   if (currentLang !== 'ro') setLanguage(currentLang, false);
 
   // Set active class on loaded buttons
@@ -72,7 +73,13 @@ window.addEventListener('DOMContentLoaded', () => {
       setLanguage(btn.dataset.lang);
     });
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLang);
+} else {
+  initLang();
+}
 
 // ---- NAV SCROLL EFFECT ----
 const nav = document.querySelector('.nav');
