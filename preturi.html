@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prețuri — ExitBiz</title>
-  <meta name="description" content="Prețuri transparente pentru închiderea firmei tale. Fără costuri ascunse, fără surprize." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prețuri — ExitBiz</title>
+<meta content="Prețuri transparente pentru închiderea firmei tale. Fără costuri ascunse, fără surprize." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<style>
     .pricing-hero { padding: calc(var(--nav-height) + 4rem) 2rem 3rem; background: var(--bg-surface); border-bottom: 1px solid var(--border); text-align: center; }
     .pricing-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 300; letter-spacing: -1px; margin-bottom: 0.75rem; }
     .pricing-hero p { font-size: 17px; color: var(--text-secondary); max-width: 520px; margin: 0 auto 1rem; line-height: 1.7; }
@@ -61,234 +62,214 @@
   </style>
 </head>
 <body>
-
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="/" class="logo">exit<span>biz</span></a>
-      <nav class="nav-links">
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-trigger">Servicii ▾</button>
-          <div class="nav-dropdown-menu">
-            <a href="servicii/radiere-pfa.html">Radiere PFA</a>
-            <a href="servicii/inchidere-srl.html">Închidere SRL</a>
-            <a href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
-            <a href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-trigger">Parteneri ▾</button>
-          <div class="nav-dropdown-menu">
-            <a href="parteneri/contabili.html">Contabili</a>
-            <a href="parteneri/lichidatori.html">Lichidatori</a>
-          </div>
-        </div>
-        <a href="blog/index.html" class="nav-link">Blog</a>
+<header class="nav">
+<div class="nav-inner">
+<a class="logo" href="/">exit<span>biz</span></a>
+<nav class="nav-links">
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Services ▾" data-ro="Servicii ▾">Servicii ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="PFA Strike-off" data-ro="Radiere PFA" href="servicii/radiere-pfa.html">Radiere PFA</a>
+<a data-en="SRL Closure" data-ro="Închidere SRL" href="servicii/inchidere-srl.html">Închidere SRL</a>
+<a data-en="SRL with Liquidator" data-ro="SRL cu Lichidator" href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
+<a data-en="Preliminary Analysis" data-ro="Analiză Preliminară" href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Partners ▾" data-ro="Parteneri ▾">Parteneri ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="Accountants" data-ro="Contabili" href="parteneri/contabili.html">Contabili</a>
+<a data-en="Liquidators" data-ro="Lichidatori" href="parteneri/lichidatori.html">Lichidatori</a>
+</div>
+</div>
+<a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
 <div class="lang-selector" id="lang-selector">
-          <button class="lang-btn lang-ro" data-lang="ro">RO</button>
-          <button class="lang-btn lang-en" data-lang="en">EN</button>
-        </div>
-        <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode">🌙</button>
-        <a href="login.html" class="btn-ghost">Contul meu</a>
-        <a href="#contact" class="btn-primary">Începe acum</a>
-      </nav>
-      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-    </div>
-  </header>
-
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-section-title">Servicii</div>
-    <a href="servicii/radiere-pfa.html" class="mobile-link">Radiere PFA</a>
-    <a href="servicii/inchidere-srl.html" class="mobile-link">Închidere SRL</a>
-    <a href="servicii/srl-cu-lichidator.html" class="mobile-link">SRL cu Lichidator</a>
-    <a href="servicii/analiza-preliminara.html" class="mobile-link">Analiză Preliminară</a>
-    <div class="mobile-section-title">Parteneri</div>
-    <a href="parteneri/contabili.html" class="mobile-link">Contabili</a>
-    <a href="parteneri/lichidatori.html" class="mobile-link">Lichidatori</a>
-    <a href="blog/index.html" class="mobile-link">Blog</a>
-    <a href="login.html" class="mobile-link">Contul meu</a>
-    <a href="#contact" class="btn-primary mobile-cta">Începe acum</a>
-  </div>
-
-  <div class="pricing-hero">
-    <div class="section-tag" data-ro="Prețuri" data-en="Pricing">Prețuri</div>
-    <h1 data-ro="Transparent, fără surprize" data-en="Transparent, no surprises">Transparent, fără surprize</h1>
-    <p data-ro="Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău." data-en="The final price is set after the free preliminary analysis, based on the complexity of your case.">Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău.</p>
-    <span class="pricing-notice" data-ro="✓ Analiză preliminară gratuită · Fără costuri ascunse" data-en="✓ Free preliminary analysis · No hidden costs">✓ Analiză preliminară gratuită · Fără costuri ascunse</span>
-  </div>
-
-  <div class="pricing-grid">
-
-    <!-- TIER 1 -->
-    <div class="pricing-card">
-      <div class="pricing-tier" data-ro="Complexitate mică" data-en="Low complexity">Complexitate mică</div>
-      <div class="pricing-name">Standard</div>
-      <div class="pricing-desc" data-ro="Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii." data-en="Simple cases, no complications. Ideal for PFA, II, IF or SRL with no employees and no debts.">Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii.</div>
-      <div class="pricing-price">
-        <span class="pricing-currency">€</span><span class="pricing-amount">199</span>
-        <div class="pricing-from" data-ro="preț de pornire · TVA inclus" data-en="starting price · VAT included">preț de pornire · TVA inclus</div>
-      </div>
-      <ul class="pricing-features">
-        <li><span class="feat-icon">✓</span> <span data-ro="Radiere PFA / II / IF" data-en="PFA / II / IF strike-off">Radiere PFA / II / IF</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="SRL fără angajați" data-en="SRL with no employees">SRL fără angajați</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Situație fiscală simplă" data-en="Simple tax situation">Situație fiscală simplă</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Toate documentele incluse" data-en="All documents included">Toate documentele incluse</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Depunere ONRC online" data-en="Online ONRC filing">Depunere ONRC online</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Dashboard urmărire dosar" data-en="Case tracking dashboard">Dashboard urmărire dosar</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Timp estimat: 5–14 zile" data-en="Estimated time: 5–14 days">Timp estimat: 5–14 zile</span></li>
-      </ul>
-      <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-ghost btn-full" style="justify-content:center" data-ro="Solicită ofertă →" data-en="Request a quote →">Solicită ofertă →</button>
-    </div>
-
-    <!-- TIER 2 -->
-    <div class="pricing-card featured">
-      <div class="featured-badge" data-ro="Cel mai solicitat" data-en="Most popular">Cel mai solicitat</div>
-      <div class="pricing-tier" data-ro="Complexitate medie" data-en="Medium complexity">Complexitate medie</div>
-      <div class="pricing-name">Business</div>
-      <div class="pricing-desc" data-ro="SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere." data-en="SRL with 1–3 shareholders, clear tax situation. Standard dissolution and strike-off process.">SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere.</div>
-      <div class="pricing-price">
-        <span class="pricing-currency">€</span><span class="pricing-amount">499</span>
-        <div class="pricing-from" data-ro="preț de pornire · TVA inclus" data-en="starting price · VAT included">preț de pornire · TVA inclus</div>
-      </div>
-      <ul class="pricing-features">
-        <li><span class="feat-icon">✓</span> <span data-ro="SRL cu 1–3 asociați" data-en="SRL with 1–3 shareholders">SRL cu 1–3 asociați</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Până la 5 angajați" data-en="Up to 5 employees">Până la 5 angajați</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Dizolvare + radiere completă" data-en="Full dissolution + strike-off">Dizolvare + radiere completă</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Comunicare cu autoritățile" data-en="Communication with authorities">Comunicare cu autoritățile</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Toate documentele incluse" data-en="All documents included">Toate documentele incluse</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Depunere + urmărire ONRC" data-en="ONRC filing + tracking">Depunere + urmărire ONRC</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Dashboard urmărire dosar" data-en="Case tracking dashboard">Dashboard urmărire dosar</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Timp estimat: 14–45 zile" data-en="Estimated time: 14–45 days">Timp estimat: 14–45 zile</span></li>
-      </ul>
-      <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-full" style="justify-content:center" data-ro="Solicită ofertă →" data-en="Request a quote →">Solicită ofertă →</button>
-    </div>
-
-    <!-- TIER 3 -->
-    <div class="pricing-card">
-      <div class="pricing-tier" data-ro="Complexitate mare" data-en="High complexity">Complexitate mare</div>
-      <div class="pricing-name">Enterprise</div>
-      <div class="pricing-desc" data-ro="Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale." data-en="Complex cases with liquidator, multiple shareholders, debts or special tax situations.">Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale.</div>
-      <div class="pricing-price">
-        <span class="pricing-currency">€</span><span class="pricing-amount">999</span>
-        <div class="pricing-from" data-ro="preț de pornire · TVA inclus" data-en="starting price · VAT included">preț de pornire · TVA inclus</div>
-      </div>
-      <ul class="pricing-features">
-        <li><span class="feat-icon">✓</span> <span data-ro="SRL cu mai mulți asociați" data-en="SRL with multiple shareholders">SRL cu mai mulți asociați</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Cazuri cu lichidator" data-en="Cases with liquidator">Cazuri cu lichidator</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Situații fiscale complexe" data-en="Complex tax situations">Situații fiscale complexe</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Management complet procedură" data-en="Full procedure management">Management complet procedură</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Lichidator autorizat recomandat" data-en="Authorized liquidator recommended">Lichidator autorizat recomandat</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Comunicare completă cu ANAF/ONRC" data-en="Full communication with ANAF/ONRC">Comunicare completă cu ANAF/ONRC</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Dashboard urmărire dosar" data-en="Case tracking dashboard">Dashboard urmărire dosar</span></li>
-        <li><span class="feat-icon">✓</span> <span data-ro="Timp estimat: 30–90 zile" data-en="Estimated time: 30–90 days">Timp estimat: 30–90 zile</span></li>
-      </ul>
-      <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-ghost btn-full" style="justify-content:center" data-ro="Solicită ofertă →" data-en="Request a quote →">Solicită ofertă →</button>
-    </div>
-
-  </div>
-
-  <div class="pricing-note" data-ro="Prețul final se stabilește după analiza preliminară gratuită. Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract." data-en="The final price is set after the free preliminary analysis. Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything.">
-    <strong data-ro="Prețul final se stabilește după analiza preliminară gratuită." data-en="The final price is set after the free preliminary analysis.">Prețul final se stabilește după analiza preliminară gratuită.</strong> <span data-ro="Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract." data-en="Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything.">Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.</span>
-  </div>
-
-  <!-- COMPARISON TABLE -->
-  <div class="comparison">
-    <h2 data-ro="Comparație pachete" data-en="Package comparison">Comparație pachete</h2>
-    <table class="comparison-table">
-      <thead>
-        <tr>
-          <th data-ro="Caracteristică" data-en="Feature">Caracteristică</th>
-          <th>Standard<br><span style="font-weight:400;color:var(--text-secondary)">€199</span></th>
-          <th style="color:var(--green)">Business<br><span style="font-weight:400">€499</span></th>
-          <th>Enterprise<br><span style="font-weight:400;color:var(--text-secondary)">€999</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Radiere PFA / II / IF</td><td><span class="check">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
-        <tr><td>Dizolvare SRL</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Lichidator autorizat</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Generare documente</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Depunere ONRC</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Dashboard personal</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Comunicare autorități</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Cazuri complexe/datorii</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- FAQ PRICING -->
-  <div class="faq-pricing">
-    <h2 data-ro="Întrebări despre prețuri" data-en="Pricing FAQ">Întrebări despre prețuri</h2>
-    <div style="display:flex;flex-direction:column;gap:1rem;">
-
-      <details class="faq-item">
-        <summary data-ro="Ce include „analiza preliminară gratuită"?" data-en="What does the free preliminary analysis include?">Ce include „analiza preliminară gratuită"?</summary>
-        <p data-ro="Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente." data-en="We analyze your company's situation for free — entity type, tax status, number of employees, existing debts — and tell you exactly which procedure suits you and what the final price is. No commitments.">Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary data-ro="De ce prețul poate varia față de cel afișat?" data-en="Why might the price differ from what's shown?">De ce prețul poate varia față de cel afișat?</summary>
-        <p data-ro="Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul." data-en="Displayed prices are starting prices. Some cases may require additional steps. Any extra cost is communicated to you before we begin.">Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary data-ro="Cum se face plata?" data-en="How does payment work?">Cum se face plata?</summary>
-        <p data-ro="Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României." data-en="We accept online payment by bank card. We issue an invoice for all services. On request, we can also issue invoices in EUR for clients outside Romania.">Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary data-ro="Există o garanție dacă procesul durează mai mult?" data-en="Is there a guarantee if the process takes longer?">Există o garanție dacă procesul durează mai mult?</summary>
-        <p data-ro="Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat." data-en="Timelines are estimates and depend largely on how quickly public institutions (ONRC, ANAF) process files. We cannot control institutional timelines, but we keep you informed at every step and ensure your case is prioritized.">Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat.</p>
-      </details>
-
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <section class="section cta-section" id="contact" style="padding-top:0">
-    <div class="section-inner">
-      <div class="cta-box" style="text-align:center;display:block;padding:3rem 2rem;">
-        <div class="section-tag" style="margin-bottom:0.75rem" data-ro="Nu ești sigur ce pachet ți se potrivește?" data-en="Not sure which package fits you?">Nu ești sigur ce pachet ți se potrivește?</div>
-        <h2 style="margin-bottom:0.75rem" data-ro="Hai să discutăm — gratuit" data-en="Let's talk — for free">Hai să discutăm — gratuit</h2>
-        <p style="color:var(--text-secondary);max-width:480px;margin:0 auto 1.5rem;font-size:16px" data-ro="Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică." data-en="We'll give you a free analysis and tell you exactly which procedure and price applies to you.">Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică.</p>
-        <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-large" data-ro="Solicită analiză gratuită →" data-en="Request free analysis →">Solicită analiză gratuită →</button>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="logo">exit<span>biz</span></a>
-        <p>Servicii profesionale de închidere firme, rapid și legal.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <div class="footer-col-title">Servicii</div>
-          <a href="servicii/radiere-pfa.html">Radiere PFA</a>
-          <a href="servicii/inchidere-srl.html">Închidere SRL</a>
-          <a href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
-          <a href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Legal</div>
-          <a href="termeni.html">Termeni și condiții</a>
-          <a href="confidentialitate.html">Politică confidențialitate</a>
-          <a href="gdpr.html">GDPR</a>
-          <a href="cookies.html">Politică cookies</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 ExitBiz · Toate drepturile rezervate</p>
-    </div>
-  </footer>
-
-  <a href="https://wa.me/40772129941" class="whatsapp-btn" data-ro="Scrie-ne" data-en="Message us" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span data-ro="Scrie-ne" data-en="Message us">Scrie-ne</span>
-  </a>
-
-  <script async src="https://tally.so/widgets/embed.js"></script>
-  <script src="js/main.js"></script>
+<button class="lang-btn lang-ro" data-lang="ro">RO</button>
+<button class="lang-btn lang-en" data-lang="en">EN</button>
+</div>
+<button aria-label="Toggle dark mode" class="theme-btn" id="theme-btn">🌙</button>
+<a class="btn-ghost" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+<a class="btn-primary" data-en="Get started" data-ro="Începe acum" href="#contact">Începe acum</a>
+</nav>
+<button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</div>
+</header>
+<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-section-title" data-en="Services" data-ro="Servicii">Servicii</div>
+<a class="mobile-link" data-en="PFA Strike-off" data-ro="Radiere PFA" href="servicii/radiere-pfa.html">Radiere PFA</a>
+<a class="mobile-link" data-en="SRL Closure" data-ro="Închidere SRL" href="servicii/inchidere-srl.html">Închidere SRL</a>
+<a class="mobile-link" data-en="SRL with Liquidator" data-ro="SRL cu Lichidator" href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
+<a class="mobile-link" data-en="Preliminary Analysis" data-ro="Analiză Preliminară" href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
+<div class="mobile-section-title" data-en="Partners" data-ro="Parteneri">Parteneri</div>
+<a class="mobile-link" data-en="Accountants" data-ro="Contabili" href="parteneri/contabili.html">Contabili</a>
+<a class="mobile-link" data-en="Liquidators" data-ro="Lichidatori" href="parteneri/lichidatori.html">Lichidatori</a>
+<a class="mobile-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="mobile-link" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+<div class="lang-selector mobile-lang-selector"><button class="lang-btn lang-ro" data-lang="ro">RO</button><button class="lang-btn lang-en" data-lang="en">EN</button></div><a class="btn-primary mobile-cta" data-en="Get started" data-ro="Începe acum" href="#contact">Începe acum</a>
+</div>
+<div class="pricing-hero">
+<div class="section-tag" data-en="Pricing" data-ro="Prețuri">Prețuri</div>
+<h1 data-en="Transparent, no surprises" data-ro="Transparent, fără surprize">Transparent, fără surprize</h1>
+<p data-en="The final price is set after the free preliminary analysis, based on the complexity of your case." data-ro="Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău.">Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău.</p>
+<span class="pricing-notice" data-en="✓ Free preliminary analysis · No hidden costs" data-ro="✓ Analiză preliminară gratuită · Fără costuri ascunse">✓ Analiză preliminară gratuită · Fără costuri ascunse</span>
+</div>
+<div class="pricing-grid">
+<!-- TIER 1 -->
+<div class="pricing-card">
+<div class="pricing-tier" data-en="Low complexity" data-ro="Complexitate mică">Complexitate mică</div>
+<div class="pricing-name">Standard</div>
+<div class="pricing-desc" data-en="Simple cases, no complications. Ideal for PFA, II, IF or SRL with no employees and no debts." data-ro="Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii.">Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii.</div>
+<div class="pricing-price">
+<span class="pricing-currency">€</span><span class="pricing-amount">199</span>
+<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
+</div>
+<ul class="pricing-features">
+<li><span class="feat-icon">✓</span> <span data-en="PFA / II / IF strike-off" data-ro="Radiere PFA / II / IF">Radiere PFA / II / IF</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="SRL with no employees" data-ro="SRL fără angajați">SRL fără angajați</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Simple tax situation" data-ro="Situație fiscală simplă">Situație fiscală simplă</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="All documents included" data-ro="Toate documentele incluse">Toate documentele incluse</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Online ONRC filing" data-ro="Depunere ONRC online">Depunere ONRC online</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 5–14 days" data-ro="Timp estimat: 5–14 zile">Timp estimat: 5–14 zile</span></li>
+</ul>
+<button class="btn-ghost btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
+</div>
+<!-- TIER 2 -->
+<div class="pricing-card featured">
+<div class="featured-badge" data-en="Most popular" data-ro="Cel mai solicitat">Cel mai solicitat</div>
+<div class="pricing-tier" data-en="Medium complexity" data-ro="Complexitate medie">Complexitate medie</div>
+<div class="pricing-name">Business</div>
+<div class="pricing-desc" data-en="SRL with 1–3 shareholders, clear tax situation. Standard dissolution and strike-off process." data-ro="SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere.">SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere.</div>
+<div class="pricing-price">
+<span class="pricing-currency">€</span><span class="pricing-amount">499</span>
+<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
+</div>
+<ul class="pricing-features">
+<li><span class="feat-icon">✓</span> <span data-en="SRL with 1–3 shareholders" data-ro="SRL cu 1–3 asociați">SRL cu 1–3 asociați</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Up to 5 employees" data-ro="Până la 5 angajați">Până la 5 angajați</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Full dissolution + strike-off" data-ro="Dizolvare + radiere completă">Dizolvare + radiere completă</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Communication with authorities" data-ro="Comunicare cu autoritățile">Comunicare cu autoritățile</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="All documents included" data-ro="Toate documentele incluse">Toate documentele incluse</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="ONRC filing + tracking" data-ro="Depunere + urmărire ONRC">Depunere + urmărire ONRC</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 14–45 days" data-ro="Timp estimat: 14–45 zile">Timp estimat: 14–45 zile</span></li>
+</ul>
+<button class="btn-primary btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
+</div>
+<!-- TIER 3 -->
+<div class="pricing-card">
+<div class="pricing-tier" data-en="High complexity" data-ro="Complexitate mare">Complexitate mare</div>
+<div class="pricing-name">Enterprise</div>
+<div class="pricing-desc" data-en="Complex cases with liquidator, multiple shareholders, debts or special tax situations." data-ro="Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale.">Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale.</div>
+<div class="pricing-price">
+<span class="pricing-currency">€</span><span class="pricing-amount">999</span>
+<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
+</div>
+<ul class="pricing-features">
+<li><span class="feat-icon">✓</span> <span data-en="SRL with multiple shareholders" data-ro="SRL cu mai mulți asociați">SRL cu mai mulți asociați</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Cases with liquidator" data-ro="Cazuri cu lichidator">Cazuri cu lichidator</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Complex tax situations" data-ro="Situații fiscale complexe">Situații fiscale complexe</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Full procedure management" data-ro="Management complet procedură">Management complet procedură</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Authorized liquidator recommended" data-ro="Lichidator autorizat recomandat">Lichidator autorizat recomandat</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Full communication with ANAF/ONRC" data-ro="Comunicare completă cu ANAF/ONRC">Comunicare completă cu ANAF/ONRC</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
+<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 30–90 days" data-ro="Timp estimat: 30–90 zile">Timp estimat: 30–90 zile</span></li>
+</ul>
+<button class="btn-ghost btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
+</div>
+</div>
+<div class="pricing-note" data-en="The final price is set after the free preliminary analysis. Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything." data-ro="Prețul final se stabilește după analiza preliminară gratuită. Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.">
+<strong data-en="The final price is set after the free preliminary analysis." data-ro="Prețul final se stabilește după analiza preliminară gratuită.">Prețul final se stabilește după analiza preliminară gratuită.</strong> <span data-en="Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything." data-ro="Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.">Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.</span>
+</div>
+<!-- COMPARISON TABLE -->
+<div class="comparison">
+<h2 data-en="Package comparison" data-ro="Comparație pachete">Comparație pachete</h2>
+<table class="comparison-table">
+<thead>
+<tr>
+<th data-en="Feature" data-ro="Caracteristică">Caracteristică</th>
+<th>Standard<br/><span style="font-weight:400;color:var(--text-secondary)">€199</span></th>
+<th style="color:var(--green)">Business<br/><span style="font-weight:400">€499</span></th>
+<th>Enterprise<br/><span style="font-weight:400;color:var(--text-secondary)">€999</span></th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Radiere PFA / II / IF</td><td><span class="check">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
+<tr><td>Dizolvare SRL</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Lichidator autorizat</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Generare documente</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Depunere ONRC</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Dashboard personal</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Comunicare autorități</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>Cazuri complexe/datorii</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+</tbody>
+</table>
+</div>
+<!-- FAQ PRICING -->
+<div class="faq-pricing">
+<h2 data-en="Pricing FAQ" data-ro="Întrebări despre prețuri">Întrebări despre prețuri</h2>
+<div style="display:flex;flex-direction:column;gap:1rem;">
+<details class="faq-item">
+<summary ?"="" data-en="What does the free preliminary analysis include?" data-ro="Ce include „analiza preliminară gratuită">Ce include „analiza preliminară gratuită"?</summary>
+<p data-en="We analyze your company's situation for free — entity type, tax status, number of employees, existing debts — and tell you exactly which procedure suits you and what the final price is. No commitments." data-ro="Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente.">Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente.</p>
+</details>
+<details class="faq-item">
+<summary data-en="Why might the price differ from what's shown?" data-ro="De ce prețul poate varia față de cel afișat?">De ce prețul poate varia față de cel afișat?</summary>
+<p data-en="Displayed prices are starting prices. Some cases may require additional steps. Any extra cost is communicated to you before we begin." data-ro="Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul.">Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul.</p>
+</details>
+<details class="faq-item">
+<summary data-en="How does payment work?" data-ro="Cum se face plata?">Cum se face plata?</summary>
+<p data-en="We accept online payment by bank card. We issue an invoice for all services. On request, we can also issue invoices in EUR for clients outside Romania." data-ro="Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României.">Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României.</p>
+</details>
+<details class="faq-item">
+<summary data-en="Is there a guarantee if the process takes longer?" data-ro="Există o garanție dacă procesul durează mai mult?">Există o garanție dacă procesul durează mai mult?</summary>
+<p data-en="Timelines are estimates and depend largely on how quickly public institutions (ONRC, ANAF) process files. We cannot control institutional timelines, but we keep you informed at every step and ensure your case is prioritized." data-ro="Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat.">Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat.</p>
+</details>
+</div>
+</div>
+<!-- CTA -->
+<section class="section cta-section" id="contact" style="padding-top:0">
+<div class="section-inner">
+<div class="cta-box" style="text-align:center;display:block;padding:3rem 2rem;">
+<div class="section-tag" data-en="Not sure which package fits you?" data-ro="Nu ești sigur ce pachet ți se potrivește?" style="margin-bottom:0.75rem">Nu ești sigur ce pachet ți se potrivește?</div>
+<h2 data-en="Let's talk — for free" data-ro="Hai să discutăm — gratuit" style="margin-bottom:0.75rem">Hai să discutăm — gratuit</h2>
+<p data-en="We'll give you a free analysis and tell you exactly which procedure and price applies to you." data-ro="Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică." style="color:var(--text-secondary);max-width:480px;margin:0 auto 1.5rem;font-size:16px">Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică.</p>
+<button class="btn-primary btn-large" data-en="Request free analysis →" data-ro="Solicită analiză gratuită →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500">Solicită analiză gratuită →</button>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/">exit<span>biz</span></a>
+<p data-en="Professional company closure services, fast and legal." data-ro="Servicii profesionale de închidere firme, rapid și legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
+</div>
+<div class="footer-links">
+<div class="footer-col">
+<div class="footer-col-title" data-en="Services" data-ro="Servicii">Servicii</div>
+<a data-en="PFA Strike-off" data-ro="Radiere PFA" href="servicii/radiere-pfa.html">Radiere PFA</a>
+<a data-en="SRL Closure" data-ro="Închidere SRL" href="servicii/inchidere-srl.html">Închidere SRL</a>
+<a data-en="SRL with Liquidator" data-ro="SRL cu Lichidator" href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
+<a data-en="Preliminary Analysis" data-ro="Analiză Preliminară" href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
+</div>
+<div class="footer-col">
+<div class="footer-col-title" data-en="Legal" data-ro="Legal">Legal</div>
+<a data-en="Terms and conditions" data-ro="Termeni și condiții" href="termeni.html">Termeni și condiții</a>
+<a data-en="Privacy policy" data-ro="Politică confidențialitate" href="confidentialitate.html">Politică confidențialitate</a>
+<a data-en="GDPR" data-ro="GDPR" href="gdpr.html">GDPR</a>
+<a data-en="Cookie policy" data-ro="Politică cookies" href="cookies.html">Politică cookies</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 ExitBiz · <span data-en="All rights reserved" data-ro="Toate drepturile rezervate">Toate drepturile rezervate</span></p>
+</div>
+</footer>
+<a aria-label="WhatsApp" class="whatsapp-btn" data-en="Message us" data-ro="Scrie-ne" href="https://wa.me/40772129941" rel="noopener" target="_blank">
+<svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+<span data-en="Message us" data-ro="Scrie-ne">Scrie-ne</span>
+</a>
+<script async="" src="https://tally.so/widgets/embed.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

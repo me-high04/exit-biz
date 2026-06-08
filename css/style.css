@@ -241,10 +241,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
   transform: translateY(-10px);
   opacity: 0;
   transition: transform 0.25s, opacity 0.25s;
+  max-height: calc(100vh - var(--nav-height));
+  overflow-y: auto;
 }
 .mobile-menu.open { opacity: 1; transform: translateY(0); }
 .mobile-link { font-size: 16px; color: var(--text-secondary); padding: 8px 0; border-bottom: 1px solid var(--border); }
 .mobile-cta { margin-top: 0.5rem; text-align: center; }
+.mobile-lang-selector { margin: 0.5rem 0; }
+.mobile-lang-selector .lang-btn { padding: 8px 20px; font-size: 13px; }
 
 /* ---- HERO ---- */
 .hero {
@@ -601,10 +605,35 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
   color: rgba(255,255,255,0.35);
 }
 
+/* ---- MOBILE CUI SECTION ---- */
+.mobile-cui-section { display: none; padding: 0 1.5rem 2rem; }
+.mobile-cui-section .cui-lookup-card { width: 100%; }
+
+/* ---- LANG POPUP ---- */
+.lang-popup-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9999;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+}
+.lang-popup-overlay.hidden { display: none; }
+.lang-popup {
+  background: var(--bg-white); border-radius: var(--radius); padding: 2.5rem 2rem;
+  max-width: 360px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.lang-popup h3 { font-size: 20px; font-weight: 400; color: var(--text-primary); margin-bottom: 0.5rem; }
+.lang-popup p { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.75rem; line-height: 1.6; }
+.lang-popup-btns { display: flex; gap: 12px; justify-content: center; }
+.lang-popup-btn {
+  flex: 1; padding: 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-hover);
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  background: transparent; color: var(--text-primary);
+}
+.lang-popup-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: calc(var(--nav-height) + 3rem); }
   .hero-visual { display: none; }
+  .mobile-cui-section { display: block; }
   .steps { flex-direction: column; }
   .step-arrow { padding: 0.5rem 0; transform: rotate(90deg); align-self: center; }
   .cta-box { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }

@@ -1,294 +1,308 @@
 <!DOCTYPE html>
+
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExitBiz — Închidere firme rapid și legal</title>
-  <meta name="description" content="Ghidăm antreprenorii prin procesul de dizolvare și radiere a firmei. Rapid, transparent și 100% legal." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ExitBiz — Închidere firme rapid și legal</title>
+<meta content="Ghidăm antreprenorii prin procesul de dizolvare și radiere a firmei. Rapid, transparent și 100% legal." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
 
-  <!-- NAV -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="/" class="logo">exit<span>biz</span></a>
-      <nav class="nav-links" id="nav-links">
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-trigger" data-ro="Servicii ▾" data-en="Services ▾">Servicii ▾</button>
-          <div class="nav-dropdown-menu">
-            <a href="servicii/radiere-pfa.html" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
-            <a href="servicii/inchidere-srl.html" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
-            <a href="servicii/srl-cu-lichidator.html" data-ro="SRL cu Lichidator" data-en="SRL with Liquidator">SRL cu Lichidator</a>
-            <a href="servicii/analiza-preliminara.html" data-ro="Analiză Preliminară" data-en="Preliminary Analysis">Analiză Preliminară</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-trigger" data-ro="Parteneri ▾" data-en="Partners ▾">Parteneri ▾</button>
-          <div class="nav-dropdown-menu">
-            <a href="parteneri/contabili.html" data-ro="Contabili" data-en="Accountants">Contabili</a>
-            <a href="parteneri/lichidatori.html" data-ro="Lichidatori" data-en="Liquidators">Lichidatori</a>
-          </div>
-        </div>
-        <a href="blog/index.html" class="nav-link" data-ro="Blog" data-en="Blog">Blog</a>
-        <a href="preturi.html" class="nav-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
+<!-- LANGUAGE SELECTION POPUP (first visit only) -->
+<div class="lang-popup-overlay hidden" id="lang-popup-overlay">
+  <div class="lang-popup">
+    <h3>Alege limba / Choose language</h3>
+    <p>Selectează limba preferată pentru a continua.<br/>Select your preferred language to continue.</p>
+    <div class="lang-popup-btns">
+      <button class="lang-popup-btn" onclick="selectLangPopup('ro')">🇷🇴 Română</button>
+      <button class="lang-popup-btn" onclick="selectLangPopup('en')">🇬🇧 English</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+<div class="nav-inner">
+<a class="logo" href="/">exit<span>biz</span></a>
+<nav class="nav-links" id="nav-links">
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Services ▾" data-ro="Servicii ▾">Servicii ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="PFA Strike-off" data-ro="Radiere PFA" href="servicii/radiere-pfa.html">Radiere PFA</a>
+<a data-en="SRL Closure" data-ro="Închidere SRL" href="servicii/inchidere-srl.html">Închidere SRL</a>
+<a data-en="SRL with Liquidator" data-ro="SRL cu Lichidator" href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
+<a data-en="Preliminary Analysis" data-ro="Analiză Preliminară" href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Partners ▾" data-ro="Parteneri ▾">Parteneri ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="Accountants" data-ro="Contabili" href="parteneri/contabili.html">Contabili</a>
+<a data-en="Liquidators" data-ro="Lichidatori" href="parteneri/lichidatori.html">Lichidatori</a>
+</div>
+</div>
+<a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="nav-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
 <div class="lang-selector" id="lang-selector">
-          <button class="lang-btn lang-ro" data-lang="ro">RO</button>
-          <button class="lang-btn lang-en" data-lang="en">EN</button>
-        </div>
-        <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode">🌙</button>
-        <a href="login.html" class="btn-ghost btn-account" data-ro="Contul meu" data-en="My account">Contul meu</a>
-        <a href="#contact" class="btn-primary" data-ro="Începe acum" data-en="Get started">Începe acum</a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Meniu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-section-title" data-ro="Servicii" data-en="Services">Servicii</div>
-    <a href="servicii/radiere-pfa.html" class="mobile-link" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
-    <a href="servicii/inchidere-srl.html" class="mobile-link" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
-    <a href="servicii/srl-cu-lichidator.html" class="mobile-link" data-ro="SRL cu Lichidator" data-en="SRL with Liquidator">SRL cu Lichidator</a>
-    <a href="servicii/analiza-preliminara.html" class="mobile-link" data-ro="Analiză Preliminară" data-en="Preliminary Analysis">Analiză Preliminară</a>
-    <div class="mobile-section-title" data-ro="Parteneri" data-en="Partners">Parteneri</div>
-    <a href="parteneri/contabili.html" class="mobile-link" data-ro="Contabili" data-en="Accountants">Contabili</a>
-    <a href="parteneri/lichidatori.html" class="mobile-link" data-ro="Lichidatori" data-en="Liquidators">Lichidatori</a>
-    <a href="blog/index.html" class="mobile-link" data-ro="Blog" data-en="Blog">Blog</a>
-    <a href="preturi.html" class="mobile-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
-    <a href="login.html" class="mobile-link" data-ro="Contul meu" data-en="My account">Contul meu</a>
-    <a href="#contact" class="btn-primary mobile-cta" data-ro="Începe acum" data-en="Get started">Începe acum</a>
-  </div>
-
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <span data-ro="Procesăm dosare în toată România" data-en="Processing cases across Romania">Procesăm dosare în toată România</span>
-        </div>
-        <h1 class="hero-title">
-          <span class="line-1" data-ro="Închide firma ta" data-en="Close your company">Închide firma ta</span>
-          <em class="line-2" data-ro="fără bătăi de cap." data-en="without the hassle.">fără bătăi de cap.</em>
-        </h1>
-        <ul class="hero-checks">
-          <li><span class="check-icon">✓</span> <span data-ro="Documente pregătite de noi, gata de semnat" data-en="Documents prepared by us, ready to sign">Documente pregătite de noi, gata de semnat</span></li>
-          <li><span class="check-icon">✓</span> <span data-ro="Urmărire dosar în timp real" data-en="Real-time case tracking">Urmărire dosar în timp real</span></li>
-          <li><span class="check-icon">✓</span> <span data-ro="Procesăm dosare în toată România" data-en="Processing cases across Romania">Procesăm dosare în toată România</span></li>
-        </ul>
-        <div class="hero-actions">
-          <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-large" data-ro="Vreau să închid firma →" data-en="I want to close my company →">Vreau să închid firma →</button>
-          <a href="#cum-functioneaza" class="btn-ghost" data-ro="Cum funcționează?" data-en="How does it work?">Cum funcționează?</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="cui-lookup-card">
-          <div class="cui-lookup-header">
-            <div class="cui-lookup-dot"></div>
-            <span data-ro="Diagnostic firmă" data-en="Company diagnostic">Diagnostic firmă</span>
-          </div>
-          <p class="cui-lookup-sub" data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată." data-en="Enter your company CUI to see your firm's situation and the recommended procedure.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
-          <div class="cui-input-row">
-            <input type="text" class="cui-input" id="cui-input" placeholder="Ex: RO12345678" maxlength="12" />
-            <button class="btn-primary" id="cui-btn" onclick="verificaFirma()" data-ro="Verifică" data-en="Check">Verifică</button>
-          </div>
-          <div class="cui-tags">
-            <span class="cui-tag" data-ro="Tip firmă" data-en="Company type">Tip firmă</span>
-            <span class="cui-tag" data-ro="Status fiscal" data-en="Tax status">Status fiscal</span>
-            <span class="cui-tag" data-ro="Procedură recomandată" data-en="Recommended procedure">Procedură recomandată</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CUI MODAL -->
-      <div class="cui-modal-overlay" id="cui-modal">
-        <div class="cui-modal">
-          <button class="cui-modal-close" onclick="inchideModal()">✕</button>
-          <div id="cui-modal-body">
-            <div class="cui-modal-icon">🔍</div>
-            <h3>Se încarcă...</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATS BAR -->
-    <div class="stats-bar">
-      <div class="stats-inner">
-        <div class="stat-item">
-          <div class="stat-num">7 zile</div>
-          <div class="stat-label" data-ro="Timp mediu de procesare" data-en="Average processing time">Timp mediu de procesare</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-num">RO / EN</div>
-          <div class="stat-label" data-ro="Suport bilingv" data-en="Bilingual support">Suport bilingv</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-num">24h</div>
-          <div class="stat-label" data-ro="Timp răspuns cerere" data-en="Request response time">Timp răspuns cerere</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HOW IT WORKS -->
-    <section class="section how-it-works" id="cum-functioneaza">
-      <div class="section-inner">
-        <div class="section-header">
-          <div class="section-tag" data-ro="Proces" data-en="Process">Proces</div>
-          <h2 data-ro="3 pași simpli până la radiere" data-en="3 simple steps to strike-off">3 pași simpli până la radiere</h2>
-          <p data-ro="Nu ai nevoie de avocat sau deplasări la ghișee." data-en="No lawyer needed, no office visits.">Nu ai nevoie de avocat sau deplasări la ghișee.</p>
-        </div>
-        <div class="steps">
-          <div class="step-card">
-            <div class="step-number">01</div>
-            <div class="step-content">
-              <h3 data-ro="Vedem cum arată firma ta" data-en="We assess your company">Vedem cum arată firma ta</h3>
-              <p data-ro="Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește." data-en="We analyze your company's situation and assess the complexity of the process. We tell you exactly which procedure suits you.">Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește.</p>
-            </div>
-          </div>
-          <div class="step-arrow">→</div>
-          <div class="step-card">
-            <div class="step-number">02</div>
-            <div class="step-content">
-              <h3 data-ro="Alegi pachetul potrivit" data-en="Choose the right package">Alegi pachetul potrivit</h3>
-              <p data-ro="Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse." data-en="You select the service that suits you and pay simply and securely. No hidden costs.">Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse.</p>
-            </div>
-          </div>
-          <div class="step-arrow">→</div>
-          <div class="step-card">
-            <div class="step-number">03</div>
-            <div class="step-content">
-              <h3 data-ro="Ne punem pe treabă" data-en="We get to work">Ne punem pe treabă</h3>
-              <p data-ro="Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal." data-en="We handle everything. You track progress in real time from your personal dashboard.">Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="section services-section" id="servicii">
-      <div class="section-inner">
-        <div class="section-header">
-          <div class="section-tag" data-ro="Servicii" data-en="Services">Servicii</div>
-          <h2 data-ro="Ce oferim" data-en="What we offer">Ce oferim</h2>
-          <p data-ro="De la suspendare simplă până la lichidare completă." data-en="From simple suspension to full liquidation.">De la suspendare simplă până la lichidare completă.</p>
-        </div>
-        <div class="services-grid">
-          <div class="service-card featured">
-            <div class="service-icon">⏸</div>
-            <h3 data-ro="Suspendare activitate" data-en="Activity suspension">Suspendare activitate</h3>
-            <p data-ro="Suspendare temporară cu toate actele incluse. Ideal dacă vrei să pui firma pe pauză." data-en="Temporary suspension with all documents included. Ideal if you want to pause your business.">Suspendare temporară cu toate actele incluse. Ideal dacă vrei să pui firma pe pauză.</p>
-            <span class="service-tag" data-ro="Cel mai rapid" data-en="Fastest">Cel mai rapid</span>
-            <a href="#contact" class="btn-service" data-ro="Începe acum →" data-en="Get started →">Începe acum →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">📋</div>
-            <h3 data-ro="Dizolvare voluntară" data-en="Voluntary dissolution">Dizolvare voluntară</h3>
-            <p data-ro="Procesul complet de dizolvare și lichidare a societății comerciale." data-en="Complete dissolution and liquidation of the commercial company.">Procesul complet de dizolvare și lichidare a societății comerciale.</p>
-            <a href="#contact" class="btn-service" data-ro="Începe acum →" data-en="Get started →">Începe acum →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🏛️</div>
-            <h3 data-ro="Radiere ONRC" data-en="ONRC strike-off">Radiere ONRC</h3>
-            <p data-ro="Depunere și urmărire dosar la Registrul Comerțului, fără cozi." data-en="File submission and tracking at the Trade Register, no queues.">Depunere și urmărire dosar la Registrul Comerțului, fără cozi.</p>
-            <a href="#contact" class="btn-service" data-ro="Începe acum →" data-en="Get started →">Începe acum →</a>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">👥</div>
-            <h3 data-ro="Cabinet profesionist" data-en="Professional office">Cabinet profesionist</h3>
-            <p data-ro="Pentru contabili și avocați cu portofoliu de clienți. Dashboard dedicat cu toate dosarele." data-en="For accountants and lawyers with client portfolios. Dedicated dashboard with all files.">Pentru contabili și avocați cu portofoliu de clienți. Dashboard dedicat cu toate dosarele.</p>
-            <a href="#contact" class="btn-service" data-ro="Începe acum →" data-en="Get started →">Începe acum →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA FORM -->
-    <section class="section cta-section" id="contact">
-      <div class="section-inner">
-        <div class="cta-box">
-          <div class="cta-text">
-            <div class="section-tag" data-ro="Începe acum" data-en="Get started">Începe acum</div>
-            <h2 data-ro="Gata să închizi firma?" data-en="Ready to close your company?">Gata să închizi firma?</h2>
-            <p data-ro="Completează formularul și te contactăm în mai puțin de 24 de ore." data-en="Fill in the form and we'll get back to you within 24 hours.">Completează formularul și te contactăm în mai puțin de 24 de ore.</p>
-          </div>
-          <div class="cta-tally-side">
-            <ul class="cta-benefits">
-              <li><span class="check-icon">✓</span> <span data-ro="Răspuns în mai puțin de 24 de ore" data-en="Response within 24 hours">Răspuns în mai puțin de 24 de ore</span></li>
-              <li><span class="check-icon">✓</span> <span data-ro="Fără angajamente — consultație gratuită" data-en="No commitments — free consultation">Fără angajamente — consultație gratuită</span></li>
-              <li><span class="check-icon">✓</span> <span data-ro="Date protejate, servere în Europa" data-en="Protected data, servers in Europe">Date protejate, servere în Europa</span></li>
-            </ul>
-            <button data-tally-open="b5zx50" data-tally-layout="modal" data-tally-width="500" class="btn-primary btn-large btn-full" data-ro="Completează formularul →" data-en="Fill in the form →">Completează formularul →</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="logo">exit<span>biz</span></a>
-        <p data-ro="Servicii profesionale de închidere firme, rapid și legal." data-en="Professional company closure services, fast and legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <div class="footer-col-title" data-ro="Servicii" data-en="Services">Servicii</div>
-          <a href="#" data-ro="Suspendare activitate" data-en="Activity suspension">Suspendare activitate</a>
-          <a href="#" data-ro="Dizolvare voluntară" data-en="Voluntary dissolution">Dizolvare voluntară</a>
-          <a href="#" data-ro="Radiere ONRC" data-en="ONRC strike-off">Radiere ONRC</a>
-          <a href="#" data-ro="Cabinet profesionist" data-en="Professional office">Cabinet profesionist</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title" data-ro="Legal" data-en="Legal">Legal</div>
-          <a href="termeni.html" data-ro="Termeni și condiții" data-en="Terms and conditions">Termeni și condiții</a>
-          <a href="confidentialitate.html" data-ro="Politică confidențialitate" data-en="Privacy policy">Politică confidențialitate</a>
-          <a href="gdpr.html" data-ro="GDPR" data-en="GDPR">GDPR</a>
-          <a href="cookies.html" data-ro="Politică cookies" data-en="Cookie policy">Politică cookies</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 ExitBiz · <span data-ro="Toate drepturile rezervate" data-en="All rights reserved">Toate drepturile rezervate</span></p>
-    </div>
-  </footer>
-
-  <!-- WHATSAPP BUTTON -->
-  <a href="https://wa.me/40772129941" class="whatsapp-btn" data-ro="Scrie-ne" data-en="Message us" target="_blank" rel="noopener" aria-label="Contactează-ne pe WhatsApp">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-    <span data-ro="Scrie-ne" data-en="Chat with us">Scrie-ne</span>
-  </a>
-
-  <!-- COOKIE BANNER -->
-  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Consimțământ cookies">
-    <div class="cookie-banner-inner">
-      <div class="cookie-text">
-        <strong data-ro="Folosim cookie-uri" data-en="We use cookies">Folosim cookie-uri</strong>
-        <p data-ro="Folosim cookie-uri pentru a îmbunătăți experiența ta pe site. Poți accepta toate sau doar cele necesare funcționării." data-en="We use cookies to improve your experience. You can accept all or only those necessary for the site to function.">Folosim cookie-uri pentru a îmbunătăți experiența ta pe site. Poți accepta toate sau doar cele necesare funcționării.</p>
-        <a href="cookies.html" class="cookie-policy-link" data-ro="Politică cookies" data-en="Cookie policy">Politică cookies</a>
-      </div>
-      <div class="cookie-actions">
-        <button class="btn-ghost cookie-btn-decline" id="cookie-decline" data-ro="Doar necesare" data-en="Essential only">Doar necesare</button>
-        <button class="btn-primary cookie-btn-accept" id="cookie-accept" data-ro="Acceptă toate" data-en="Accept all">Acceptă toate</button>
-      </div>
-    </div>
-  </div>
-
-  <script async src="https://tally.so/widgets/embed.js"></script>
-  <script src="js/main.js"></script>
+<button class="lang-btn lang-ro" data-lang="ro">RO</button>
+<button class="lang-btn lang-en" data-lang="en">EN</button>
+</div>
+<button aria-label="Toggle dark mode" class="theme-btn" id="theme-btn">🌙</button>
+<a class="btn-ghost btn-account" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+<a class="btn-primary" data-en="Get started" data-ro="Începe acum" href="#contact">Începe acum</a>
+</nav>
+<button aria-label="Meniu" class="hamburger" id="hamburger">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-section-title" data-en="Services" data-ro="Servicii">Servicii</div>
+<a class="mobile-link" data-en="PFA Strike-off" data-ro="Radiere PFA" href="servicii/radiere-pfa.html">Radiere PFA</a>
+<a class="mobile-link" data-en="SRL Closure" data-ro="Închidere SRL" href="servicii/inchidere-srl.html">Închidere SRL</a>
+<a class="mobile-link" data-en="SRL with Liquidator" data-ro="SRL cu Lichidator" href="servicii/srl-cu-lichidator.html">SRL cu Lichidator</a>
+<a class="mobile-link" data-en="Preliminary Analysis" data-ro="Analiză Preliminară" href="servicii/analiza-preliminara.html">Analiză Preliminară</a>
+<div class="mobile-section-title" data-en="Partners" data-ro="Parteneri">Parteneri</div>
+<a class="mobile-link" data-en="Accountants" data-ro="Contabili" href="parteneri/contabili.html">Contabili</a>
+<a class="mobile-link" data-en="Liquidators" data-ro="Lichidatori" href="parteneri/lichidatori.html">Lichidatori</a>
+<a class="mobile-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="mobile-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
+<a class="mobile-link" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+<div class="lang-selector mobile-lang-selector"><button class="lang-btn lang-ro" data-lang="ro">RO</button><button class="lang-btn lang-en" data-lang="en">EN</button></div><a class="btn-primary mobile-cta" data-en="Get started" data-ro="Începe acum" href="#contact">Începe acum</a>
+</div>
+<main>
+<!-- HERO -->
+<section class="hero">
+<div class="hero-inner">
+<div class="hero-badge">
+<span class="badge-dot"></span>
+<span data-en="Processing cases across Romania" data-ro="Procesăm dosare în toată România">Procesăm dosare în toată România</span>
+</div>
+<h1 class="hero-title">
+<span class="line-1" data-en="Close your company" data-ro="Închide firma ta">Închide firma ta</span>
+<em class="line-2" data-en="without the hassle." data-ro="fără bătăi de cap.">fără bătăi de cap.</em>
+</h1>
+<ul class="hero-checks">
+<li><span class="check-icon">✓</span> <span data-en="Documents prepared by us, ready to sign" data-ro="Documente pregătite de noi, gata de semnat">Documente pregătite de noi, gata de semnat</span></li>
+<li><span class="check-icon">✓</span> <span data-en="Real-time case tracking" data-ro="Urmărire dosar în timp real">Urmărire dosar în timp real</span></li>
+<li><span class="check-icon">✓</span> <span data-en="Processing cases across Romania" data-ro="Procesăm dosare în toată România">Procesăm dosare în toată România</span></li>
+</ul>
+<div class="hero-actions">
+<button class="btn-primary btn-large" data-en="I want to close my company →" data-ro="Vreau să închid firma →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500">Vreau să închid firma →</button>
+<a class="btn-ghost" data-en="How does it work?" data-ro="Cum funcționează?" href="#cum-functioneaza">Cum funcționează?</a>
+</div>
+</div>
+<div class="hero-visual">
+<div class="cui-lookup-card">
+<div class="cui-lookup-header">
+<div class="cui-lookup-dot"></div>
+<span data-en="Company diagnostic" data-ro="Diagnostic firmă">Diagnostic firmă</span>
+</div>
+<p class="cui-lookup-sub" data-en="Enter your company CUI to see your firm's situation and the recommended procedure." data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
+<div class="cui-input-row">
+<input class="cui-input" id="cui-input" maxlength="12" placeholder="Ex: RO12345678" type="text"/>
+<button class="btn-primary" data-en="Check" data-ro="Verifică" id="cui-btn" onclick="verificaFirma()">Verifică</button>
+</div>
+<div class="cui-tags">
+<span class="cui-tag" data-en="Company type" data-ro="Tip firmă">Tip firmă</span>
+<span class="cui-tag" data-en="Tax status" data-ro="Status fiscal">Status fiscal</span>
+<span class="cui-tag" data-en="Recommended procedure" data-ro="Procedură recomandată">Procedură recomandată</span>
+</div>
+</div>
+</div>
+<!-- CUI MODAL -->
+<div class="cui-modal-overlay" id="cui-modal">
+<div class="cui-modal">
+<button class="cui-modal-close" onclick="inchideModal()">✕</button>
+<div id="cui-modal-body">
+<div class="cui-modal-icon">🔍</div>
+<h3>Se încarcă...</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- CUI DIAGNOSTIC — MOBILE ONLY -->
+<div class="mobile-cui-section">
+<div class="cui-lookup-card">
+<div class="cui-lookup-header">
+<div class="cui-lookup-dot"></div>
+<span data-en="Company diagnostic" data-ro="Diagnostic firmă">Diagnostic firmă</span>
+</div>
+<p class="cui-lookup-sub" data-en="Enter your company CUI to see your firm's situation and the recommended procedure." data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
+<div class="cui-input-row">
+<input class="cui-input" id="cui-input-mobile" maxlength="12" placeholder="Ex: RO12345678" type="text"/>
+<button class="btn-primary" data-en="Check" data-ro="Verifică" onclick="verificaFirmaMobile()">Verifică</button>
+</div>
+</div>
+</div>
+<!-- STATS BAR -->
+<div class="stats-bar">
+<div class="stats-inner">
+<div class="stat-item">
+<div class="stat-num">7 zile</div>
+<div class="stat-label" data-en="Average processing time" data-ro="Timp mediu de procesare">Timp mediu de procesare</div>
+</div>
+<div class="stat-divider"></div>
+<div class="stat-item">
+<div class="stat-num">RO / EN</div>
+<div class="stat-label" data-en="Bilingual support" data-ro="Suport bilingv">Suport bilingv</div>
+</div>
+<div class="stat-divider"></div>
+<div class="stat-item">
+<div class="stat-num">24h</div>
+<div class="stat-label" data-en="Request response time" data-ro="Timp răspuns cerere">Timp răspuns cerere</div>
+</div>
+</div>
+</div>
+<!-- HOW IT WORKS -->
+<section class="section how-it-works" id="cum-functioneaza">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-tag" data-en="Process" data-ro="Proces">Proces</div>
+<h2 data-en="3 simple steps to strike-off" data-ro="3 pași simpli până la radiere">3 pași simpli până la radiere</h2>
+<p data-en="No lawyer needed, no office visits." data-ro="Nu ai nevoie de avocat sau deplasări la ghișee.">Nu ai nevoie de avocat sau deplasări la ghișee.</p>
+</div>
+<div class="steps">
+<div class="step-card">
+<div class="step-number">01</div>
+<div class="step-content">
+<h3 data-en="We assess your company" data-ro="Vedem cum arată firma ta">Vedem cum arată firma ta</h3>
+<p data-en="We analyze your company's situation and assess the complexity of the process. We tell you exactly which procedure suits you." data-ro="Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește.">Analizăm situația firmei și stabilim complexitatea procesului. Îți spunem exact ce procedură ți se potrivește.</p>
+</div>
+</div>
+<div class="step-arrow">→</div>
+<div class="step-card">
+<div class="step-number">02</div>
+<div class="step-content">
+<h3 data-en="Choose the right package" data-ro="Alegi pachetul potrivit">Alegi pachetul potrivit</h3>
+<p data-en="You select the service that suits you and pay simply and securely. No hidden costs." data-ro="Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse.">Selectezi serviciul care ți se potrivește și plătești simplu și sigur. Fără costuri ascunse.</p>
+</div>
+</div>
+<div class="step-arrow">→</div>
+<div class="step-card">
+<div class="step-number">03</div>
+<div class="step-content">
+<h3 data-en="We get to work" data-ro="Ne punem pe treabă">Ne punem pe treabă</h3>
+<p data-en="We handle everything. You track progress in real time from your personal dashboard." data-ro="Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal.">Ne ocupăm de tot. Urmărești progresul în timp real din dashboard-ul personal.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SERVICES -->
+<section class="section services-section" id="servicii">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-tag" data-en="Services" data-ro="Servicii">Servicii</div>
+<h2 data-en="What we offer" data-ro="Ce oferim">Ce oferim</h2>
+<p data-en="From simple suspension to full liquidation." data-ro="De la suspendare simplă până la lichidare completă.">De la suspendare simplă până la lichidare completă.</p>
+</div>
+<div class="services-grid">
+<div class="service-card featured">
+<div class="service-icon">⏸</div>
+<h3 data-en="Activity suspension" data-ro="Suspendare activitate">Suspendare activitate</h3>
+<p data-en="Temporary suspension with all documents included. Ideal if you want to pause your business." data-ro="Suspendare temporară cu toate actele incluse. Ideal dacă vrei să pui firma pe pauză.">Suspendare temporară cu toate actele incluse. Ideal dacă vrei să pui firma pe pauză.</p>
+<span class="service-tag" data-en="Fastest" data-ro="Cel mai rapid">Cel mai rapid</span>
+<a class="btn-service" data-en="Get started →" data-ro="Începe acum →" href="#contact">Începe acum →</a>
+</div>
+<div class="service-card">
+<div class="service-icon">📋</div>
+<h3 data-en="Voluntary dissolution" data-ro="Dizolvare voluntară">Dizolvare voluntară</h3>
+<p data-en="Complete dissolution and liquidation of the commercial company." data-ro="Procesul complet de dizolvare și lichidare a societății comerciale.">Procesul complet de dizolvare și lichidare a societății comerciale.</p>
+<a class="btn-service" data-en="Get started →" data-ro="Începe acum →" href="#contact">Începe acum →</a>
+</div>
+<div class="service-card">
+<div class="service-icon">🏛️</div>
+<h3 data-en="ONRC strike-off" data-ro="Radiere ONRC">Radiere ONRC</h3>
+<p data-en="File submission and tracking at the Trade Register, no queues." data-ro="Depunere și urmărire dosar la Registrul Comerțului, fără cozi.">Depunere și urmărire dosar la Registrul Comerțului, fără cozi.</p>
+<a class="btn-service" data-en="Get started →" data-ro="Începe acum →" href="#contact">Începe acum →</a>
+</div>
+<div class="service-card">
+<div class="service-icon">👥</div>
+<h3 data-en="Professional office" data-ro="Cabinet profesionist">Cabinet profesionist</h3>
+<p data-en="For accountants and lawyers with client portfolios. Dedicated dashboard with all files." data-ro="Pentru contabili și avocați cu portofoliu de clienți. Dashboard dedicat cu toate dosarele.">Pentru contabili și avocați cu portofoliu de clienți. Dashboard dedicat cu toate dosarele.</p>
+<a class="btn-service" data-en="Get started →" data-ro="Începe acum →" href="#contact">Începe acum →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA FORM -->
+<section class="section cta-section" id="contact">
+<div class="section-inner">
+<div class="cta-box">
+<div class="cta-text">
+<div class="section-tag" data-en="Get started" data-ro="Începe acum">Începe acum</div>
+<h2 data-en="Ready to close your company?" data-ro="Gata să închizi firma?">Gata să închizi firma?</h2>
+<p data-en="Fill in the form and we'll get back to you within 24 hours." data-ro="Completează formularul și te contactăm în mai puțin de 24 de ore.">Completează formularul și te contactăm în mai puțin de 24 de ore.</p>
+</div>
+<div class="cta-tally-side">
+<ul class="cta-benefits">
+<li><span class="check-icon">✓</span> <span data-en="Response within 24 hours" data-ro="Răspuns în mai puțin de 24 de ore">Răspuns în mai puțin de 24 de ore</span></li>
+<li><span class="check-icon">✓</span> <span data-en="No commitments — free consultation" data-ro="Fără angajamente — consultație gratuită">Fără angajamente — consultație gratuită</span></li>
+<li><span class="check-icon">✓</span> <span data-en="Protected data, servers in Europe" data-ro="Date protejate, servere în Europa">Date protejate, servere în Europa</span></li>
+</ul>
+<button class="btn-primary btn-large btn-full" data-en="Fill in the form →" data-ro="Completează formularul →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500">Completează formularul →</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/">exit<span>biz</span></a>
+<p data-en="Professional company closure services, fast and legal." data-ro="Servicii profesionale de închidere firme, rapid și legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
+</div>
+<div class="footer-links">
+<div class="footer-col">
+<div class="footer-col-title" data-en="Services" data-ro="Servicii">Servicii</div>
+<a data-en="Activity suspension" data-ro="Suspendare activitate" href="#">Suspendare activitate</a>
+<a data-en="Voluntary dissolution" data-ro="Dizolvare voluntară" href="#">Dizolvare voluntară</a>
+<a data-en="ONRC strike-off" data-ro="Radiere ONRC" href="#">Radiere ONRC</a>
+<a data-en="Professional office" data-ro="Cabinet profesionist" href="#">Cabinet profesionist</a>
+</div>
+<div class="footer-col">
+<div class="footer-col-title" data-en="Legal" data-ro="Legal">Legal</div>
+<a data-en="Terms and conditions" data-ro="Termeni și condiții" href="termeni.html">Termeni și condiții</a>
+<a data-en="Privacy policy" data-ro="Politică confidențialitate" href="confidentialitate.html">Politică confidențialitate</a>
+<a data-en="GDPR" data-ro="GDPR" href="gdpr.html">GDPR</a>
+<a data-en="Cookie policy" data-ro="Politică cookies" href="cookies.html">Politică cookies</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 ExitBiz · <span data-en="All rights reserved" data-ro="Toate drepturile rezervate">Toate drepturile rezervate</span></p>
+</div>
+</footer>
+<!-- WHATSAPP BUTTON -->
+<a aria-label="Contactează-ne pe WhatsApp" class="whatsapp-btn" data-en="Message us" data-ro="Scrie-ne" href="https://wa.me/40772129941" rel="noopener" target="_blank">
+<svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+</svg>
+<span data-en="Chat with us" data-ro="Scrie-ne">Scrie-ne</span>
+</a>
+<!-- COOKIE BANNER -->
+<div aria-label="Consimțământ cookies" class="cookie-banner" id="cookie-banner" role="dialog">
+<div class="cookie-banner-inner">
+<div class="cookie-text">
+<strong data-en="We use cookies" data-ro="Folosim cookie-uri">Folosim cookie-uri</strong>
+<p data-en="We use cookies to improve your experience. You can accept all or only those necessary for the site to function." data-ro="Folosim cookie-uri pentru a îmbunătăți experiența ta pe site. Poți accepta toate sau doar cele necesare funcționării.">Folosim cookie-uri pentru a îmbunătăți experiența ta pe site. Poți accepta toate sau doar cele necesare funcționării.</p>
+<a class="cookie-policy-link" data-en="Cookie policy" data-ro="Politică cookies" href="cookies.html">Politică cookies</a>
+</div>
+<div class="cookie-actions">
+<button class="btn-ghost cookie-btn-decline" data-en="Essential only" data-ro="Doar necesare" id="cookie-decline">Doar necesare</button>
+<button class="btn-primary cookie-btn-accept" data-en="Accept all" data-ro="Acceptă toate" id="cookie-accept">Acceptă toate</button>
+</div>
+</div>
+</div>
+<script async="" src="https://tally.so/widgets/embed.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

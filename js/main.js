@@ -57,7 +57,6 @@ function setLanguage(lang, save = true) {
 }
 
 // Aplică limba salvată la încărcarea paginii
-// Script-ul e la finalul <body> deci DOM e deja gata — nu e nevoie de DOMContentLoaded
 function initLang() {
   if (currentLang !== 'ro') setLanguage(currentLang, false);
 
@@ -73,12 +72,41 @@ function initLang() {
       setLanguage(btn.dataset.lang);
     });
   });
+
+  // Show language popup on first visit
+  checkLangPopup();
 }
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initLang);
 } else {
   initLang();
+}
+
+// ---- LANGUAGE SELECTION POPUP (first visit) ----
+function selectLangPopup(lang) {
+  const overlay = document.getElementById('lang-popup-overlay');
+  if (overlay) overlay.classList.add('hidden');
+  setLanguage(lang);
+}
+
+function checkLangPopup() {
+  // Show popup only if user has never chosen a language
+  if (!localStorage.getItem('lang')) {
+    const overlay = document.getElementById('lang-popup-overlay');
+    if (overlay) {
+      setTimeout(() => overlay.classList.remove('hidden'), 600);
+    }
+  }
+}
+
+// ---- CUI MOBILE WRAPPER ----
+function verificaFirmaMobile() {
+  const input = document.getElementById('cui-input-mobile');
+  if (input) {
+    document.getElementById('cui-input').value = input.value;
+    verificaFirma();
+  }
 }
 
 // ---- NAV SCROLL EFFECT ----
