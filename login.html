@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg); }
+    .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg); flex-direction: column; gap: 1rem; }
     .auth-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem 2rem; width: 100%; max-width: 420px; box-shadow: 0 8px 40px rgba(0,0,0,0.07); }
     .auth-logo { display: block; text-align: center; font-family: var(--font-display); font-size: 24px; font-weight: 300; color: var(--text-primary); margin-bottom: 0.25rem; }
     .auth-logo span { color: var(--green); font-weight: 600; }
@@ -28,17 +28,26 @@
     .auth-error.show { display: block; }
     .auth-success { background: var(--green-light); border: 1px solid var(--green); color: var(--green-dark); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; display: none; }
     .auth-success.show { display: block; }
+    .auth-lang { display: flex; justify-content: center; }
   </style>
 </head>
 <body>
   <div class="auth-page">
+
+    <div class="auth-lang">
+      <div class="lang-selector" id="lang-selector">
+        <button class="lang-btn lang-ro" data-lang="ro">RO</button>
+        <button class="lang-btn lang-en" data-lang="en">EN</button>
+      </div>
+    </div>
+
     <div class="auth-card">
       <a href="/" class="auth-logo">exit<span>biz</span></a>
-      <p style="text-align:center; font-size:13px; color:var(--text-secondary); margin-bottom:1.75rem;">Urmărește statusul dosarului tău</p>
+      <p class="auth-sub" data-ro="Urmărește statusul dosarului tău" data-en="Track your case status">Urmărește statusul dosarului tău</p>
 
       <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="showTab('login')">Intră în cont</button>
-        <button class="auth-tab" id="tab-signup" onclick="showTab('signup')">Înregistrare</button>
+        <button class="auth-tab active" id="tab-login" onclick="showTab('login')" data-ro="Intră în cont" data-en="Sign in">Intră în cont</button>
+        <button class="auth-tab" id="tab-signup" onclick="showTab('signup')" data-ro="Înregistrare" data-en="Register">Înregistrare</button>
       </div>
 
       <div id="error-box" class="auth-error"></div>
@@ -51,16 +60,16 @@
           <input type="email" id="login-email" placeholder="ion@firma.ro" required />
         </div>
         <div>
-          <label for="login-password">Parolă</label>
+          <label for="login-password" data-ro="Parolă" data-en="Password">Parolă</label>
           <input type="password" id="login-password" placeholder="••••••••" required />
         </div>
-        <button type="submit" class="btn-primary btn-full auth-btn" id="login-btn">Intră în cont →</button>
+        <button type="submit" class="btn-primary btn-full auth-btn" id="login-btn" data-ro="Intră în cont →" data-en="Sign in →">Intră în cont →</button>
       </form>
 
       <!-- SIGNUP -->
       <form class="auth-form" id="form-signup" style="display:none">
         <div>
-          <label for="signup-name">Numele tău</label>
+          <label for="signup-name" data-ro="Numele tău" data-en="Your name">Numele tău</label>
           <input type="text" id="signup-name" placeholder="Ion Popescu" required />
         </div>
         <div>
@@ -68,10 +77,10 @@
           <input type="email" id="signup-email" placeholder="ion@firma.ro" required />
         </div>
         <div>
-          <label for="signup-password">Parolă</label>
-          <input type="password" id="signup-password" placeholder="Minim 6 caractere" required />
+          <label for="signup-password" data-ro="Parolă" data-en="Password">Parolă</label>
+          <input type="password" id="signup-password" id="signup-password" data-placeholder-ro="Minim 6 caractere" data-placeholder-en="At least 6 characters" placeholder="Minim 6 caractere" required />
         </div>
-        <button type="submit" class="btn-primary btn-full auth-btn" id="signup-btn">Creează cont →</button>
+        <button type="submit" class="btn-primary btn-full auth-btn" id="signup-btn" data-ro="Creează cont →" data-en="Create account →">Creează cont →</button>
       </form>
     </div>
   </div>
@@ -79,6 +88,31 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script>
+    // ---- TRANSLATIONS for JS-generated strings ----
+    const T = {
+      ro: {
+        loading_login: 'Se încarcă...',
+        loading_signup: 'Se creează contul...',
+        error_login: 'Email sau parolă incorectă.',
+        success_signup: 'Cont creat! Verifică emailul pentru confirmare, apoi intră în cont.',
+        btn_login: 'Intră în cont →',
+        btn_signup: 'Creează cont →',
+      },
+      en: {
+        loading_login: 'Loading...',
+        loading_signup: 'Creating account...',
+        error_login: 'Incorrect email or password.',
+        success_signup: 'Account created! Check your email for confirmation, then sign in.',
+        btn_login: 'Sign in →',
+        btn_signup: 'Create account →',
+      }
+    };
+
+    function t(key) {
+      const lang = localStorage.getItem('lang') || 'ro';
+      return T[lang]?.[key] || T.ro[key];
+    }
+
     function showTab(tab) {
       document.getElementById('form-login').style.display = tab === 'login' ? 'flex' : 'none';
       document.getElementById('form-signup').style.display = tab === 'signup' ? 'flex' : 'none';
@@ -117,16 +151,14 @@
       }
     }
 
-    // Check if already logged in
     db.auth.getSession().then(({ data: { session } }) => {
       if (session) redirectByRole();
     });
 
-    // Login
     document.getElementById('form-login').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('login-btn');
-      btn.textContent = 'Se încarcă...';
+      btn.textContent = t('loading_login');
       btn.disabled = true;
       hideMessages();
 
@@ -136,19 +168,18 @@
       });
 
       if (error) {
-        showError('Email sau parolă incorectă.');
-        btn.textContent = 'Intră în cont →';
+        showError(t('error_login'));
+        btn.textContent = t('btn_login');
         btn.disabled = false;
       } else {
         await redirectByRole();
       }
     });
 
-    // Signup
     document.getElementById('form-signup').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('signup-btn');
-      btn.textContent = 'Se creează contul...';
+      btn.textContent = t('loading_signup');
       btn.disabled = true;
       hideMessages();
 
@@ -160,14 +191,15 @@
 
       if (error) {
         showError(error.message);
-        btn.textContent = 'Creează cont →';
+        btn.textContent = t('btn_signup');
         btn.disabled = false;
       } else {
-        showSuccess('Cont creat! Verifică emailul pentru confirmare, apoi intră în cont.');
-        btn.textContent = 'Creează cont →';
+        showSuccess(t('success_signup'));
+        btn.textContent = t('btn_signup');
         btn.disabled = false;
       }
     });
   </script>
+  <script src="js/main.js"></script>
 </body>
 </html>

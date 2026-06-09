@@ -50,84 +50,159 @@
   <nav class="db-nav">
     <a href="/" class="logo">exit<span>biz</span></a>
     <div class="db-nav-right">
+      <div class="lang-selector" id="lang-selector">
+        <button class="lang-btn lang-ro" data-lang="ro">RO</button>
+        <button class="lang-btn lang-en" data-lang="en">EN</button>
+      </div>
       <span class="db-user" id="user-email"></span>
-      <button class="btn-ghost btn-sm" id="logout-btn">Ieși din cont</button>
+      <button class="btn-ghost btn-sm" id="logout-btn" data-ro="Ieși din cont" data-en="Sign out">Ieși din cont</button>
     </div>
   </nav>
 
   <div class="db-main">
     <div class="db-greeting">
-      <h1>Bună, <span id="user-name">—</span></h1>
-      <p>Statusul dosarelor tale active</p>
+      <h1 id="greeting-title">Bună, <span id="user-name">—</span></h1>
+      <p id="greeting-sub" data-ro="Statusul dosarelor tale active" data-en="Status of your active cases">Statusul dosarelor tale active</p>
     </div>
 
     <div id="dosare-container">
-      <div class="loading">Se încarcă dosarele...</div>
+      <div class="loading" id="loading-msg" data-ro="Se încarcă dosarele..." data-en="Loading cases...">Se încarcă dosarele...</div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script>
-    const STEPS = [
-      { key: 'nou',          label: 'Cerere primită' },
-      { key: 'documente',    label: 'Documente generate' },
-      { key: 'depus_onrc',   label: 'Dosar depus ONRC' },
-      { key: 'in_procesare', label: 'În procesare' },
-      { key: 'finalizat',    label: 'Finalizat' }
-    ];
-
-    const SERVICE_LABELS = {
-      suspendare: 'Suspendare activitate',
-      dizolvare:  'Dizolvare voluntară',
-      radiere:    'Radiere ONRC',
-      cabinet:    'Cabinet profesionist'
+    // ---- BILINGUAL LABELS ----
+    const LABELS = {
+      ro: {
+        steps: ['Cerere primită', 'Documente generate', 'Dosar depus ONRC', 'În procesare', 'Finalizat'],
+        services: {
+          suspendare: 'Suspendare activitate',
+          dizolvare:  'Dizolvare voluntară',
+          radiere:    'Radiere ONRC',
+          cabinet:    'Cabinet profesionist'
+        },
+        statuses: {
+          nou:          'Cerere primită',
+          documente:    'Documente generate',
+          depus_onrc:   'Dosar depus ONRC',
+          in_procesare: 'În procesare',
+          finalizat:    'Finalizat'
+        },
+        cui_prefix: 'CUI',
+        opened: 'Deschis pe',
+        note_label: 'Notă de la ExitBiz',
+        empty_title: 'Niciun dosar activ momentan',
+        empty_sub: 'Dosarul tău va apărea aici imediat ce echipa ExitBiz îl creează.',
+        how_title: 'Cum funcționează?',
+        how_steps: [
+          'Trimiți cererea prin formularul de pe site',
+          'Echipa noastră creează dosarul și primești email de confirmare',
+          'Urmărești statusul în timp real chiar aici'
+        ],
+        send_req: 'Trimite o cerere →',
+        whatsapp: 'Scrie-ne pe WhatsApp',
+        loading: 'Se încarcă dosarele...',
+        greeting: 'Bună',
+        sign_out: 'Ieși din cont',
+      },
+      en: {
+        steps: ['Request received', 'Documents generated', 'Filed at ONRC', 'In processing', 'Completed'],
+        services: {
+          suspendare: 'Activity suspension',
+          dizolvare:  'Voluntary dissolution',
+          radiere:    'ONRC Strike-off',
+          cabinet:    'Professional office'
+        },
+        statuses: {
+          nou:          'Request received',
+          documente:    'Documents generated',
+          depus_onrc:   'Filed at ONRC',
+          in_procesare: 'In processing',
+          finalizat:    'Completed'
+        },
+        cui_prefix: 'CUI',
+        opened: 'Opened on',
+        note_label: 'Note from ExitBiz',
+        empty_title: 'No active cases yet',
+        empty_sub: 'Your case will appear here as soon as the ExitBiz team creates it.',
+        how_title: 'How does it work?',
+        how_steps: [
+          'Submit a request through the form on the site',
+          'Our team creates the case and you receive a confirmation email',
+          'Track the status in real time right here'
+        ],
+        send_req: 'Submit a request →',
+        whatsapp: 'Message us on WhatsApp',
+        loading: 'Loading cases...',
+        greeting: 'Hi',
+        sign_out: 'Sign out',
+      }
     };
 
-    const STATUS_LABELS = {
-      nou:          'Cerere primită',
-      documente:    'Documente generate',
-      depus_onrc:   'Dosar depus ONRC',
-      in_procesare: 'În procesare',
-      finalizat:    'Finalizat'
-    };
+    function getLang() { return localStorage.getItem('lang') || 'ro'; }
+    function L(key) { return LABELS[getLang()]?.[key] ?? LABELS.ro[key]; }
+
+    const STEP_KEYS = ['nou', 'documente', 'depus_onrc', 'in_procesare', 'finalizat'];
 
     function formatDate(iso) {
-      return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+      const lang = getLang();
+      return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-GB' : 'ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     function renderTimeline(currentStatus) {
-      const currentIndex = STEPS.findIndex(s => s.key === currentStatus);
-      return STEPS.map((step, i) => {
-        let cls = '';
-        let icon = '';
+      const stepLabels = L('steps');
+      const currentIndex = STEP_KEYS.indexOf(currentStatus);
+      return STEP_KEYS.map((key, i) => {
+        let cls = '', icon = '';
         if (i < currentIndex) { cls = 'done'; icon = '✓'; }
         else if (i === currentIndex) { cls = 'active'; icon = '●'; }
         else { icon = '○'; }
-        return `
-          <div class="timeline-step ${cls}">
-            <div class="timeline-dot">${icon}</div>
-            <div class="timeline-label">${step.label}</div>
-          </div>`;
+        return `<div class="timeline-step ${cls}">
+          <div class="timeline-dot">${icon}</div>
+          <div class="timeline-label">${stepLabels[i]}</div>
+        </div>`;
       }).join('');
     }
 
     function renderDosar(d) {
-      const serviceLabel = SERVICE_LABELS[d.service_type] || d.service_type;
-      const statusLabel = STATUS_LABELS[d.status] || d.status;
-      return `
-        <div class="dosar-card">
-          <div class="dosar-header">
-            <div>
-              <div class="dosar-title">${serviceLabel}</div>
-              <div class="dosar-meta">${d.cui ? `CUI: ${d.cui} · ` : ''}Deschis pe ${formatDate(d.created_at)}</div>
-            </div>
-            <span class="status-badge status-${d.status}">${statusLabel}</span>
+      const serviceLabel = L('services')[d.service_type] || d.service_type;
+      const statusLabel = L('statuses')[d.status] || d.status;
+      const cuiPart = d.cui ? `${L('cui_prefix')}: ${d.cui} · ` : '';
+      return `<div class="dosar-card">
+        <div class="dosar-header">
+          <div>
+            <div class="dosar-title">${serviceLabel}</div>
+            <div class="dosar-meta">${cuiPart}${L('opened')} ${formatDate(d.created_at)}</div>
           </div>
-          <div class="status-timeline">${renderTimeline(d.status)}</div>
-          ${d.notes ? `<div class="dosar-notes"><strong>Notă de la ExitBiz:</strong> ${d.notes}</div>` : ''}
-        </div>`;
+          <span class="status-badge status-${d.status}">${statusLabel}</span>
+        </div>
+        <div class="status-timeline">${renderTimeline(d.status)}</div>
+        ${d.notes ? `<div class="dosar-notes"><strong>${L('note_label')}:</strong> ${d.notes}</div>` : ''}
+      </div>`;
     }
+
+    function renderEmpty() {
+      const steps = L('how_steps');
+      return `<div class="empty-state">
+        <div style="font-size:48px;margin-bottom:1rem;">📋</div>
+        <h2>${L('empty_title')}</h2>
+        <p>${L('empty_sub')}</p>
+        <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:1.5rem auto;max-width:380px;text-align:left;">
+          <p style="font-size:13px;font-weight:600;margin-bottom:0.75rem;color:var(--text-primary);">${L('how_title')}</p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            ${steps.map((s, i) => `<div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">${i+1}.</span> ${s}</div>`).join('')}
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="/" class="btn-primary">${L('send_req')}</a>
+          <a href="https://wa.me/40772129941" target="_blank" class="btn-ghost">${L('whatsapp')}</a>
+        </div>
+      </div>`;
+    }
+
+    let dosareData = [];
 
     async function init() {
       const { data: { session } } = await db.auth.getSession();
@@ -138,7 +213,10 @@
 
       const { data: profile } = await db.from('profiles').select('full_name, role').eq('id', user.id).single();
       if (profile?.role === 'admin') { window.location.href = 'admin.html'; return; }
-      document.getElementById('user-name').textContent = profile?.full_name || user.email;
+
+      const name = profile?.full_name || user.email;
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('greeting-title').innerHTML = `${L('greeting')}, <span id="user-name">${name}</span>`;
 
       const { data: dosare, error } = await db
         .from('dosare')
@@ -146,45 +224,23 @@
         .eq('client_email', user.email)
         .order('created_at', { ascending: false });
 
+      dosareData = dosare || [];
       const container = document.getElementById('dosare-container');
 
-      if (error || !dosare?.length) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <div style="font-size:48px;margin-bottom:1rem;">📋</div>
-            <h2>Niciun dosar activ momentan</h2>
-            <p>Dosarul tău va apărea aici imediat ce echipa ExitBiz îl creează.</p>
-            <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:1.5rem auto;max-width:380px;text-align:left;">
-              <p style="font-size:13px;font-weight:600;margin-bottom:0.75rem;color:var(--text-primary);">Cum funcționează?</p>
-              <div style="display:flex;flex-direction:column;gap:0.6rem;">
-                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">1.</span> Trimiți cererea prin formularul de pe site</div>
-                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">2.</span> Echipa noastră creează dosarul și primești email de confirmare</div>
-                <div style="font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--green);font-weight:600;flex-shrink:0;">3.</span> Urmărești statusul în timp real chiar aici</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-              <a href="/" class="btn-primary">Trimite o cerere →</a>
-              <a href="https://wa.me/40772129941" target="_blank" class="btn-ghost">Scrie-ne pe WhatsApp</a>
-            </div>
-          </div>`;
+      if (error || !dosareData.length) {
+        container.innerHTML = renderEmpty();
         return;
       }
 
-      container.innerHTML = dosare.map(renderDosar).join('');
+      container.innerHTML = dosareData.map(renderDosar).join('');
 
-      // Real-time updates
       db.channel('dosare-changes')
         .on('postgres_changes', {
           event: 'UPDATE', schema: 'public', table: 'dosare',
           filter: `client_email=eq.${user.email}`
         }, payload => {
-          const cards = container.querySelectorAll('.dosar-card');
-          dosare.forEach((d, i) => {
-            if (d.id === payload.new.id) {
-              dosare[i] = payload.new;
-              cards[i].outerHTML = renderDosar(payload.new);
-            }
-          });
+          dosareData = dosareData.map(d => d.id === payload.new.id ? payload.new : d);
+          container.innerHTML = dosareData.map(renderDosar).join('');
         })
         .subscribe();
     }
@@ -196,5 +252,6 @@
 
     init();
   </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
