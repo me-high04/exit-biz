@@ -7,18 +7,19 @@
 -- ── 1. EXTINDE TABELA dosare ──────────────────────────────────────────────
 
 -- Actualizează statusuri (pipeline nou)
+-- Pasul 1: scoate constraint-ul vechi
 alter table public.dosare
   drop constraint if exists dosare_status_check;
 
+-- Pasul 2: migrează datele existente ÎNAINTE de noul constraint
+update public.dosare set status = 'lead'      where status = 'nou';
+update public.dosare set status = 'depus'     where status = 'depus_onrc';
+update public.dosare set status = 'pregatire' where status = 'in_procesare';
+
+-- Pasul 3: adaugă noul constraint (acum toate rândurile sunt conforme)
 alter table public.dosare
   add constraint dosare_status_check
   check (status in ('lead','diagnostic','analiza','documente','pregatire','depus','finalizat'));
-
--- Migrează statusuri vechi → noi
-update public.dosare set status = 'lead'       where status = 'nou';
-update public.dosare set status = 'documente'  where status = 'documente'; -- same
-update public.dosare set status = 'depus'      where status = 'depus_onrc';
-update public.dosare set status = 'pregatire'  where status = 'in_procesare';
 -- 'finalizat' rămâne la fel
 
 -- Câmpuri noi pe dosar
