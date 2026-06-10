@@ -76,7 +76,7 @@
     // ---- BILINGUAL LABELS ----
     const LABELS = {
       ro: {
-        steps: ['Cerere primită', 'Documente generate', 'Dosar depus ONRC', 'În procesare', 'Finalizat'],
+        steps: ['Lead', 'Diagnostic', 'Analiză', 'Documente', 'Pregătire', 'Depus', 'Finalizat'],
         services: {
           suspendare: 'Suspendare activitate',
           dizolvare:  'Dizolvare voluntară',
@@ -84,11 +84,13 @@
           cabinet:    'Cabinet profesionist'
         },
         statuses: {
-          nou:          'Cerere primită',
-          documente:    'Documente generate',
-          depus_onrc:   'Dosar depus ONRC',
-          in_procesare: 'În procesare',
-          finalizat:    'Finalizat'
+          lead:       'Lead',
+          diagnostic: 'Diagnostic',
+          analiza:    'Analiză',
+          documente:  'Documente',
+          pregatire:  'Pregătire',
+          depus:      'Depus',
+          finalizat:  'Finalizat'
         },
         cui_prefix: 'CUI',
         opened: 'Deschis pe',
@@ -108,7 +110,7 @@
         sign_out: 'Ieși din cont',
       },
       en: {
-        steps: ['Request received', 'Documents generated', 'Filed at ONRC', 'In processing', 'Completed'],
+        steps: ['Lead', 'Diagnostic', 'Analysis', 'Documents', 'Preparation', 'Filed', 'Completed'],
         services: {
           suspendare: 'Activity suspension',
           dizolvare:  'Voluntary dissolution',
@@ -116,11 +118,13 @@
           cabinet:    'Professional office'
         },
         statuses: {
-          nou:          'Request received',
-          documente:    'Documents generated',
-          depus_onrc:   'Filed at ONRC',
-          in_procesare: 'In processing',
-          finalizat:    'Completed'
+          lead:       'Lead',
+          diagnostic: 'Diagnostic',
+          analiza:    'Analysis',
+          documente:  'Documents',
+          pregatire:  'Preparation',
+          depus:      'Filed',
+          finalizat:  'Completed'
         },
         cui_prefix: 'CUI',
         opened: 'Opened on',
@@ -144,7 +148,7 @@
     function getLang() { return localStorage.getItem('lang') || 'ro'; }
     function L(key) { return LABELS[getLang()]?.[key] ?? LABELS.ro[key]; }
 
-    const STEP_KEYS = ['nou', 'documente', 'depus_onrc', 'in_procesare', 'finalizat'];
+    const STEP_KEYS = ['lead', 'diagnostic', 'analiza', 'documente', 'pregatire', 'depus', 'finalizat'];
 
     function formatDate(iso) {
       const lang = getLang();
