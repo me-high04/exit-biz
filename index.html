@@ -203,21 +203,9 @@
         <div class="ccw-step-content">
           <div class="ccw-step-label" data-ro="Tip Document" data-en="Document Type">Tip Document</div>
           <div class="ccw-step-body" id="ccw-body-2" style="display:none">
-            <div class="ccw-radio-group">
-              <label class="ccw-radio selected" onclick="ccwSelectDoc(this,'baza','79')">
-                <div class="ccw-radio-dot"></div>
-                <div>
-                  <div class="ccw-radio-name" data-ro="Certificat constatator de bază" data-en="Basic certificate of standing">Certificat constatator de bază</div>
-                  <div class="ccw-radio-price">79 RON + TVA</div>
-                </div>
-              </label>
-              <label class="ccw-radio" onclick="ccwSelectDoc(this,'istoric','299')">
-                <div class="ccw-radio-dot"></div>
-                <div>
-                  <div class="ccw-radio-name" data-ro="Constatator cu istoric" data-en="Certificate with history">Constatator cu istoric</div>
-                  <div class="ccw-radio-price">299 RON + TVA</div>
-                </div>
-              </label>
+            <div class="ccw-doc-selected">
+              <div class="ccw-doc-name">Certificat constatator de bază</div>
+              <div class="ccw-radio-price">79 RON + TVA</div>
             </div>
             <div class="ccw-input-group">
               <label class="ccw-label" data-ro="Document solicitat pentru a servi la" data-en="Document requested to serve at">Document solicitat pentru a servi la</label>
@@ -302,16 +290,50 @@
           <div class="ccw-step-label" data-ro="Contact" data-en="Contact">Contact</div>
           <div class="ccw-step-body" id="ccw-body-4" style="display:none">
             <div class="ccw-input-group">
-              <label class="ccw-label" data-ro="Email livrare *" data-en="Delivery email *">Email livrare *</label>
-              <input type="email" id="ccw-email" class="ccw-input" placeholder="email@firma.ro" />
+              <label class="ccw-label">Adresa email <span class="ccw-required">*</span></label>
+              <input type="email" id="ccw-email" class="ccw-input" placeholder="Email" />
+              <div class="ccw-field-error" id="err-email"></div>
             </div>
             <div class="ccw-input-group">
-              <label class="ccw-label" data-ro="Telefon (opțional)" data-en="Phone (optional)">Telefon (opțional)</label>
-              <input type="text" id="ccw-phone" class="ccw-input" placeholder="+40 7xx xxx xxx" />
+              <label class="ccw-label">Telefon</label>
+              <input type="text" id="ccw-phone" class="ccw-input" placeholder="Telefon" />
+              <div class="ccw-hint">Opțional dacă doriți notificare GRATUITĂ prin SMS despre stadiul comenzii</div>
             </div>
+
+            <!-- Urgent toggle -->
+            <div class="ccw-urgent-box" id="ccw-urgent-box">
+              <label class="ccw-toggle-row">
+                <div class="ccw-toggle-wrap">
+                  <input type="checkbox" id="ccw-urgent-toggle" onchange="ccwToggleUrgent(this)" />
+                  <span class="ccw-toggle-slider"></span>
+                </div>
+                <span class="ccw-toggle-label">Doresc serviciul <strong>Urgent (+29 RON + TVA)</strong></span>
+              </label>
+              <div class="ccw-urgent-desc">Primiți certificatul <strong>în cel mult 10 minute</strong>. Fără acest serviciu, cererea va fi procesată în cel mult 6 ore.</div>
+            </div>
+
+            <!-- Checkboxuri -->
+            <div class="ccw-checks">
+              <label class="ccw-check-row">
+                <input type="checkbox" id="ccw-terms" />
+                <span>Am citit și sunt de acord cu <a href="termeni.html" target="_blank" class="ccw-link">termenii și condițiile</a> <span class="ccw-required">*</span></span>
+              </label>
+              <div class="ccw-field-error" id="err-terms"></div>
+              <label class="ccw-check-row">
+                <input type="checkbox" id="ccw-marketing" />
+                <span>Sunt de acord să primesc comunicări comerciale</span>
+              </label>
+            </div>
+
+            <!-- Total -->
+            <div class="ccw-total-bar">
+              <span>Total:</span>
+              <span id="ccw-total-display" class="ccw-total-amount">94 RON + TVA</span>
+            </div>
+
             <div class="ccw-step-nav">
               <button class="ccw-btn-back" onclick="ccwBack(4)" data-ro="Înapoi" data-en="Back">Înapoi</button>
-              <button class="btn-primary ccw-btn-next" onclick="ccwSubmit()" id="ccw-submit" data-ro="Comandă acum →" data-en="Order now →">Comandă acum →</button>
+              <button class="btn-primary ccw-btn-next" onclick="ccwSubmit()" id="ccw-submit">Continuă</button>
             </div>
             <div class="ccw-price-summary" id="ccw-price-summary"></div>
           </div>
@@ -325,7 +347,7 @@
 
 <script>
 // ── CCW STATE ─────────────────────────────────────────────────────────────
-const ccwState = { cui:'', firmName:'', docType:'baza', docPrice:'79', scop:'', factura:'firma', cuiFacturare:'', email:'', phone:'' };
+const ccwState = { cui:'', firmName:'', docType:'baza', docPrice:'79', scop:'', factura:'firma', cuiFacturare:'', email:'', phone:'', urgent:false };
 let ccwCurrentStep = 1;
 
 // ── ANAF LOOKUP ───────────────────────────────────────────────────────────
@@ -401,12 +423,6 @@ function ccwSetStep(n) {
 }
 
 // ── SELECTORS ─────────────────────────────────────────────────────────────
-function ccwSelectDoc(el, type, price) {
-  document.querySelectorAll('#ccw-body-2 .ccw-radio').forEach(r => r.classList.remove('selected'));
-  el.classList.add('selected');
-  ccwState.docType = type; ccwState.docPrice = price;
-}
-
 function ccwSelectFactura(el, type) {
   document.querySelectorAll('#ccw-body-3 .ccw-radio').forEach(r => r.classList.remove('selected'));
   el.classList.add('selected');
@@ -414,31 +430,76 @@ function ccwSelectFactura(el, type) {
   document.getElementById('ccw-cui-facturare-wrap').style.display = type !== 'firma' ? 'block' : 'none';
 }
 
-function ccwUpdatePriceSummary() {
-  const priceHT = parseInt(ccwState.docPrice);
-  const tva = Math.round(priceHT * 0.19);
-  const total = priceHT + tva;
-  const docLabel = ccwState.docType === 'baza' ? 'Certificat constatator de bază' : 'Constatator cu istoric';
-  document.getElementById('ccw-price-summary').innerHTML = `
-    <div class="ccw-summary-row"><span>${docLabel}</span><span>${priceHT} RON</span></div>
-    <div class="ccw-summary-row"><span>TVA (19%)</span><span>${tva} RON</span></div>
-    <div class="ccw-summary-row total"><span>Total</span><span>${total} RON</span></div>`;
+// ── URGENT TOGGLE ─────────────────────────────────────────────────────────
+function ccwToggleUrgent(el) {
+  ccwState.urgent = el.checked;
+  ccwUpdateTotal();
+}
+
+function ccwUpdateTotal() {
+  const base = 79;
+  const urgentExtra = 29;
+  const subtotal = base + (ccwState.urgent ? urgentExtra : 0);
+  const tva = Math.round(subtotal * 0.19);
+  const total = subtotal + tva;
+  const el = document.getElementById('ccw-total-display');
+  if (el) el.textContent = `${total} RON + TVA`;
+}
+
+// ── VALIDARE ──────────────────────────────────────────────────────────────
+function ccwShowError(fieldId, msg) {
+  const el = document.getElementById(fieldId);
+  if (el) { el.textContent = msg; el.style.display = 'block'; }
+}
+function ccwClearError(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (el) { el.textContent = ''; el.style.display = 'none'; }
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────
 function ccwSubmit() {
+  let valid = true;
+
   const email = document.getElementById('ccw-email').value.trim();
-  if (!email || !email.includes('@')) { document.getElementById('ccw-email').focus(); return; }
+  ccwClearError('err-email');
+  if (!email || !email.includes('@')) {
+    ccwShowError('err-email', 'Adresa de email este obligatorie.');
+    document.getElementById('ccw-email').classList.add('ccw-input-error');
+    valid = false;
+  } else {
+    document.getElementById('ccw-email').classList.remove('ccw-input-error');
+  }
+
+  ccwClearError('err-terms');
+  if (!document.getElementById('ccw-terms').checked) {
+    ccwShowError('err-terms', 'Trebuie să accepți termenii și condițiile.');
+    valid = false;
+  }
+
+  if (!valid) return;
+
   ccwState.email = email;
   ccwState.phone = document.getElementById('ccw-phone').value.trim();
+
   const btn = document.getElementById('ccw-submit');
   btn.textContent = 'Se procesează...'; btn.disabled = true;
-  const lang = localStorage.getItem('lang') || 'ro';
-  const msg = `Comandă Certificat Constatator:\n- Firmă: ${ccwState.firmName} (RO${ccwState.cui})\n- Tip: ${ccwState.docType === 'baza' ? 'De bază' : 'Cu istoric'} - ${ccwState.docPrice} RON + TVA\n- Scop: ${ccwState.scop || 'Nespecificat'}\n- Facturare: ${ccwState.factura}${ccwState.cuiFacturare ? ' / CUI: '+ccwState.cuiFacturare : ''}\n- Email livrare: ${ccwState.email}${ccwState.phone ? '\n- Telefon: '+ccwState.phone : ''}`;
+
+  const base = 79, urgentExtra = 29;
+  const subtotal = base + (ccwState.urgent ? urgentExtra : 0);
+  const tva = Math.round(subtotal * 0.19);
+
+  const msg = `Comandă Certificat Constatator:
+- Firmă: ${ccwState.firmName} (RO${ccwState.cui})
+- Tip: Certificat constatator de bază - ${base} RON + TVA
+- Urgent: ${ccwState.urgent ? 'DA (+' + urgentExtra + ' RON + TVA)' : 'NU (procesare 6h)'}
+- Scop: ${ccwState.scop || 'Nespecificat'}
+- Facturare: ${ccwState.factura}${ccwState.cuiFacturare ? ' / CUI: ' + ccwState.cuiFacturare : ''}
+- Email livrare: ${ccwState.email}${ccwState.phone ? '\n- Telefon: ' + ccwState.phone : ''}
+- Total: ${subtotal + tva} RON (incl. TVA)`;
+
   setTimeout(() => {
     window.open(`https://wa.me/40772129941?text=${encodeURIComponent(msg)}`, '_blank');
-    btn.textContent = lang === 'en' ? 'Order now →' : 'Comandă acum →';
-    btn.disabled = false;
+    btn.textContent = 'Continuă'; btn.disabled = false;
   }, 600);
 }
 </script>

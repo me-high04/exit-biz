@@ -693,10 +693,38 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .ccw-btn-back:hover { border-color: var(--text-secondary); }
 .ccw-btn-next { padding: 8px 18px; font-size: 13px; }
 
-/* Price summary */
-.ccw-price-summary { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px; }
-.ccw-summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); padding: 3px 0; }
-.ccw-summary-row.total { font-size: 15px; font-weight: 600; color: var(--text-primary); border-top: 1px solid var(--border); margin-top: 6px; padding-top: 8px; }
+/* Doc selected display */
+.ccw-doc-selected { background: var(--bg-surface); border: 1.5px solid var(--green); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.ccw-doc-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+
+/* Required star */
+.ccw-required { color: #e53e3e; }
+
+/* Field error */
+.ccw-field-error { font-size: 11px; color: #e53e3e; margin-top: 4px; display: none; }
+.ccw-input-error { border-color: #e53e3e !important; }
+
+/* Urgent box */
+.ccw-urgent-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px; }
+.ccw-toggle-row { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.ccw-toggle-wrap { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+.ccw-toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+.ccw-toggle-slider { position: absolute; inset: 0; background: var(--border-hover); border-radius: 99px; transition: background 0.2s; }
+.ccw-toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: transform 0.2s; }
+.ccw-toggle-wrap input:checked + .ccw-toggle-slider { background: var(--green); }
+.ccw-toggle-wrap input:checked + .ccw-toggle-slider::before { transform: translateX(18px); }
+.ccw-toggle-label { font-size: 13px; color: var(--text-primary); }
+.ccw-urgent-desc { font-size: 12px; color: var(--text-secondary); margin-top: 8px; line-height: 1.5; }
+
+/* Checkboxuri */
+.ccw-checks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.ccw-check-row { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--text-secondary); cursor: pointer; line-height: 1.5; }
+.ccw-check-row input[type=checkbox] { margin-top: 2px; flex-shrink: 0; accent-color: var(--green); width: 14px; height: 14px; }
+.ccw-link { color: var(--green); text-decoration: underline; }
+
+/* Total bar */
+.ccw-total-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); margin-bottom: 12px; font-size: 14px; color: var(--text-secondary); }
+.ccw-total-amount { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 
 @media (max-width: 900px) {
   .ccw-inner { grid-template-columns: 1fr; gap: 2rem; }
