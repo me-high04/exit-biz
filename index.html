@@ -141,28 +141,303 @@
 </div>
 </div>
 </div>
-<!-- CERTIFICAT CONSTATATOR STRIP -->
-<div class="cc-strip">
-  <div class="cc-strip-inner">
-    <div class="cc-strip-left">
-      <div class="cc-strip-icon">📄</div>
-      <div>
-        <div class="cc-strip-title" data-ro="Ai nevoie de Certificat Constatator?" data-en="Need a Certificate of Standing?">Ai nevoie de Certificat Constatator?</div>
-        <div class="cc-strip-sub" data-ro="Obții documentul oficial ONRC livrat pe email, fără deplasări." data-en="Get the official ONRC document delivered by email, without travel.">Obții documentul oficial ONRC livrat pe email, fără deplasări.</div>
+<!-- CERTIFICAT CONSTATATOR WIDGET -->
+<section class="ccw-section" id="certificat-constatator">
+<div class="ccw-inner">
+
+  <!-- LEFT: marketing copy -->
+  <div class="ccw-left">
+    <div class="section-tag" data-ro="Nou" data-en="New">Nou</div>
+    <h2 class="ccw-title" data-ro="Certificat Constatator în <span>10 minute</span>" data-en="Certificate of Standing in <span>10 minutes</span>">Certificat Constatator în <span>10 minute</span></h2>
+    <ul class="ccw-list">
+      <li data-ro="Document original de la Registrul Comerțului" data-en="Original document from the Trade Registry">Document original de la Registrul Comerțului</li>
+      <li data-ro="Livrare pe email în format PDF" data-en="PDF delivery by email">Livrare pe email în format PDF</li>
+      <li data-ro="Program NON STOP 24/24" data-en="Available 24/7">Program NON STOP 24/24</li>
+      <li data-ro="Extras beneficiari reali inclus" data-en="Beneficial owners extract included">Extras beneficiari reali inclus</li>
+      <li data-ro="Garantat sau banii înapoi" data-en="Money back guarantee">Garantat sau banii înapoi</li>
+    </ul>
+    <div class="ccw-trust">
+      <div class="ccw-trust-badge">
+        <svg width="32" height="20" viewBox="0 0 60 40" fill="none"><rect width="60" height="40" rx="4" fill="#635BFF"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="sans-serif">stripe</text></svg>
+        <span>Visa / Mastercard</span>
       </div>
-    </div>
-    <div class="cc-strip-right">
-      <div class="cc-strip-plans">
-        <span class="cc-strip-plan">Standard <strong>79 RON</strong></span>
-        <span class="cc-strip-divider">·</span>
-        <span class="cc-strip-plan">Urgent <strong>129 RON</strong></span>
-        <span class="cc-strip-divider">·</span>
-        <span class="cc-strip-plan">Expres <strong>199 RON</strong></span>
+      <div class="ccw-trust-badge">
+        <span class="ccw-ssl">🔒 SSL</span>
+        <span>Plată securizată</span>
       </div>
-      <a href="servicii/certificat-constatator.html" class="btn-primary" data-ro="Comandă acum →" data-en="Order now →">Comandă acum →</a>
     </div>
   </div>
+
+  <!-- RIGHT: multi-step card -->
+  <div class="ccw-card">
+    <div class="ccw-card-title" data-ro="Completează acum!" data-en="Complete now!">Completează acum!</div>
+
+    <!-- Stepper -->
+    <div class="ccw-stepper" id="ccw-stepper">
+      <div class="ccw-step-row active" data-step="1">
+        <div class="ccw-step-col">
+          <div class="ccw-step-circle">1</div>
+          <div class="ccw-step-line"></div>
+        </div>
+        <div class="ccw-step-content">
+          <div class="ccw-step-label" data-ro="CUI/CIF certificat" data-en="Company CUI/CIF">CUI/CIF certificat</div>
+          <div class="ccw-step-body" id="ccw-body-1">
+            <div class="ccw-input-wrap">
+              <input type="text" id="ccw-cui" class="ccw-input" placeholder="Ex: RO12345678" maxlength="12" />
+              <button class="btn-primary ccw-btn-sm" onclick="ccwLookupCUI()" data-ro="Caută" data-en="Search">Caută</button>
+            </div>
+            <div id="ccw-firm-result" class="ccw-firm-result" style="display:none"></div>
+            <div id="ccw-cui-error" class="ccw-error" style="display:none"></div>
+            <div class="ccw-step-nav">
+              <button class="btn-primary ccw-btn-next" onclick="ccwNext(1)" id="ccw-next-1" disabled data-ro="Continuă" data-en="Continue">Continuă</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ccw-step-row" data-step="2">
+        <div class="ccw-step-col">
+          <div class="ccw-step-circle">2</div>
+          <div class="ccw-step-line"></div>
+        </div>
+        <div class="ccw-step-content">
+          <div class="ccw-step-label" data-ro="Tip Document" data-en="Document Type">Tip Document</div>
+          <div class="ccw-step-body" id="ccw-body-2" style="display:none">
+            <div class="ccw-radio-group">
+              <label class="ccw-radio selected" onclick="ccwSelectDoc(this,'baza','79')">
+                <div class="ccw-radio-dot"></div>
+                <div>
+                  <div class="ccw-radio-name" data-ro="Certificat constatator de bază" data-en="Basic certificate of standing">Certificat constatator de bază</div>
+                  <div class="ccw-radio-price">79 RON + TVA</div>
+                </div>
+              </label>
+              <label class="ccw-radio" onclick="ccwSelectDoc(this,'istoric','299')">
+                <div class="ccw-radio-dot"></div>
+                <div>
+                  <div class="ccw-radio-name" data-ro="Constatator cu istoric" data-en="Certificate with history">Constatator cu istoric</div>
+                  <div class="ccw-radio-price">299 RON + TVA</div>
+                </div>
+              </label>
+            </div>
+            <div class="ccw-input-group">
+              <label class="ccw-label" data-ro="Document solicitat pentru a servi la" data-en="Document requested to serve at">Document solicitat pentru a servi la</label>
+              <select id="ccw-scop" class="ccw-select">
+                <option value="">— Selectează scopul —</option>
+                <option>Accesare Fonduri</option><option>Accesare Fonduri Europene</option>
+                <option>Administrația financiară</option><option>Administrația Fondului pentru Mediu</option>
+                <option>Administrația Finanțelor Publice</option><option>Agenția pentru Finanțarea Investițiilor Rurale (AFIR)</option>
+                <option>Agenția Națională de Administrare Fiscală</option><option>Agenția Națională pentru Ocuparea Forței de Muncă</option>
+                <option>Agenția Națională pentru Protecția Mediului</option><option>Agenția Națională pentru Resurse Minerale</option>
+                <option>Ambasadă</option><option>Autoritatea Rutieră Română</option><option>Autorizare</option>
+                <option>Banca Națională a României</option><option>Bancă</option><option>Birou notar public</option>
+                <option>Casa Națională de Asigurări de Sănătate</option><option>Casa Națională de Pensii</option>
+                <option>Direcția Generală a Vămilor</option><option>Eliberare cazier judiciar</option>
+                <option>Fonduri SAPARD</option><option>Informare</option><option>Inspectoratul General pentru Imigrări</option>
+                <option>Instanță</option><option>Leasing</option><option>Licitație</option>
+                <option>Ministerul Muncii și Justiției Sociale</option><option>Obținere viză</option>
+                <option>Oficiul de Cadastru și Publicitate Imobiliară</option><option>Parchet</option>
+                <option>Poliție</option><option>Primărie</option><option>Registrul Auto Român</option>
+                <option>Registrul Operatorilor Intracomunitari</option><option>Înregistrare în scopuri de TVA</option>
+                <option>Agenția de Plăți și Intervenții în Agricultură</option><option>Atestare ANRE</option>
+                <option>Altul</option>
+              </select>
+            </div>
+            <div class="ccw-step-nav">
+              <button class="ccw-btn-back" onclick="ccwBack(2)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+              <button class="btn-primary ccw-btn-next" onclick="ccwNext(2)" data-ro="Continuă" data-en="Continue">Continuă</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ccw-step-row" data-step="3">
+        <div class="ccw-step-col">
+          <div class="ccw-step-circle">3</div>
+          <div class="ccw-step-line"></div>
+        </div>
+        <div class="ccw-step-content">
+          <div class="ccw-step-label" data-ro="Date Facturare" data-en="Billing Details">Date Facturare</div>
+          <div class="ccw-step-body" id="ccw-body-3" style="display:none">
+            <div class="ccw-radio-group">
+              <label class="ccw-radio selected" onclick="ccwSelectFactura(this,'firma')">
+                <div class="ccw-radio-dot"></div>
+                <div>
+                  <div class="ccw-radio-name" data-ro="Firma din certificat" data-en="Company from certificate">Firma din certificat</div>
+                  <div class="ccw-radio-sub" data-ro="Eliberează factura pe aceeași societate" data-en="Invoice issued to the same company">Eliberează factura pe aceeași societate</div>
+                </div>
+              </label>
+              <label class="ccw-radio" onclick="ccwSelectFactura(this,'pj')">
+                <div class="ccw-radio-dot"></div>
+                <div>
+                  <div class="ccw-radio-name" data-ro="Persoană juridică" data-en="Legal entity">Persoană juridică</div>
+                  <div class="ccw-radio-sub" data-ro="Facturează pe o altă societate" data-en="Invoice to a different company">Facturează pe o altă societate</div>
+                </div>
+              </label>
+              <label class="ccw-radio" onclick="ccwSelectFactura(this,'pf')">
+                <div class="ccw-radio-dot"></div>
+                <div>
+                  <div class="ccw-radio-name" data-ro="Persoană fizică" data-en="Individual">Persoană fizică</div>
+                  <div class="ccw-radio-sub" data-ro="Eliberează factura pe persoană fizică" data-en="Invoice issued to an individual">Eliberează factura pe persoană fizică</div>
+                </div>
+              </label>
+            </div>
+            <div id="ccw-cui-facturare-wrap" style="display:none" class="ccw-input-group">
+              <label class="ccw-label" style="color:#e53e3e" data-ro="CUI/CIF facturare *" data-en="Billing CUI/CIF *">CUI/CIF facturare *</label>
+              <input type="text" id="ccw-cui-facturare" class="ccw-input" placeholder="CUI/CIF" />
+              <div class="ccw-hint" data-ro="CUI-ul firmei pentru care va fi emisă factura" data-en="CUI of the company to be invoiced">CUI-ul firmei pentru care va fi emisă factura</div>
+            </div>
+            <div class="ccw-step-nav">
+              <button class="ccw-btn-back" onclick="ccwBack(3)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+              <button class="btn-primary ccw-btn-next" onclick="ccwNext(3)" data-ro="Continuă" data-en="Continue">Continuă</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ccw-step-row" data-step="4">
+        <div class="ccw-step-col">
+          <div class="ccw-step-circle">4</div>
+        </div>
+        <div class="ccw-step-content">
+          <div class="ccw-step-label" data-ro="Contact" data-en="Contact">Contact</div>
+          <div class="ccw-step-body" id="ccw-body-4" style="display:none">
+            <div class="ccw-input-group">
+              <label class="ccw-label" data-ro="Email livrare *" data-en="Delivery email *">Email livrare *</label>
+              <input type="email" id="ccw-email" class="ccw-input" placeholder="email@firma.ro" />
+            </div>
+            <div class="ccw-input-group">
+              <label class="ccw-label" data-ro="Telefon (opțional)" data-en="Phone (optional)">Telefon (opțional)</label>
+              <input type="text" id="ccw-phone" class="ccw-input" placeholder="+40 7xx xxx xxx" />
+            </div>
+            <div class="ccw-step-nav">
+              <button class="ccw-btn-back" onclick="ccwBack(4)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+              <button class="btn-primary ccw-btn-next" onclick="ccwSubmit()" id="ccw-submit" data-ro="Comandă acum →" data-en="Order now →">Comandă acum →</button>
+            </div>
+            <div class="ccw-price-summary" id="ccw-price-summary"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+</section>
+
+<script>
+// ── CCW STATE ─────────────────────────────────────────────────────────────
+const ccwState = { cui:'', firmName:'', docType:'baza', docPrice:'79', scop:'', factura:'firma', cuiFacturare:'', email:'', phone:'' };
+let ccwCurrentStep = 1;
+
+// ── ANAF LOOKUP ───────────────────────────────────────────────────────────
+async function ccwLookupCUI() {
+  const cui = document.getElementById('ccw-cui').value.trim().replace(/[^0-9]/g,'');
+  const errEl = document.getElementById('ccw-cui-error');
+  const resEl = document.getElementById('ccw-firm-result');
+  const nextBtn = document.getElementById('ccw-next-1');
+  if (!cui || cui.length < 2) { errEl.textContent = 'Introdu un CUI valid.'; errEl.style.display='block'; return; }
+  errEl.style.display='none'; resEl.style.display='none';
+  const btn = document.querySelector('.ccw-btn-sm');
+  btn.textContent = '...'; btn.disabled = true;
+  try {
+    const r = await fetch(`/.netlify/functions/firma-info?cui=${cui}`);
+    const d = await r.json();
+    const f = d?.found?.[0] ?? d?.data?.[0];
+    if (f) {
+      ccwState.cui = cui;
+      ccwState.firmName = f.denumire || f.name || '';
+      resEl.innerHTML = `<div class="ccw-firm-box">
+        <div class="ccw-firm-name">${ccwState.firmName}</div>
+        <div class="ccw-firm-meta">RO${cui}</div>
+        ${f.nrRegCom ? `<div class="ccw-firm-meta">Nr. înregistrare: ${f.nrRegCom}</div>` : ''}
+        ${f.adresa ? `<div class="ccw-firm-meta">${f.adresa}</div>` : ''}
+      </div>`;
+      resEl.style.display='block';
+      nextBtn.disabled = false;
+    } else {
+      errEl.textContent = 'Firma nu a fost găsită. Verifică CUI-ul.';
+      errEl.style.display='block';
+    }
+  } catch(e) {
+    errEl.textContent = 'Eroare la căutare. Încearcă din nou.';
+    errEl.style.display='block';
+  }
+  btn.textContent = 'Caută'; btn.disabled = false;
+}
+
+document.getElementById('ccw-cui').addEventListener('keydown', e => { if(e.key==='Enter') ccwLookupCUI(); });
+
+// ── STEP NAVIGATION ───────────────────────────────────────────────────────
+function ccwNext(step) {
+  if (step === 2) {
+    ccwState.scop = document.getElementById('ccw-scop').value;
+  }
+  if (step === 3) {
+    if (ccwState.factura !== 'firma') {
+      const cf = document.getElementById('ccw-cui-facturare').value.trim();
+      if (!cf) { document.getElementById('ccw-cui-facturare').focus(); return; }
+      ccwState.cuiFacturare = cf;
+    }
+  }
+  ccwSetStep(step + 1);
+}
+
+function ccwBack(step) { ccwSetStep(step - 1); }
+
+function ccwSetStep(n) {
+  ccwCurrentStep = n;
+  document.querySelectorAll('.ccw-step-row').forEach(row => {
+    const s = parseInt(row.dataset.step);
+    row.classList.remove('active','done');
+    if (s === n) row.classList.add('active');
+    if (s < n) row.classList.add('done');
+    const body = document.getElementById(`ccw-body-${s}`);
+    if (body) body.style.display = s === n ? 'block' : 'none';
+  });
+  if (n === 4) ccwUpdatePriceSummary();
+}
+
+// ── SELECTORS ─────────────────────────────────────────────────────────────
+function ccwSelectDoc(el, type, price) {
+  document.querySelectorAll('#ccw-body-2 .ccw-radio').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  ccwState.docType = type; ccwState.docPrice = price;
+}
+
+function ccwSelectFactura(el, type) {
+  document.querySelectorAll('#ccw-body-3 .ccw-radio').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  ccwState.factura = type;
+  document.getElementById('ccw-cui-facturare-wrap').style.display = type !== 'firma' ? 'block' : 'none';
+}
+
+function ccwUpdatePriceSummary() {
+  const priceHT = parseInt(ccwState.docPrice);
+  const tva = Math.round(priceHT * 0.19);
+  const total = priceHT + tva;
+  const docLabel = ccwState.docType === 'baza' ? 'Certificat constatator de bază' : 'Constatator cu istoric';
+  document.getElementById('ccw-price-summary').innerHTML = `
+    <div class="ccw-summary-row"><span>${docLabel}</span><span>${priceHT} RON</span></div>
+    <div class="ccw-summary-row"><span>TVA (19%)</span><span>${tva} RON</span></div>
+    <div class="ccw-summary-row total"><span>Total</span><span>${total} RON</span></div>`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────
+function ccwSubmit() {
+  const email = document.getElementById('ccw-email').value.trim();
+  if (!email || !email.includes('@')) { document.getElementById('ccw-email').focus(); return; }
+  ccwState.email = email;
+  ccwState.phone = document.getElementById('ccw-phone').value.trim();
+  const btn = document.getElementById('ccw-submit');
+  btn.textContent = 'Se procesează...'; btn.disabled = true;
+  const lang = localStorage.getItem('lang') || 'ro';
+  const msg = `Comandă Certificat Constatator:\n- Firmă: ${ccwState.firmName} (RO${ccwState.cui})\n- Tip: ${ccwState.docType === 'baza' ? 'De bază' : 'Cu istoric'} - ${ccwState.docPrice} RON + TVA\n- Scop: ${ccwState.scop || 'Nespecificat'}\n- Facturare: ${ccwState.factura}${ccwState.cuiFacturare ? ' / CUI: '+ccwState.cuiFacturare : ''}\n- Email livrare: ${ccwState.email}${ccwState.phone ? '\n- Telefon: '+ccwState.phone : ''}`;
+  setTimeout(() => {
+    window.open(`https://wa.me/40772129941?text=${encodeURIComponent(msg)}`, '_blank');
+    btn.textContent = lang === 'en' ? 'Order now →' : 'Comandă acum →';
+    btn.disabled = false;
+  }, 600);
+}
+</script>
 <!-- STATS BAR -->
 <div class="stats-bar">
 <div class="stats-inner">

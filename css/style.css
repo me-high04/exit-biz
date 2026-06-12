@@ -629,20 +629,78 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 }
 .lang-popup-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
 
-/* ---- CERTIFICAT CONSTATATOR STRIP ---- */
-.cc-strip { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; }
-.cc-strip-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-.cc-strip-left { display: flex; align-items: center; gap: 1rem; }
-.cc-strip-icon { font-size: 28px; flex-shrink: 0; }
-.cc-strip-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
-.cc-strip-sub { font-size: 13px; color: var(--text-secondary); }
-.cc-strip-right { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-.cc-strip-plans { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
-.cc-strip-plan strong { color: var(--text-primary); font-weight: 600; }
-.cc-strip-divider { color: var(--border-hover); }
-@media (max-width: 768px) {
-  .cc-strip-right { width: 100%; }
-  .cc-strip-plans { display: none; }
+/* ---- CERTIFICAT CONSTATATOR WIDGET ---- */
+.ccw-section { background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
+.ccw-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 440px; gap: 4rem; align-items: start; }
+.ccw-title { font-size: clamp(24px, 3.5vw, 38px); font-weight: 300; color: var(--text-primary); margin: 0.75rem 0 1.5rem; line-height: 1.2; }
+.ccw-title span { color: var(--green); font-weight: 600; }
+.ccw-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+.ccw-list li { font-size: 15px; color: var(--text-secondary); padding-left: 1.5rem; position: relative; }
+.ccw-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.ccw-trust { display: flex; gap: 1rem; flex-wrap: wrap; }
+.ccw-trust-badge { display: flex; align-items: center; gap: 8px; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 14px; font-size: 12px; color: var(--text-secondary); }
+.ccw-ssl { font-size: 14px; }
+
+/* Card */
+.ccw-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.ccw-card-title { font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 1.5rem; text-align: center; }
+
+/* Stepper */
+.ccw-step-row { display: grid; grid-template-columns: 32px 1fr; gap: 12px; }
+.ccw-step-col { display: flex; flex-direction: column; align-items: center; }
+.ccw-step-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); color: var(--text-muted); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+.ccw-step-line { width: 2px; flex: 1; min-height: 16px; background: var(--border); margin: 4px 0; }
+.ccw-step-row.done .ccw-step-circle { background: var(--green); border-color: var(--green); color: #fff; }
+.ccw-step-row.done .ccw-step-circle::after { content: '✓'; }
+.ccw-step-row.done .ccw-step-circle { font-size: 0; }
+.ccw-step-row.done .ccw-step-line { background: var(--green); }
+.ccw-step-row.active .ccw-step-circle { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.ccw-step-content { padding-bottom: 1rem; }
+.ccw-step-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); padding: 4px 0 8px; }
+.ccw-step-row.active .ccw-step-label { color: var(--text-primary); }
+.ccw-step-row.done .ccw-step-label { color: var(--green); }
+
+/* Form elements */
+.ccw-input-wrap { display: flex; gap: 8px; margin-bottom: 10px; }
+.ccw-input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font-body); background: var(--bg); color: var(--text-primary); transition: border-color 0.15s; width: 100%; }
+.ccw-input:focus { outline: none; border-color: var(--green); }
+.ccw-select { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font-body); background: var(--bg); color: var(--text-primary); }
+.ccw-btn-sm { padding: 9px 14px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
+.ccw-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-secondary); display: block; margin-bottom: 5px; }
+.ccw-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.ccw-input-group { margin-bottom: 10px; }
+.ccw-error { font-size: 12px; color: #e53e3e; margin-bottom: 8px; }
+
+/* Firm result */
+.ccw-firm-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 10px; }
+.ccw-firm-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.ccw-firm-meta { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+
+/* Radio options */
+.ccw-radio-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.ccw-radio { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+.ccw-radio:hover { border-color: var(--green); }
+.ccw-radio.selected { border-color: var(--green); background: var(--green-light); }
+.ccw-radio-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 2px; transition: all 0.15s; }
+.ccw-radio.selected .ccw-radio-dot { border-color: var(--green); background: var(--green); }
+.ccw-radio-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.ccw-radio-price { font-size: 12px; color: var(--green); font-weight: 600; }
+.ccw-radio-sub { font-size: 11px; color: var(--text-secondary); }
+
+/* Navigation */
+.ccw-step-nav { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+.ccw-btn-back { padding: 8px 14px; font-size: 13px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer; font-family: var(--font-body); }
+.ccw-btn-back:hover { border-color: var(--text-secondary); }
+.ccw-btn-next { padding: 8px 18px; font-size: 13px; }
+
+/* Price summary */
+.ccw-price-summary { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px; }
+.ccw-summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); padding: 3px 0; }
+.ccw-summary-row.total { font-size: 15px; font-weight: 600; color: var(--text-primary); border-top: 1px solid var(--border); margin-top: 6px; padding-top: 8px; }
+
+@media (max-width: 900px) {
+  .ccw-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .ccw-card { max-width: 480px; }
 }
 
 /* ---- RESPONSIVE ---- */
