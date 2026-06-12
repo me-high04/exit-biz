@@ -111,15 +111,17 @@ function verificaFirmaMobile() {
 
 // ---- NAV SCROLL EFFECT ----
 const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+}
 
 // ---- HAMBURGER MENU ----
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 
-hamburger.addEventListener('click', () => {
+if (hamburger && mobileMenu) hamburger.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   mobileMenu.style.display = isOpen ? 'flex' : 'none';
@@ -129,13 +131,15 @@ hamburger.addEventListener('click', () => {
 });
 
 // close mobile menu on link click
-document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-    setTimeout(() => { mobileMenu.style.display = 'none'; }, 250);
+if (hamburger && mobileMenu) {
+  document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      setTimeout(() => { mobileMenu.style.display = 'none'; }, 250);
+    });
   });
-});
+}
 
 // ---- SCROLL FADE-IN ----
 const observer = new IntersectionObserver((entries) => {
