@@ -20,7 +20,7 @@
   --radius-sm: 8px;
   --font-display: 'Sora', sans-serif;
   --font-body: 'Sora', sans-serif;
-  --nav-height: 68px;
+  --nav-height: 80px;
   --max-width: 1100px;
   --nav-bg: rgba(248,250,255,0.85);
 }
@@ -118,8 +118,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 }
 .logo {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
   letter-spacing: -0.5px;
   color: var(--text-primary);
 }
@@ -127,10 +127,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px;
 }
 .nav-link {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-secondary);
   font-weight: 400;
   transition: color 0.2s;
@@ -252,17 +252,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 
 /* ---- HERO ---- */
 .hero {
-  padding-top: calc(var(--nav-height) + 5rem);
+  padding-top: calc(var(--nav-height) + 4rem);
   padding-bottom: 4rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  max-width: var(--max-width);
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  min-height: 90vh;
+  grid-template-columns: 1fr 460px;
+  gap: 3rem;
+  align-items: start;
+  min-height: auto;
 }
 .hero-badge {
   display: inline-flex;
@@ -343,8 +343,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 
 /* hero visual */
 .hero-visual {
-  position: relative;
-  height: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 1rem;
 }
 .doc-card {
   position: absolute;
@@ -629,6 +631,19 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 }
 .lang-popup-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
 
+/* ---- CC HERO CARD ---- */
+.cc-hero-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.cc-hero-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.cc-hero-plans { display: flex; gap: 8px; margin-top: 10px; }
+.cc-hero-plan { flex: 1; display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; color: var(--text-secondary); transition: all 0.15s; justify-content: space-between; }
+.cc-hero-plan:hover { border-color: var(--green); }
+.cc-hero-plan.selected { border-color: #f59e0b; background: #fffbeb; color: var(--text-primary); }
+.cc-hero-plan-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; transition: all 0.15s; }
+.cc-hero-plan.selected .cc-hero-plan-dot { border-color: #f59e0b; background: #f59e0b; }
+.cc-hero-plan strong { font-weight: 700; color: var(--text-primary); }
+.cc-hero-more { display: block; text-align: right; font-size: 12px; color: var(--green); margin-top: 10px; }
+.cc-hero-more:hover { text-decoration: underline; }
+
 /* ---- CERTIFICAT CONSTATATOR WIDGET ---- */
 .ccw-section { background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
 .ccw-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 440px; gap: 4rem; align-items: start; }
@@ -733,7 +748,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: calc(var(--nav-height) + 3rem); }
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: calc(var(--nav-height) + 3rem); gap: 2rem; }
   .hero-visual { display: none; }
   .mobile-cui-section { display: block; }
   .steps { flex-direction: column; }
