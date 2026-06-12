@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificat Constatator Online — ExitBiz</title>
+  <meta name="description" content="Obține certificatul constatator ONRC rapid și 100% online. Livrare pe email în aceeași zi. Fără deplasări, fără cozi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ── HERO ── */
+    .cc-hero { padding: calc(var(--nav-height) + 5rem) 2rem 4rem; background: linear-gradient(135deg, var(--bg) 0%, var(--bg-surface) 100%); }
+    .cc-hero-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center; }
+    .cc-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); color: var(--green); font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 99px; margin-bottom: 1.5rem; }
+    .cc-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+    .cc-hero h1 { font-size: clamp(32px, 4.5vw, 54px); font-weight: 300; line-height: 1.15; letter-spacing: -1px; color: var(--text-primary); margin-bottom: 1.25rem; }
+    .cc-hero h1 strong { font-weight: 600; color: var(--green); }
+    .cc-hero p { font-size: 17px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; max-width: 500px; }
+    .cc-trust { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .cc-trust-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+    .cc-trust-item svg { color: var(--green); flex-shrink: 0; }
+
+    /* ── ORDER CARD ── */
+    .cc-order-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .cc-order-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 1.5rem; }
+    .cc-input-group { margin-bottom: 1rem; }
+    .cc-input-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-secondary); display: block; margin-bottom: 6px; }
+    .cc-input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; font-family: var(--font-body); background: var(--bg); color: var(--text-primary); transition: border-color 0.15s; }
+    .cc-input:focus { outline: none; border-color: var(--green); }
+    .cc-plans { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
+    .cc-plan { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+    .cc-plan:hover { border-color: var(--green); }
+    .cc-plan.selected { border-color: var(--green); background: var(--green-light); }
+    .cc-plan input[type=radio] { display: none; }
+    .cc-plan-left { display: flex; align-items: center; gap: 10px; }
+    .cc-plan-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; transition: all 0.15s; }
+    .cc-plan.selected .cc-plan-dot { border-color: var(--green); background: var(--green); }
+    .cc-plan-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .cc-plan-time { font-size: 11px; color: var(--text-muted); }
+    .cc-plan-price { font-size: 15px; font-weight: 600; color: var(--green); }
+    .cc-order-btn { width: 100%; padding: 14px; font-size: 15px; font-weight: 600; }
+    .cc-order-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px; line-height: 1.5; }
+
+    /* ── CE CONȚINE ── */
+    .cc-contains { padding: 5rem 2rem; background: var(--bg-white); }
+    .cc-contains-inner { max-width: var(--max-width); margin: 0 auto; }
+    .cc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .cc-item { display: flex; gap: 14px; align-items: flex-start; }
+    .cc-item-icon { width: 38px; height: 38px; background: var(--green-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .cc-item-text h4 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+    .cc-item-text p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── PAȘI ── */
+    .cc-steps { padding: 5rem 2rem; background: var(--bg); }
+    .cc-steps-inner { max-width: var(--max-width); margin: 0 auto; }
+    .cc-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2.5rem; }
+    .cc-step { text-align: center; }
+    .cc-step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--green); color: #fff; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .cc-step h3 { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .cc-step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .cc-faq { padding: 5rem 2rem; background: var(--bg-white); }
+    .cc-faq-inner { max-width: 720px; margin: 0 auto; }
+    .cc-faq-item { border-bottom: 1px solid var(--border); }
+    .cc-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; font-size: 15px; font-weight: 500; color: var(--text-primary); background: none; border: none; cursor: pointer; text-align: left; font-family: var(--font-body); gap: 1rem; }
+    .cc-faq-q .arrow { color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+    .cc-faq-item.open .arrow { transform: rotate(180deg); }
+    .cc-faq-a { display: none; padding-bottom: 1.25rem; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .cc-faq-item.open .cc-faq-a { display: block; }
+
+    /* ── CTA BOTTOM ── */
+    .cc-cta { padding: 5rem 2rem; background: var(--text-primary); text-align: center; }
+    .cc-cta h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: #fff; margin-bottom: 0.75rem; }
+    .cc-cta p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cc-hero-inner { grid-template-columns: 1fr; }
+      .cc-order-card { max-width: 480px; }
+      .cc-steps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="logo">exit<span>biz</span></a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger" data-ro="Servicii ▾" data-en="Services ▾">Servicii ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="radiere-pfa.html" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
+            <a href="inchidere-srl.html" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
+            <a href="srl-cu-lichidator.html" data-ro="SRL cu Lichidator" data-en="SRL with Liquidator">SRL cu Lichidator</a>
+            <a href="analiza-preliminara.html" data-ro="Analiză Preliminară" data-en="Preliminary Analysis">Analiză Preliminară</a>
+            <a href="certificat-constatator.html" style="color:var(--green);font-weight:500" data-ro="Certificat Constatator" data-en="Certificate of Standing">Certificat Constatator</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger" data-ro="Parteneri ▾" data-en="Partners ▾">Parteneri ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="../parteneri/contabili.html" data-ro="Contabili" data-en="Accountants">Contabili</a>
+            <a href="../parteneri/lichidatori.html" data-ro="Lichidatori" data-en="Liquidators">Lichidatori</a>
+          </div>
+        </div>
+        <a href="../blog/index.html" class="nav-link" data-ro="Blog" data-en="Blog">Blog</a>
+        <a href="../preturi.html" class="nav-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
+        <div class="lang-selector" id="lang-selector">
+          <button class="lang-btn lang-ro" data-lang="ro">RO</button>
+          <button class="lang-btn lang-en" data-lang="en">EN</button>
+        </div>
+        <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode">🌙</button>
+        <a href="../login.html" class="btn-ghost" data-ro="Contul meu" data-en="My account">Contul meu</a>
+        <a href="#comanda" class="btn-primary" data-ro="Comandă acum" data-en="Order now">Comandă acum</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Meniu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-section-title" data-ro="Servicii" data-en="Services">Servicii</div>
+    <a href="radiere-pfa.html" class="mobile-link" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
+    <a href="inchidere-srl.html" class="mobile-link" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
+    <a href="srl-cu-lichidator.html" class="mobile-link" data-ro="SRL cu Lichidator" data-en="SRL with Liquidator">SRL cu Lichidator</a>
+    <a href="certificat-constatator.html" class="mobile-link" data-ro="Certificat Constatator" data-en="Certificate of Standing">Certificat Constatator</a>
+    <div class="mobile-section-title" data-ro="Parteneri" data-en="Partners">Parteneri</div>
+    <a href="../parteneri/contabili.html" class="mobile-link" data-ro="Contabili" data-en="Accountants">Contabili</a>
+    <a href="../parteneri/lichidatori.html" class="mobile-link" data-ro="Lichidatori" data-en="Liquidators">Lichidatori</a>
+    <a href="../blog/index.html" class="mobile-link" data-ro="Blog" data-en="Blog">Blog</a>
+    <a href="../preturi.html" class="mobile-link" data-ro="Prețuri" data-en="Pricing">Prețuri</a>
+    <div class="lang-selector mobile-lang-selector">
+      <button class="lang-btn lang-ro" data-lang="ro">RO</button>
+      <button class="lang-btn lang-en" data-lang="en">EN</button>
+    </div>
+    <a href="#comanda" class="btn-primary mobile-cta" data-ro="Comandă acum" data-en="Order now">Comandă acum</a>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="cc-hero" id="comanda">
+      <div class="cc-hero-inner">
+        <div>
+          <div class="cc-badge">
+            <span class="cc-badge-dot"></span>
+            <span data-ro="Eliberat de ONRC · 100% legal" data-en="Issued by ONRC · 100% legal">Eliberat de ONRC · 100% legal</span>
+          </div>
+          <h1 data-ro="Certificat Constatator <strong>online,</strong> livrat pe email." data-en="Certificate of Standing <strong>online,</strong> delivered by email.">Certificat Constatator <strong>online,</strong> livrat pe email.</h1>
+          <p data-ro="Obții certificatul constatator ONRC fără deplasări și fără cozi. Introduci CUI-ul, alegi urgența, îl primești pe email." data-en="Get your ONRC Certificate of Standing without travel or queues. Enter your CUI, choose urgency, receive it by email.">Obții certificatul constatator ONRC fără deplasări și fără cozi. Introduci CUI-ul, alegi urgența, îl primești pe email.</p>
+          <div class="cc-trust">
+            <div class="cc-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-ro="Document oficial ONRC" data-en="Official ONRC document">Document oficial ONRC</span>
+            </div>
+            <div class="cc-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-ro="Livrare pe email în format PDF" data-en="PDF delivery by email">Livrare pe email în format PDF</span>
+            </div>
+            <div class="cc-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-ro="Plată online securizată" data-en="Secure online payment">Plată online securizată</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDER CARD -->
+        <div class="cc-order-card">
+          <div class="cc-order-title" data-ro="Comandă certificatul constatator" data-en="Order certificate of standing">Comandă certificatul constatator</div>
+
+          <div class="cc-input-group">
+            <label data-ro="CUI / Cod fiscal firmă" data-en="Company CUI / Tax code">CUI / Cod fiscal firmă</label>
+            <input type="text" class="cc-input" id="cc-cui" placeholder="Ex: RO12345678" maxlength="12" />
+          </div>
+
+          <div class="cc-input-group">
+            <label data-ro="Email livrare" data-en="Delivery email">Email livrare</label>
+            <input type="email" class="cc-input" id="cc-email" placeholder="email@firma.ro" />
+          </div>
+
+          <div class="cc-input-group">
+            <label data-ro="Alege urgența" data-en="Choose urgency">Alege urgența</label>
+            <div class="cc-plans" id="cc-plans">
+              <label class="cc-plan selected" onclick="selectPlan(this, '79')">
+                <input type="radio" name="plan" value="standard" checked />
+                <div class="cc-plan-left">
+                  <div class="cc-plan-dot"></div>
+                  <div>
+                    <div class="cc-plan-name" data-ro="Standard" data-en="Standard">Standard</div>
+                    <div class="cc-plan-time" data-ro="2-3 zile lucrătoare" data-en="2-3 business days">2-3 zile lucrătoare</div>
+                  </div>
+                </div>
+                <div class="cc-plan-price">79 RON</div>
+              </label>
+              <label class="cc-plan" onclick="selectPlan(this, '129')">
+                <input type="radio" name="plan" value="urgent" />
+                <div class="cc-plan-left">
+                  <div class="cc-plan-dot"></div>
+                  <div>
+                    <div class="cc-plan-name" data-ro="Urgent" data-en="Urgent">Urgent</div>
+                    <div class="cc-plan-time" data-ro="Ziua următoare" data-en="Next business day">Ziua următoare</div>
+                  </div>
+                </div>
+                <div class="cc-plan-price">129 RON</div>
+              </label>
+              <label class="cc-plan" onclick="selectPlan(this, '199')">
+                <input type="radio" name="plan" value="expres" />
+                <div class="cc-plan-left">
+                  <div class="cc-plan-dot"></div>
+                  <div>
+                    <div class="cc-plan-name" data-ro="Expres" data-en="Express">Expres</div>
+                    <div class="cc-plan-time" data-ro="Aceeași zi (până la 16:00)" data-en="Same day (by 16:00)">Aceeași zi (până la 16:00)</div>
+                  </div>
+                </div>
+                <div class="cc-plan-price">199 RON</div>
+              </label>
+            </div>
+          </div>
+
+          <button class="btn-primary cc-order-btn" id="cc-order-btn" onclick="submitOrder()">
+            <span id="cc-btn-text" data-ro="Comandă · 79 RON →" data-en="Order · 79 RON →">Comandă · 79 RON →</span>
+          </button>
+          <p class="cc-order-note" data-ro="TVA inclus · Factură emisă automat · Plată cu cardul" data-en="VAT included · Invoice issued automatically · Card payment">TVA inclus · Factură emisă automat · Plată cu cardul</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CE CONȚINE -->
+    <section class="cc-contains">
+      <div class="cc-contains-inner">
+        <div class="section-header">
+          <div class="section-tag" data-ro="Document oficial" data-en="Official document">Document oficial</div>
+          <h2 data-ro="Ce conține certificatul constatator" data-en="What the certificate contains">Ce conține certificatul constatator</h2>
+          <p data-ro="Documentul oficial eliberat de ONRC cu toate informațiile legale ale firmei." data-en="The official document issued by ONRC with all legal information about the company.">Documentul oficial eliberat de ONRC cu toate informațiile legale ale firmei.</p>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-item">
+            <div class="cc-item-icon">🏢</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Date de identificare" data-en="Identification data">Date de identificare</h4>
+              <p data-ro="Denumire, CUI, nr. înregistrare, formă juridică" data-en="Name, CUI, registration number, legal form">Denumire, CUI, nr. înregistrare, formă juridică</p>
+            </div>
+          </div>
+          <div class="cc-item">
+            <div class="cc-item-icon">📍</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Sediu social" data-en="Registered office">Sediu social</h4>
+              <p data-ro="Adresa completă și data expirării sediului" data-en="Full address and office expiry date">Adresa completă și data expirării sediului</p>
+            </div>
+          </div>
+          <div class="cc-item">
+            <div class="cc-item-icon">👤</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Administratori și asociați" data-en="Directors and associates">Administratori și asociați</h4>
+              <p data-ro="Numele, calitatea și puterile de reprezentare" data-en="Names, roles and representation powers">Numele, calitatea și puterile de reprezentare</p>
+            </div>
+          </div>
+          <div class="cc-item">
+            <div class="cc-item-icon">📊</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Obiect de activitate" data-en="Business activity">Obiect de activitate</h4>
+              <p data-ro="Codul CAEN principal și activitățile secundare" data-en="Main CAEN code and secondary activities">Codul CAEN principal și activitățile secundare</p>
+            </div>
+          </div>
+          <div class="cc-item">
+            <div class="cc-item-icon">✅</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Stare firmă" data-en="Company status">Stare firmă</h4>
+              <p data-ro="Activ, suspendat, în dizolvare sau radiat" data-en="Active, suspended, in dissolution or struck off">Activ, suspendat, în dizolvare sau radiat</p>
+            </div>
+          </div>
+          <div class="cc-item">
+            <div class="cc-item-icon">💰</div>
+            <div class="cc-item-text">
+              <h4 data-ro="Capital social" data-en="Share capital">Capital social</h4>
+              <p data-ro="Valoarea capitalului social subscris și vărsat" data-en="Value of subscribed and paid-up capital">Valoarea capitalului social subscris și vărsat</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAȘI -->
+    <section class="cc-steps">
+      <div class="cc-steps-inner">
+        <div class="section-header">
+          <div class="section-tag" data-ro="Proces" data-en="Process">Proces</div>
+          <h2 data-ro="3 pași simpli" data-en="3 simple steps">3 pași simpli</h2>
+          <p data-ro="De la comandă la document în căsuța ta de email." data-en="From order to document in your inbox.">De la comandă la document în căsuța ta de email.</p>
+        </div>
+        <div class="cc-steps-grid">
+          <div class="cc-step">
+            <div class="cc-step-num">1</div>
+            <h3 data-ro="Completezi formularul" data-en="Fill in the form">Completezi formularul</h3>
+            <p data-ro="Introduci CUI-ul firmei, emailul de livrare și alegi urgența dorită." data-en="Enter the company CUI, delivery email and choose your preferred urgency.">Introduci CUI-ul firmei, emailul de livrare și alegi urgența dorită.</p>
+          </div>
+          <div class="cc-step">
+            <div class="cc-step-num">2</div>
+            <h3 data-ro="Plătești online" data-en="Pay online">Plătești online</h3>
+            <p data-ro="Plată securizată cu cardul. Primești confirmarea și factura automat pe email." data-en="Secure card payment. You receive confirmation and invoice automatically by email.">Plată securizată cu cardul. Primești confirmarea și factura automat pe email.</p>
+          </div>
+          <div class="cc-step">
+            <div class="cc-step-num">3</div>
+            <h3 data-ro="Primești documentul" data-en="Receive the document">Primești documentul</h3>
+            <p data-ro="Certificatul constatator PDF, eliberat oficial de ONRC, direct în inbox-ul tău." data-en="The PDF Certificate of Standing, officially issued by ONRC, directly in your inbox.">Certificatul constatator PDF, eliberat oficial de ONRC, direct în inbox-ul tău.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="cc-faq">
+      <div class="cc-faq-inner">
+        <div class="section-header" style="text-align:center;margin-bottom:2.5rem">
+          <div class="section-tag" data-ro="Întrebări frecvente" data-en="FAQ">Întrebări frecvente</div>
+          <h2 data-ro="Ai întrebări?" data-en="Have questions?">Ai întrebări?</h2>
+        </div>
+        <div class="cc-faq-item">
+          <button class="cc-faq-q" onclick="toggleFaq(this)">
+            <span data-ro="Ce este certificatul constatator?" data-en="What is the Certificate of Standing?">Ce este certificatul constatator?</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="cc-faq-a" data-ro="Certificatul constatator este un document oficial eliberat de ONRC care atestă situația juridică și fiscală a unei firme la o dată dată. Este solicitat frecvent în licitații publice, la bănci, notari sau parteneri de afaceri." data-en="The Certificate of Standing is an official document issued by ONRC that attests the legal and fiscal status of a company at a given date. It is frequently required in public tenders, at banks, notaries or business partners.">Certificatul constatator este un document oficial eliberat de ONRC care atestă situația juridică și fiscală a unei firme la o dată dată. Este solicitat frecvent în licitații publice, la bănci, notari sau parteneri de afaceri.</div>
+        </div>
+        <div class="cc-faq-item">
+          <button class="cc-faq-q" onclick="toggleFaq(this)">
+            <span data-ro="Cât timp este valabil?" data-en="How long is it valid?">Cât timp este valabil?</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="cc-faq-a" data-ro="Certificatul constatator este valabil 30 de zile de la data eliberării, conform legislației în vigoare. Unele instituții pot accepta și documente mai vechi — verificați cu solicitantul." data-en="The Certificate of Standing is valid for 30 days from the date of issue, according to current legislation. Some institutions may accept older documents — check with the requesting party.">Certificatul constatator este valabil 30 de zile de la data eliberării, conform legislației în vigoare. Unele instituții pot accepta și documente mai vechi — verificați cu solicitantul.</div>
+        </div>
+        <div class="cc-faq-item">
+          <button class="cc-faq-q" onclick="toggleFaq(this)">
+            <span data-ro="Este documentul semnat electronic?" data-en="Is the document electronically signed?">Este documentul semnat electronic?</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="cc-faq-a" data-ro="Da. Certificatul constatator eliberat online de ONRC are semnătură electronică calificată și are aceeași valoare juridică cu documentul pe hârtie." data-en="Yes. The Certificate of Standing issued online by ONRC has a qualified electronic signature and has the same legal value as the paper document.">Da. Certificatul constatator eliberat online de ONRC are semnătură electronică calificată și are aceeași valoare juridică cu documentul pe hârtie.</div>
+        </div>
+        <div class="cc-faq-item">
+          <button class="cc-faq-q" onclick="toggleFaq(this)">
+            <span data-ro="Pot comanda pentru orice firmă din România?" data-en="Can I order for any company in Romania?">Pot comanda pentru orice firmă din România?</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="cc-faq-a" data-ro="Da, puteți comanda certificatul constatator pentru orice firmă înregistrată la ONRC — SRL, SA, PFA, II, RA etc. — nu trebuie să fiți administratorul firmei." data-en="Yes, you can order the Certificate of Standing for any company registered with ONRC — SRL, SA, PFA, II, RA, etc. — you do not need to be the company director.">Da, puteți comanda certificatul constatator pentru orice firmă înregistrată la ONRC — SRL, SA, PFA, II, RA etc. — nu trebuie să fiți administratorul firmei.</div>
+        </div>
+        <div class="cc-faq-item">
+          <button class="cc-faq-q" onclick="toggleFaq(this)">
+            <span data-ro="Cum plătesc?" data-en="How do I pay?">Cum plătesc?</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="cc-faq-a" data-ro="Acceptăm plata cu cardul (Visa, Mastercard) prin procesator securizat. Primești factura fiscal pe email imediat după plată." data-en="We accept card payment (Visa, Mastercard) through a secure processor. You receive your fiscal invoice by email immediately after payment.">Acceptăm plata cu cardul (Visa, Mastercard) prin procesator securizat. Primești factura fiscal pe email imediat după plată.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BOTTOM -->
+    <section class="cc-cta">
+      <h2 data-ro="Ai nevoie de certificatul constatator acum?" data-en="Need the certificate right now?">Ai nevoie de certificatul constatator acum?</h2>
+      <p data-ro="Comandă online în 2 minute. Fără drumuri, fără cozi." data-en="Order online in 2 minutes. No travel, no queues.">Comandă online în 2 minute. Fără drumuri, fără cozi.</p>
+      <a href="#comanda" class="btn-primary btn-large" data-ro="Comandă acum →" data-en="Order now →">Comandă acum →</a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">exit<span>biz</span></a>
+        <p data-ro="Servicii profesionale de închidere firme, rapid și legal." data-en="Professional company closure services, fast and legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <div class="footer-col-title" data-ro="Servicii" data-en="Services">Servicii</div>
+          <a href="radiere-pfa.html" data-ro="Radiere PFA" data-en="PFA Strike-off">Radiere PFA</a>
+          <a href="inchidere-srl.html" data-ro="Închidere SRL" data-en="SRL Closure">Închidere SRL</a>
+          <a href="certificat-constatator.html" data-ro="Certificat Constatator" data-en="Certificate of Standing">Certificat Constatator</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title" data-ro="Legal" data-en="Legal">Legal</div>
+          <a href="../termeni.html" data-ro="Termeni și condiții" data-en="Terms and conditions">Termeni și condiții</a>
+          <a href="../confidentialitate.html" data-ro="Politică confidențialitate" data-en="Privacy policy">Politică confidențialitate</a>
+          <a href="../gdpr.html" data-ro="GDPR" data-en="GDPR">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ExitBiz · <span data-ro="Toate drepturile rezervate" data-en="All rights reserved">Toate drepturile rezervate</span></p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/40772129941" class="whatsapp-btn" target="_blank" rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span data-ro="Scrie-ne" data-en="Message us">Scrie-ne</span>
+  </a>
+
+  <script>
+    function selectPlan(el, price) {
+      document.querySelectorAll('.cc-plan').forEach(p => p.classList.remove('selected'));
+      el.classList.add('selected');
+      const lang = localStorage.getItem('lang') || 'ro';
+      const btnText = document.getElementById('cc-btn-text');
+      const label = lang === 'en' ? 'Order' : 'Comandă';
+      btnText.textContent = `${label} · ${price} RON →`;
+      btnText.setAttribute('data-ro', `Comandă · ${price} RON →`);
+      btnText.setAttribute('data-en', `Order · ${price} RON →`);
+    }
+
+    function toggleFaq(btn) {
+      btn.closest('.cc-faq-item').classList.toggle('open');
+    }
+
+    function submitOrder() {
+      const cui = document.getElementById('cc-cui').value.trim();
+      const email = document.getElementById('cc-email').value.trim();
+      const plan = document.querySelector('.cc-plan.selected input');
+      const lang = localStorage.getItem('lang') || 'ro';
+
+      if (!cui) {
+        document.getElementById('cc-cui').focus();
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        document.getElementById('cc-email').focus();
+        return;
+      }
+
+      const btn = document.getElementById('cc-order-btn');
+      btn.textContent = lang === 'en' ? 'Redirecting...' : 'Se redirecționează...';
+      btn.disabled = true;
+
+      // TODO: integrare Stripe/Netopia — deocamdată trimite pe WhatsApp cu detalii
+      const planName = plan ? plan.value : 'standard';
+      const msg = lang === 'en'
+        ? `Hello! I want to order a Certificate of Standing. CUI: ${cui}, Email: ${email}, Plan: ${planName}`
+        : `Bună ziua! Vreau să comand un Certificat Constatator. CUI: ${cui}, Email: ${email}, Plan: ${planName}`;
+
+      setTimeout(() => {
+        window.open(`https://wa.me/40772129941?text=${encodeURIComponent(msg)}`, '_blank');
+        btn.textContent = lang === 'en' ? 'Order · — RON →' : 'Comandă · — RON →';
+        btn.disabled = false;
+      }, 800);
+    }
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

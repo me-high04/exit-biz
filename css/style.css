@@ -629,6 +629,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 }
 .lang-popup-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
 
+/* ---- CERTIFICAT CONSTATATOR STRIP ---- */
+.cc-strip { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; }
+.cc-strip-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.cc-strip-left { display: flex; align-items: center; gap: 1rem; }
+.cc-strip-icon { font-size: 28px; flex-shrink: 0; }
+.cc-strip-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.cc-strip-sub { font-size: 13px; color: var(--text-secondary); }
+.cc-strip-right { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.cc-strip-plans { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+.cc-strip-plan strong { color: var(--text-primary); font-weight: 600; }
+.cc-strip-divider { color: var(--border-hover); }
+@media (max-width: 768px) {
+  .cc-strip-right { width: 100%; }
+  .cc-strip-plans { display: none; }
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: calc(var(--nav-height) + 3rem); }
