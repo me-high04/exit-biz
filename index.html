@@ -38,6 +38,7 @@
 </div>
 </div>
 <a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="nav-link" data-en="Articles" data-ro="Articole" href="blog/index.html">Articole</a>
 <a class="nav-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
 <div class="lang-selector" id="lang-selector">
 <button class="lang-btn lang-ro" data-lang="ro">RO</button>
@@ -57,6 +58,7 @@
 <a class="mobile-link" data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
 <a class="mobile-link" data-en="Certificate of Standing" data-ro="Certificat Constatator" href="servicii/certificat-constatator.html">Certificat Constatator</a>
 <a class="mobile-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="mobile-link" data-en="Articles" data-ro="Articole" href="blog/index.html">Articole</a>
 <a class="mobile-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
 <a class="mobile-link" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
 <div class="lang-selector mobile-lang-selector"><button class="lang-btn lang-ro" data-lang="ro">RO</button><button class="lang-btn lang-en" data-lang="en">EN</button></div>
@@ -84,36 +86,17 @@
 </div>
 </div>
 <div class="hero-visual">
-
-  <!-- CARD 1: Diagnostic firmă -->
-  <div class="cui-lookup-card">
-    <div class="cui-lookup-header">
-      <div class="cui-lookup-dot"></div>
-      <span data-en="Company diagnostic" data-ro="Diagnostic firmă">Diagnostic firmă</span>
-    </div>
-    <p class="cui-lookup-sub" data-en="Enter your company CUI to see your firm's situation and the recommended procedure." data-ro="Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.">Introdu CUI-ul pentru a vedea situația firmei și procedura recomandată.</p>
-    <div class="cui-input-row">
-      <input class="cui-input" id="cui-input" maxlength="12" placeholder="Ex: RO12345678" type="text"/>
-      <button class="btn-primary" data-en="Check" data-ro="Verifică" id="cui-btn" onclick="verificaFirma()">Verifică</button>
-    </div>
-    <div class="cui-tags">
-      <span class="cui-tag" data-en="Company type" data-ro="Tip firmă">Tip firmă</span>
-      <span class="cui-tag" data-en="Tax status" data-ro="Status fiscal">Status fiscal</span>
-      <span class="cui-tag" data-en="Recommended procedure" data-ro="Procedură recomandată">Procedură recomandată</span>
-    </div>
-  </div>
-
-  <!-- CARD 2: Certificat Constatator — Multi-step -->
+  <!-- CERTIFICAT CONSTATATOR — Multi-step -->
   <div class="cc-hero-card" id="certificat-constatator">
-    <div class="cc-hero-card-title">Completează acum!</div>
+    <div class="cc-hero-card-header-text">
+      <p class="cui-lookup-sub" style="margin-bottom:10px"><strong>Ai nevoie de un certificat constatator?</strong> Completează acum și îl primești direct pe email!</p>
+    </div>
     <div class="ccs-stepper">
 
-      <!-- S1: CUI -->
       <div class="ccs-step-row active" data-step="1">
         <div class="ccs-col"><div class="ccs-dot">1</div><div class="ccs-line"></div></div>
         <div class="ccs-content">
           <div class="ccs-label">Introdu CUI</div>
-          <div class="ccs-sublabel">CUI/CIF certificat</div>
           <div id="ccs-body-1">
             <div class="cui-input-row" style="margin:8px 0">
               <input type="text" class="cui-input" id="ccs-cui" placeholder="Ex: RO12345678" maxlength="12"/>
@@ -126,7 +109,6 @@
         </div>
       </div>
 
-      <!-- S2: Tip Document -->
       <div class="ccs-step-row" data-step="2">
         <div class="ccs-col"><div class="ccs-dot">2</div><div class="ccs-line"></div></div>
         <div class="ccs-content">
@@ -134,18 +116,15 @@
           <div id="ccs-body-2" style="display:none">
             <div class="ccs-doc-box">Certificat constatator de bază <span>79 RON + TVA</span></div>
             <div style="margin-top:10px">
-              <label class="ccs-lbl">Document solicitat pentru a servi la</label>
+              <label class="ccs-lbl">Solicitat pentru</label>
               <select id="ccs-scop" class="ccw-select" style="margin-top:4px">
                 <option value="">— Selectează scopul —</option>
                 <option>Accesare Fonduri</option><option>Accesare Fonduri Europene</option>
                 <option>Administrația financiară</option><option>Administrația Finanțelor Publice</option>
                 <option>Agenția pentru Finanțarea Investițiilor Rurale (AFIR)</option>
-                <option>Agenția Națională de Administrare Fiscală</option>
                 <option>Banca Națională a României</option><option>Bancă</option>
-                <option>Birou notar public</option><option>Casa Națională de Pensii</option>
-                <option>Direcția Generală a Vămilor</option><option>Instanță</option>
+                <option>Birou notar public</option><option>Instanță</option>
                 <option>Leasing</option><option>Licitație</option>
-                <option>Oficiul de Cadastru și Publicitate Imobiliară</option>
                 <option>Parchet</option><option>Poliție</option><option>Primărie</option>
                 <option>Registrul Auto Român</option><option>Înregistrare în scopuri de TVA</option>
                 <option>Altul</option>
@@ -159,7 +138,6 @@
         </div>
       </div>
 
-      <!-- S3: Facturare -->
       <div class="ccs-step-row" data-step="3">
         <div class="ccs-col"><div class="ccs-dot">3</div><div class="ccs-line"></div></div>
         <div class="ccs-content">
@@ -168,7 +146,7 @@
             <div class="ccw-radio-group" style="margin-top:8px">
               <label class="ccw-radio selected" onclick="ccsFactura(this,'firma')">
                 <div class="ccw-radio-dot"></div>
-                <div><div class="ccw-radio-name">Firma din certificat</div><div class="ccw-radio-sub">Eliberează factura pe aceeași societate</div></div>
+                <div><div class="ccw-radio-name">Firma din certificat</div><div class="ccw-radio-sub">Factura pe aceeași societate</div></div>
               </label>
               <label class="ccw-radio" onclick="ccsFactura(this,'pj')">
                 <div class="ccw-radio-dot"></div>
@@ -176,13 +154,12 @@
               </label>
               <label class="ccw-radio" onclick="ccsFactura(this,'pf')">
                 <div class="ccw-radio-dot"></div>
-                <div><div class="ccw-radio-name">Persoană fizică</div><div class="ccw-radio-sub">Eliberează factura pe persoană fizică</div></div>
+                <div><div class="ccw-radio-name">Persoană fizică</div></div>
               </label>
             </div>
             <div id="ccs-cui-fact-wrap" style="display:none;margin-top:8px">
               <label class="ccs-lbl" style="color:#e53e3e">CUI/CIF facturare *</label>
               <input type="text" id="ccs-cui-fact" class="ccw-input" placeholder="CUI/CIF" style="margin-top:4px"/>
-              <div class="ccs-hint">CUI-ul firmei pentru care va fi emisă factura</div>
             </div>
             <div class="ccs-nav">
               <button class="ccw-btn-back" onclick="ccsGo(2)">Înapoi</button>
@@ -192,14 +169,13 @@
         </div>
       </div>
 
-      <!-- S4: Contact -->
       <div class="ccs-step-row" data-step="4">
         <div class="ccs-col"><div class="ccs-dot">4</div></div>
         <div class="ccs-content">
           <div class="ccs-label">Contact</div>
           <div id="ccs-body-4" style="display:none">
             <div style="margin-top:8px">
-              <label class="ccs-lbl">Adresa email <span style="color:#e53e3e">*</span></label>
+              <label class="ccs-lbl">Adresa email *</label>
               <input type="email" id="ccs-email" class="ccw-input" placeholder="Email" style="margin-top:4px"/>
               <div id="ccs-err-email" class="ccs-error" style="display:none"></div>
             </div>
@@ -211,13 +187,9 @@
             <div class="ccw-checks" style="margin-top:10px">
               <label class="ccw-check-row">
                 <input type="checkbox" id="ccs-terms"/>
-                <span>Am citit și sunt de acord cu <a href="termeni.html" target="_blank" class="ccw-link">termenii și condițiile</a> *</span>
+                <span>Am citit <a href="termeni.html" target="_blank" class="ccw-link">termenii și condițiile</a> *</span>
               </label>
               <div id="ccs-err-terms" class="ccs-error" style="display:none"></div>
-              <label class="ccw-check-row">
-                <input type="checkbox" id="ccs-mkt"/>
-                <span>Sunt de acord să primesc comunicări comerciale</span>
-              </label>
             </div>
             <div class="ccs-total-bar">
               <span>Total:</span><span class="ccs-total-amount">94 RON + TVA</span>
@@ -232,12 +204,11 @@
 
     </div>
   </div>
-
 </div>
+</section>
+
 <script>
 const ccsState={cui:'',firmName:'',scop:'',factura:'firma',cuiFact:'',email:'',phone:''};
-let ccsStep=1;
-
 async function ccsLookup(){
   const cui=document.getElementById('ccs-cui').value.trim().replace(/[^0-9]/g,'');
   const err=document.getElementById('ccs-err1'),firm=document.getElementById('ccs-firm'),next=document.getElementById('ccs-next1');
@@ -246,14 +217,13 @@ async function ccsLookup(){
   const btn=document.querySelector('#ccs-body-1 .ccw-btn-sm');btn.textContent='...';btn.disabled=true;
   try{
     const r=await fetch('/.netlify/functions/firma-info?cui='+cui);
-    const d=await r.json();
-    const raw=d?.found?.[0];const f=raw?.date_generale??raw;
+    const d=await r.json();const raw=d?.found?.[0];const f=raw?.date_generale??raw;
     if(f&&f.denumire){
       ccsState.cui=cui;ccsState.firmName=f.denumire;
-      firm.innerHTML='<strong>'+f.denumire+'</strong><br>RO'+cui+(f.nrRegCom?'<br>Nr. înregistrare: '+f.nrRegCom:'')+(f.adresa?'<br><span style="font-size:11px">'+f.adresa+'</span>':'');
+      firm.innerHTML='<strong>'+f.denumire+'</strong><br>RO'+cui+(f.nrRegCom?'<br>Nr. înreg.: '+f.nrRegCom:'')+(f.adresa?'<br><span style="font-size:11px">'+f.adresa+'</span>':'');
       firm.style.display='block';next.disabled=false;
-    }else{err.textContent='Firma nu a fost găsită. Verifică CUI-ul.';err.style.display='block';}
-  }catch(e){err.textContent='Eroare la căutare. Încearcă din nou.';err.style.display='block';}
+    }else{err.textContent='Firma nu a fost găsită.';err.style.display='block';}
+  }catch(e){err.textContent='Eroare. Încearcă din nou.';err.style.display='block';}
   btn.textContent='Caută';btn.disabled=false;
 }
 document.addEventListener('DOMContentLoaded',()=>{
@@ -261,7 +231,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(i)i.addEventListener('keydown',e=>{if(e.key==='Enter')ccsLookup();});
 });
 function ccsGo(n){
-  ccsStep=n;
+  if(n===3)ccsState.scop=document.getElementById('ccs-scop')?.value||'';
   document.querySelectorAll('.ccs-step-row').forEach(row=>{
     const s=parseInt(row.dataset.step);
     row.classList.remove('active','done');
@@ -270,7 +240,6 @@ function ccsGo(n){
     const b=document.getElementById('ccs-body-'+s);
     if(b)b.style.display=s===n?'block':'none';
   });
-  if(n===2){ccsState.scop=document.getElementById('ccs-scop')?.value||'';}
 }
 function ccsFactura(el,type){
   document.querySelectorAll('#ccs-body-3 .ccw-radio').forEach(r=>r.classList.remove('selected'));
@@ -278,25 +247,26 @@ function ccsFactura(el,type){
   document.getElementById('ccs-cui-fact-wrap').style.display=type!=='firma'?'block':'none';
 }
 function ccsNext3(){
-  if(ccsState.factura!=='firma'){
-    const v=document.getElementById('ccs-cui-fact').value.trim();
-    if(!v){document.getElementById('ccs-cui-fact').focus();return;}
-    ccsState.cuiFact=v;
-  }
-  ccsState.scop=document.getElementById('ccs-scop')?.value||'';
+  if(ccsState.factura!=='firma'){const v=document.getElementById('ccs-cui-fact').value.trim();if(!v){document.getElementById('ccs-cui-fact').focus();return;}ccsState.cuiFact=v;}
   ccsGo(4);
 }
 function ccsSubmit(){
   const email=document.getElementById('ccs-email').value.trim();
   let ok=true;
-  document.getElementById('ccs-err-email').style.display='none';
-  document.getElementById('ccs-err-terms').style.display='none';
+  ['ccs-err-email','ccs-err-terms'].forEach(id=>document.getElementById(id).style.display='none');
   if(!email||!email.includes('@')){document.getElementById('ccs-err-email').textContent='Email-ul este obligatoriu.';document.getElementById('ccs-err-email').style.display='block';ok=false;}
-  if(!document.getElementById('ccs-terms').checked){document.getElementById('ccs-err-terms').textContent='Trebuie să accepți termenii și condițiile.';document.getElementById('ccs-err-terms').style.display='block';ok=false;}
+  if(!document.getElementById('ccs-terms').checked){document.getElementById('ccs-err-terms').textContent='Acceptă termenii pentru a continua.';document.getElementById('ccs-err-terms').style.display='block';ok=false;}
   if(!ok)return;
   ccsState.email=email;ccsState.phone=document.getElementById('ccs-phone').value.trim();
   const btn=document.getElementById('ccs-submit');btn.textContent='Se procesează...';btn.disabled=true;
-  const msg='Comandă Certificat Constatator:\n- Firmă: '+ccsState.firmName+' (RO'+ccsState.cui+')\n- Tip: Certificat constatator de bază - 79 RON + TVA\n- Scop: '+(ccsState.scop||'Nespecificat')+'\n- Facturare: '+ccsState.factura+(ccsState.cuiFact?' / CUI: '+ccsState.cuiFact:'')+'\n- Email: '+ccsState.email+(ccsState.phone?'\n- Tel: '+ccsState.phone:'')+'\n- Total: 94 RON (incl. TVA)';
+  const msg='Comandă Certificat Constatator:
+- Firmă: '+ccsState.firmName+' (RO'+ccsState.cui+')
+- Tip: Certificat constatator de bază - 79 RON + TVA
+- Scop: '+(ccsState.scop||'Nespecificat')+'
+- Facturare: '+ccsState.factura+(ccsState.cuiFact?' / CUI: '+ccsState.cuiFact:'')+'
+- Email: '+ccsState.email+(ccsState.phone?'
+- Tel: '+ccsState.phone:'')+'
+- Total: 94 RON (incl. TVA)';
   setTimeout(()=>{window.open('https://wa.me/40772129941?text='+encodeURIComponent(msg),'_blank');btn.textContent='Continuă';btn.disabled=false;},600);
 }
 </script>

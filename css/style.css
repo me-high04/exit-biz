@@ -347,8 +347,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .hero-visual {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   padding-top: 1rem;
+  align-self: start;
 }
 .doc-card {
   position: absolute;
