@@ -245,9 +245,11 @@ async function verificaFirma() {
   try {
     const res = await fetch(`/.netlify/functions/firma-info?cui=${cui}`);
     const data = await res.json();
-    const firma = data?.found?.[0];
+    // ANAF v8: date_generale e nested în found[0]
+    const raw = data?.found?.[0];
+    const firma = raw?.date_generale ?? raw;
 
-    if (!firma) {
+    if (!firma || !firma.denumire) {
       body.innerHTML = `
         <div class="cui-modal-icon">❌</div>
         <h3>Firma nu a fost găsită</h3>
@@ -257,7 +259,7 @@ async function verificaFirma() {
     }
 
     const procedura = getProcedura(firma.denumire);
-    const stareColor = firma.stare === 'ACTIVA' ? 'var(--green)' : '#e53e3e';
+    const stareColor = (firma.stare || '').includes('ACTIV') ? 'var(--green)' : '#e53e3e';
     const tvaStatus = firma.scpTVA ? '✓ Plătitor TVA' : '✗ Neplătitor TVA';
 
     body.innerHTML = `

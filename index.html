@@ -341,15 +341,19 @@ async function ccwLookupCUI() {
   try {
     const r = await fetch(`/.netlify/functions/firma-info?cui=${cui}`);
     const d = await r.json();
-    const f = d?.found?.[0] ?? d?.data?.[0];
-    if (f) {
+    // ANAF v8: date_generale e nested în found[0]
+    const raw = d?.found?.[0];
+    const f = raw?.date_generale ?? raw;
+    if (f && (f.denumire || f.name)) {
       ccwState.cui = cui;
       ccwState.firmName = f.denumire || f.name || '';
+      const nrReg = f.nrRegCom || raw?.nrRegCom || '';
+      const adresa = f.adresa || raw?.adresa || '';
       resEl.innerHTML = `<div class="ccw-firm-box">
         <div class="ccw-firm-name">${ccwState.firmName}</div>
         <div class="ccw-firm-meta">RO${cui}</div>
-        ${f.nrRegCom ? `<div class="ccw-firm-meta">Nr. înregistrare: ${f.nrRegCom}</div>` : ''}
-        ${f.adresa ? `<div class="ccw-firm-meta">${f.adresa}</div>` : ''}
+        ${nrReg ? `<div class="ccw-firm-meta">Nr. înregistrare: ${nrReg}</div>` : ''}
+        ${adresa ? `<div class="ccw-firm-meta">${adresa}</div>` : ''}
       </div>`;
       resEl.style.display='block';
       nextBtn.disabled = false;
