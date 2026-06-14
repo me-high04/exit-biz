@@ -634,7 +634,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .lang-popup-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
 
 /* ---- CC HERO CARD (multi-step) ---- */
-.cc-hero-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); max-height: 520px; overflow-y: auto; }
+.cc-hero-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); max-height: 580px; overflow-y: auto; }
+.ccs-main-title { font-size: 17px; font-weight: 700; color: var(--text-primary); text-align: center; margin-bottom: 4px; }
+.ccs-main-sub { font-size: 13px; color: var(--text-secondary); text-align: center; margin-bottom: 1rem; line-height: 1.5; }
 .cc-hero-card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); text-align: center; margin-bottom: 1rem; }
 /* CCS Stepper */
 .ccs-stepper { display: flex; flex-direction: column; }
