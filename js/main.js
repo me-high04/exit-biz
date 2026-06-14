@@ -417,12 +417,18 @@ document.getElementById('mobile-menu').style.display = 'none';
     window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function attachWaHandlers() {
     document.querySelectorAll('.whatsapp-btn').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         openWaPopup();
       });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachWaHandlers);
+  } else {
+    attachWaHandlers();
+  }
 })();
