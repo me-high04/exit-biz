@@ -447,7 +447,8 @@ function calcPrice() {
   if (s1 === 'nu-stiu') return { type: 'evaluare' };
   var contab = getContab(s6);
   if (s1 === 'suspendare') {
-    return { type: 'suspendare', procedura: 80, contab: contab, timp: '2-4 săptămâni', proceduraTip: 'Suspendare temporară' };
+    var sp = Math.ceil(80 / 100) * 100;
+    return { type: 'suspendare', procedura: sp, contab: contab, timp: '2-4 săptămâni', proceduraTip: 'Suspendare temporară' };
   }
   var price = 200;
   if (s2 === '1-5')       price += 100;
@@ -458,6 +459,7 @@ function calcPrice() {
   if (s4 === 'act-10k+')  price += 300;
   if (s5 === '1-3ani')    price += 40;
   if (s5 === '3ani+')     price += 80;
+  price = Math.ceil(price / 100) * 100;
   var hasActive = s4 !== 'no-act', hasDat = s3 !== 'no-dat', big5 = s2 === '5+';
   var timp = (big5 || (hasActive && hasDat) || s6 === 'mari') ? '12+ luni'
            : (hasActive || hasDat) ? '6-12 luni' : '3-6 luni';
