@@ -330,17 +330,35 @@ function closeWaPopup() {
 }
 function submitWaPopup(e) {
   e.preventDefault();
+  var lang = (typeof currentLang !== 'undefined' ? currentLang : null) || localStorage.getItem('lang') || 'ro';
   var form = document.getElementById('wa-qualify-form');
   var errEl = document.getElementById('wa-qualify-err');
-  var firma = (form.querySelector('input[name="wq-firma"]:checked') || {}).value || '';
-  var proc  = (form.querySelector('input[name="wq-proc"]:checked')  || {}).value || '';
-  var bil   = (form.querySelector('input[name="wq-bil"]:checked')   || {}).value || '';
-  if (!firma || !proc || !bil) {
-    errEl.textContent = 'Te rugam sa raspunzi la toate intrebarile.';
+  var inFirma = form.querySelector('input[name="wq-firma"]:checked');
+  var inProc  = form.querySelector('input[name="wq-proc"]:checked');
+  var inBil   = form.querySelector('input[name="wq-bil"]:checked');
+  if (!inFirma || !inProc || !inBil) {
+    errEl.textContent = lang === 'en' ? 'Please answer all questions.' : 'Te rugam sa raspunzi la toate intrebarile.';
     return;
   }
   errEl.textContent = '';
-  var msg = 'Buna ziua!\n\n1. ' + firma + '\n2. ' + proc + '\n3. ' + bil + '\n\nDoresc informatii si un sfat personalizat.';
+
+  var isEn = lang === 'en';
+  var q1 = isEn ? 'Do you have a company you want to close?' : 'Aveti o firma pe care doriti sa o inchideti?';
+  var q2 = isEn ? 'What type of company / procedure are you looking for?' : 'Ce tip de firma / procedura aveti in vedere?';
+  var q3 = isEn ? 'Do you know when the last annual financial statement was filed?' : 'Stiti cand a fost depus ultimul bilant anual?';
+  var a1 = isEn ? (inFirma.dataset.en || inFirma.value) : inFirma.value;
+  var a2 = isEn ? (inProc.dataset.en  || inProc.value)  : inProc.value;
+  var a3 = isEn ? (inBil.dataset.en   || inBil.value)   : inBil.value;
+  var ansLabel = isEn ? 'Answer' : 'Raspuns';
+  var intro = isEn
+    ? 'Hello! I filled in the contact form on ExitBiz.ro:\n\n'
+    : 'Buna ziua! Am completat formularul de contact pe ExitBiz.ro:\n\n';
+
+  var msg = intro
+    + '1. ' + q1 + '\n   ' + ansLabel + ': ' + a1 + '\n\n'
+    + '2. ' + q2 + '\n   ' + ansLabel + ': ' + a2 + '\n\n'
+    + '3. ' + q3 + '\n   ' + ansLabel + ': ' + a3;
+
   closeWaPopup();
   window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
 }
