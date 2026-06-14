@@ -88,22 +88,22 @@
 <div class="hero-visual">
   <div class="cc-hero-card" id="certificat-constatator">
 
-    <h3 class="ccs-main-title">Completează acum!</h3>
-    <p class="ccs-main-sub">Ai nevoie de un certificat constatator? <strong>Completează</strong> și îl primești direct pe email!</p>
+    <h3 class="ccs-main-title" data-ro="Completează acum!" data-en="Order now!">Completează acum!</h3>
+    <p class="ccs-main-sub" data-ro="Ai nevoie de un certificat constatator? Completează și îl primești direct pe email!" data-en="Need a certificate of standing? Fill in and receive it directly by email!">Ai nevoie de un certificat constatator? Completează și îl primești direct pe email!</p>
 
     <div id="ccs-row-1" class="ccs-step-row active">
       <div class="ccs-col"><div class="ccs-dot" id="ccs-dot-1">1</div><div class="ccs-line"></div></div>
       <div class="ccs-content">
-        <div class="ccs-label">Introdu CUI</div>
-        <div class="ccs-sublabel">CUI/CIF certificat</div>
+        <div class="ccs-label" data-ro="Introdu CUI" data-en="Enter company ID">Introdu CUI</div>
+        <div class="ccs-sublabel" data-ro="CUI/CIF certificat" data-en="Company registration number">CUI/CIF certificat</div>
         <div id="ccs-body-1">
           <div class="cui-input-row" style="margin:8px 0 6px">
             <input type="text" id="ccs-cui-input" class="cui-input" placeholder="Ex: RO12345678" maxlength="12"/>
-            <button id="ccs-search-btn" class="btn-primary" style="padding:9px 14px;font-size:13px;white-space:nowrap" onclick="ccLookup()">Caută</button>
+            <button id="ccs-search-btn" class="btn-primary" style="padding:9px 14px;font-size:13px;white-space:nowrap" onclick="ccLookup()" data-ro="Caută" data-en="Search">Caută</button>
           </div>
           <div id="ccs-firm-info" class="ccs-firm-box" style="display:none"></div>
           <div id="ccs-err-1" class="ccs-error" style="display:none"></div>
-          <div class="ccs-nav"><button id="ccs-next-1" class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccShowStep(2)" disabled>Continuă</button></div>
+          <div class="ccs-nav"><button id="ccs-next-1" class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccShowStep(2)" disabled data-ro="Continuă" data-en="Continue">Continuă</button></div>
         </div>
       </div>
     </div>
@@ -111,26 +111,34 @@
     <div id="ccs-row-2" class="ccs-step-row">
       <div class="ccs-col"><div class="ccs-dot" id="ccs-dot-2">2</div><div class="ccs-line"></div></div>
       <div class="ccs-content">
-        <div class="ccs-label">Tip Document</div>
+        <div class="ccs-label" data-ro="Tip Document" data-en="Document Type">Tip Document</div>
         <div id="ccs-body-2" style="display:none">
-          <div class="ccs-doc-box" style="margin:8px 0 10px">Certificat constatator de bază <span style="color:var(--green);font-weight:700">79 RON + TVA</span></div>
-          <label class="ccs-lbl" style="font-size:11px">Document solicitat pentru a servi la</label>
+          <div class="ccs-doc-box" style="margin:8px 0 10px"><span data-ro="Certificat constatator de bază" data-en="Certificate of Standing – basic">Certificat constatator de bază</span> <span style="color:var(--green);font-weight:700">79 RON + TVA</span></div>
+          <label class="ccs-lbl" style="font-size:11px" data-ro="Document solicitat pentru a servi la" data-en="Document requested to be used for">Document solicitat pentru a servi la</label>
           <select id="ccs-scop" class="ccw-select" style="margin-top:5px;width:100%">
-            <option value="">— Selectează scopul —</option>
-            <option>Accesare Fonduri</option><option>Accesare Fonduri Europene</option>
-            <option>Administrația financiară</option><option>Administrația Finanțelor Publice</option>
-            <option>Agenția pentru Finanțarea Investițiilor Rurale (AFIR)</option>
-            <option>Agenția Națională de Administrare Fiscală</option>
-            <option>Banca Națională a României</option><option>Bancă</option>
-            <option>Birou notar public</option><option>Instanță</option>
-            <option>Leasing</option><option>Licitație</option>
-            <option>Parchet</option><option>Poliție</option><option>Primărie</option>
-            <option>Registrul Auto Român</option><option>Înregistrare în scopuri de TVA</option>
-            <option>Altul</option>
+            <option value="" data-ro="— Selectează scopul —" data-en="— Select purpose —">— Selectează scopul —</option>
+            <option data-ro="Accesare Fonduri" data-en="Accessing Funds">Accesare Fonduri</option>
+            <option data-ro="Accesare Fonduri Europene" data-en="Accessing European Funds">Accesare Fonduri Europene</option>
+            <option data-ro="Administrația financiară" data-en="Financial Administration">Administrația financiară</option>
+            <option data-ro="Administrația Finanțelor Publice" data-en="Public Finance Administration">Administrația Finanțelor Publice</option>
+            <option data-ro="Agenția pentru Finanțarea Investițiilor Rurale (AFIR)" data-en="Rural Investment Financing Agency (AFIR)">Agenția pentru Finanțarea Investițiilor Rurale (AFIR)</option>
+            <option data-ro="Agenția Națională de Administrare Fiscală" data-en="National Tax Administration Agency">Agenția Națională de Administrare Fiscală</option>
+            <option data-ro="Banca Națională a României" data-en="National Bank of Romania">Banca Națională a României</option>
+            <option data-ro="Bancă" data-en="Bank">Bancă</option>
+            <option data-ro="Birou notar public" data-en="Notary office">Birou notar public</option>
+            <option data-ro="Instanță" data-en="Court">Instanță</option>
+            <option data-ro="Leasing" data-en="Leasing">Leasing</option>
+            <option data-ro="Licitație" data-en="Tender / Auction">Licitație</option>
+            <option data-ro="Parchet" data-en="Prosecutor's office">Parchet</option>
+            <option data-ro="Poliție" data-en="Police">Poliție</option>
+            <option data-ro="Primărie" data-en="Town hall">Primărie</option>
+            <option data-ro="Registrul Auto Român" data-en="Romanian Auto Registry">Registrul Auto Român</option>
+            <option data-ro="Înregistrare în scopuri de TVA" data-en="VAT registration">Înregistrare în scopuri de TVA</option>
+            <option data-ro="Altul" data-en="Other">Altul</option>
           </select>
           <div class="ccs-nav" style="margin-top:10px">
-            <button class="ccw-btn-back" onclick="ccShowStep(1)">Înapoi</button>
-            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccShowStep(3)">Continuă</button>
+            <button class="ccw-btn-back" onclick="ccShowStep(1)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccShowStep(3)" data-ro="Continuă" data-en="Continue">Continuă</button>
           </div>
         </div>
       </div>
@@ -139,29 +147,29 @@
     <div id="ccs-row-3" class="ccs-step-row">
       <div class="ccs-col"><div class="ccs-dot" id="ccs-dot-3">3</div><div class="ccs-line"></div></div>
       <div class="ccs-content">
-        <div class="ccs-label">Date Facturare</div>
+        <div class="ccs-label" data-ro="Date Facturare" data-en="Billing Details">Date Facturare</div>
         <div id="ccs-body-3" style="display:none">
           <div class="ccw-radio-group" style="margin:8px 0 10px">
             <label class="ccw-radio selected" onclick="ccSelectFact(this,'firma')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name">Firma din certificat</div><div class="ccw-radio-sub">Eliberează factura pe aceeași societate</div></div>
+              <div><div class="ccw-radio-name" data-ro="Firma din certificat" data-en="Company from certificate">Firma din certificat</div><div class="ccw-radio-sub" data-ro="Eliberează factura pe aceeași societate" data-en="Invoice on the same company">Eliberează factura pe aceeași societate</div></div>
             </label>
             <label class="ccw-radio" onclick="ccSelectFact(this,'pj')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name">Persoană juridică</div><div class="ccw-radio-sub">Facturează pe o altă societate</div></div>
+              <div><div class="ccw-radio-name" data-ro="Persoană juridică" data-en="Other legal entity">Persoană juridică</div><div class="ccw-radio-sub" data-ro="Facturează pe o altă societate" data-en="Invoice on a different company">Facturează pe o altă societate</div></div>
             </label>
             <label class="ccw-radio" onclick="ccSelectFact(this,'pf')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name">Persoană fizică</div></div>
+              <div><div class="ccw-radio-name" data-ro="Persoană fizică" data-en="Individual (natural person)">Persoană fizică</div></div>
             </label>
           </div>
           <div id="ccs-fact-cui-wrap" style="display:none;margin-bottom:10px">
-            <label style="font-size:11px;font-weight:600;color:#e53e3e;display:block;margin-bottom:4px">CUI/CIF facturare *</label>
+            <label style="font-size:11px;font-weight:600;color:#e53e3e;display:block;margin-bottom:4px" data-ro="CUI/CIF facturare *" data-en="Billing company ID *">CUI/CIF facturare *</label>
             <input type="text" id="ccs-fact-cui" class="ccw-input" placeholder="CUI/CIF"/>
           </div>
           <div class="ccs-nav">
-            <button class="ccw-btn-back" onclick="ccShowStep(2)">Înapoi</button>
-            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccStep3Next()">Continuă</button>
+            <button class="ccw-btn-back" onclick="ccShowStep(2)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccStep3Next()" data-ro="Continuă" data-en="Continue">Continuă</button>
           </div>
         </div>
       </div>
@@ -170,36 +178,36 @@
     <div id="ccs-row-4" class="ccs-step-row">
       <div class="ccs-col"><div class="ccs-dot" id="ccs-dot-4">4</div></div>
       <div class="ccs-content">
-        <div class="ccs-label">Contact</div>
+        <div class="ccs-label" data-ro="Contact" data-en="Contact">Contact</div>
         <div id="ccs-body-4" style="display:none">
           <div style="margin:8px 0">
-            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Adresa email <span style="color:#e53e3e">*</span></label>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px"><span data-ro="Adresa email" data-en="Email address">Adresa email</span> <span style="color:#e53e3e">*</span></label>
             <input type="email" id="ccs-email" class="ccw-input" placeholder="Email"/>
             <div id="ccs-err-email" class="ccs-error" style="display:none"></div>
           </div>
           <div style="margin:8px 0">
-            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Telefon</label>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px" data-ro="Telefon" data-en="Phone">Telefon</label>
             <input type="text" id="ccs-phone" class="ccw-input" placeholder="Telefon"/>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Opțional — notificare SMS despre stadiul comenzii</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px" data-ro="Opțional — notificare SMS despre stadiul comenzii" data-en="Optional — SMS notification about order status">Opțional — notificare SMS despre stadiul comenzii</div>
           </div>
           <div style="margin:10px 0">
             <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-secondary);cursor:pointer">
               <input type="checkbox" id="ccs-terms" style="margin-top:2px"/>
-              <span>Am citit <a href="termeni.html" target="_blank" style="color:var(--green)">termenii și condițiile</a> <span style="color:#e53e3e">*</span></span>
+              <span><span data-ro="Am citit" data-en="I have read the">Am citit</span> <a href="termeni.html" target="_blank" style="color:var(--green)" data-ro="termenii și condițiile" data-en="terms and conditions">termenii și condițiile</a> <span style="color:#e53e3e">*</span></span>
             </label>
             <div id="ccs-err-terms" class="ccs-error" style="display:none"></div>
             <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-secondary);cursor:pointer;margin-top:6px">
               <input type="checkbox" id="ccs-mkt" style="margin-top:2px"/>
-              <span>Sunt de acord să primesc comunicări comerciale</span>
+              <span data-ro="Sunt de acord să primesc comunicări comerciale" data-en="I agree to receive commercial communications">Sunt de acord să primesc comunicări comerciale</span>
             </label>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border);margin-bottom:8px">
-            <span style="font-size:13px;color:var(--text-secondary)">Total:</span>
+            <span style="font-size:13px;color:var(--text-secondary)" data-ro="Total:" data-en="Total:">Total:</span>
             <span style="font-size:17px;font-weight:700">79 RON + TVA</span>
           </div>
           <div class="ccs-nav">
-            <button class="ccw-btn-back" onclick="ccShowStep(3)">Înapoi</button>
-            <button class="btn-primary" style="padding:9px 20px;font-size:13px" id="ccs-submit-btn" onclick="ccSubmit()">Continuă</button>
+            <button class="ccw-btn-back" onclick="ccShowStep(3)" data-ro="Înapoi" data-en="Back">Înapoi</button>
+            <button class="btn-primary" style="padding:9px 20px;font-size:13px" id="ccs-submit-btn" onclick="ccSubmit()" data-ro="Continuă" data-en="Continue">Continuă</button>
           </div>
         </div>
       </div>
@@ -475,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- WHATSAPP BUTTON -->
 <button class="whatsapp-btn" aria-label="Contactează-ne pe WhatsApp" onclick="openWaPopup()">
 <svg fill="currentColor" height="28" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-<span>Scrie-ne</span>
+<span data-ro="Scrie-ne" data-en="Message us">Scrie-ne</span>
 </button>
 <!-- WHATSAPP QUALIFIER POPUP -->
 <div id="wa-qualify-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeWaPopup()">

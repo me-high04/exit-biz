@@ -32,7 +32,12 @@ let currentLang = localStorage.getItem('lang') || 'ro';
 function setLanguage(lang, save = true) {
   currentLang = lang;
   document.querySelectorAll('[data-ro]').forEach(el => {
-    el.textContent = el.dataset[lang] || el.dataset['ro'];
+    var text = el.dataset[lang] || el.dataset['ro'];
+    if (el.tagName === 'OPTION') {
+      el.textContent = text;
+    } else if (el.children.length === 0) {
+      el.textContent = text;
+    }
   });
   document.documentElement.lang = lang;
   if (save) localStorage.setItem('lang', lang);
