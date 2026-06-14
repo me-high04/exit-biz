@@ -322,7 +322,8 @@ document.getElementById('cui-input')?.addEventListener('keydown', function(e) {
 
 // ---- INIT ----
 // Set initial display for mobile menu
-document.getElementById('mobile-menu').style.display = 'none';
+var _mm = document.getElementById('mobile-menu');
+if (_mm) _mm.style.display = 'none';
 
 // ---- WHATSAPP QUALIFIER POPUP ----
 function openWaPopup() {

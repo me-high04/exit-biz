@@ -1,243 +1,328 @@
 <!DOCTYPE html>
-
 <html lang="ro">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Prețuri — ExitBiz</title>
-<meta content="Prețuri transparente pentru închiderea firmei tale. Fără costuri ascunse, fără surprize." name="description"/>
+<title>Prețuri — Calculator Închidere Firmă — ExitBiz</title>
+<meta content="Calculează estimativ cât costă închiderea sau suspendarea firmei tale. Răspunde la 6 întrebări și primești un estimativ personalizat." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 <style>
-    .pricing-hero { padding: calc(var(--nav-height) + 4rem) 2rem 3rem; background: var(--bg-surface); border-bottom: 1px solid var(--border); text-align: center; }
-    .pricing-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 300; letter-spacing: -1px; margin-bottom: 0.75rem; }
-    .pricing-hero p { font-size: 17px; color: var(--text-secondary); max-width: 520px; margin: 0 auto 1rem; line-height: 1.7; }
-    .pricing-notice { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; background: var(--green-light); color: var(--green-dark); padding: 6px 14px; border-radius: 99px; font-weight: 500; }
-
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 980px; margin: 0 auto; padding: 4rem 2rem; }
-
-    .pricing-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; position: relative; transition: box-shadow 0.2s, transform 0.2s; }
-    .pricing-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-4px); }
-    .pricing-card.featured { border: 2px solid var(--green); }
-    .featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 16px; border-radius: 99px; white-space: nowrap; letter-spacing: 0.5px; text-transform: uppercase; }
-
-    .pricing-tier { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 0.5rem; }
-    .pricing-name { font-size: 22px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
-    .pricing-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; min-height: 60px; }
-    .pricing-price { margin-bottom: 1.75rem; }
-    .pricing-amount { font-size: 48px; font-weight: 600; color: var(--text-primary); line-height: 1; letter-spacing: -2px; }
-    .pricing-currency { font-size: 24px; font-weight: 400; color: var(--text-secondary); vertical-align: top; margin-top: 8px; display: inline-block; }
-    .pricing-from { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
-    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
-    .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-    .pricing-features li .feat-icon { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .pricing-features li .feat-icon.no { color: var(--text-muted); }
-
-    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-
-    .pricing-note { text-align: center; max-width: 600px; margin: 0 auto 4rem; padding: 0 2rem; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-    .pricing-note strong { color: var(--text-primary); }
-
-    .comparison { max-width: 860px; margin: 0 auto; padding: 0 2rem 4rem; }
-    .comparison h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 300; text-align: center; margin-bottom: 2rem; }
-    .comparison-table { width: 100%; border-collapse: collapse; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .comparison-table th { padding: 14px 16px; font-size: 13px; font-weight: 600; text-align: center; border-bottom: 1px solid var(--border); background: var(--bg-surface); }
-    .comparison-table th:first-child { text-align: left; }
-    .comparison-table td { padding: 12px 16px; font-size: 14px; text-align: center; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
-    .comparison-table td:first-child { text-align: left; color: var(--text-primary); font-weight: 400; }
-    .comparison-table tr:last-child td { border-bottom: none; }
-    .comparison-table tr:hover td { background: var(--bg); }
-    .check { color: var(--green); font-weight: 700; font-size: 16px; }
-    .dash { color: var(--text-muted); }
-
-    .faq-pricing { max-width: 700px; margin: 0 auto; padding: 0 2rem 5rem; }
-    .faq-pricing h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 300; text-align: center; margin-bottom: 2rem; }
-
-    @media (max-width: 560px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+.calc-hero {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-white) 100%);
+  padding: 5rem 2rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.calc-hero-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--green); background: var(--green-light); border: 1px solid var(--green);
+  border-radius: 99px; padding: 4px 14px; margin-bottom: 1rem;
+}
+.calc-hero h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; line-height: 1.25; }
+.calc-hero p  { font-size: 16px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; }
+.calc-wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+.calc-progress-wrap { margin-bottom: 2rem; }
+.calc-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.calc-progress-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.calc-progress-pct   { font-size: 12px; color: var(--green); font-weight: 600; }
+.calc-progress-track { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.calc-progress-bar   { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+.calc-step { display: none; }
+.calc-step.active { display: block; animation: fadeSlideIn 0.3s ease; }
+@keyframes fadeSlideIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.calc-step-title { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.4rem; }
+.calc-step-sub   { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+.calc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.calc-option { cursor: pointer; display: block; }
+.calc-option input[type="radio"] { display: none; }
+.calc-option-card {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg-white); transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.calc-option:hover .calc-option-card { border-color: var(--green); background: var(--green-light); }
+.calc-option input:checked + .calc-option-card {
+  border-color: var(--green); background: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(29,158,117,0.12);
+}
+.calc-option-radio {
+  width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border);
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.calc-option input:checked + .calc-option-card .calc-option-radio { border-color: var(--green); background: var(--green); }
+.calc-option input:checked + .calc-option-card .calc-option-radio::after {
+  content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; display: block;
+}
+.calc-option-icon  { font-size: 22px; flex-shrink: 0; }
+.calc-option-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.calc-option-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.calc-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+.calc-err { font-size: 13px; color: #e53e3e; margin-bottom: 0.75rem; min-height: 18px; }
+#calc-loading {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; padding: 4rem 2rem; text-align: center;
+}
+.calc-spinner {
+  width: 56px; height: 56px; border: 4px solid var(--border);
+  border-top-color: var(--green); border-radius: 50%;
+  animation: spin 0.9s linear infinite; margin-bottom: 1.5rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.calc-loading-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+.calc-loading-msg   { font-size: 14px; color: var(--text-secondary); transition: opacity 0.3s; }
+.calc-loading-dots  { display: flex; gap: 6px; margin-top: 1.5rem; justify-content: center; }
+.calc-loading-dots span {
+  width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+  animation: dotBounce 1.2s ease-in-out infinite; opacity: 0.3;
+}
+.calc-loading-dots span:nth-child(1) { animation-delay: 0s; }
+.calc-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.calc-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce { 0%,80%,100% { opacity:.3; transform:scale(.8); } 40% { opacity:1; transform:scale(1.2); } }
+#calc-result { display: none; animation: fadeSlideIn 0.5s ease; }
+.result-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+.result-card-header { background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; padding: 1.5rem 1.75rem; }
+.result-card-header h2 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.result-card-header p  { font-size: 13px; opacity: 0.85; }
+.result-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); border-radius: 99px; font-size: 12px; font-weight: 600; padding: 3px 12px; margin-top: 10px; }
+.result-body { padding: 1.5rem 1.75rem; }
+.result-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 15px; color: var(--text-secondary); }
+.result-row + .result-row { border-top: 1px solid var(--border); }
+.result-row-value { font-weight: 600; color: var(--text-primary); text-align: right; }
+.result-total-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0 6px; border-top: 2px solid var(--border); margin-top: 4px; }
+.result-total-label { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.result-total-value { font-size: 22px; font-weight: 700; color: var(--green); text-align: right; }
+.result-tva  { font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 2px; }
+.result-note { font-size: 12px; color: var(--text-muted); padding: 12px 0 0; line-height: 1.6; border-top: 1px solid var(--border); margin-top: 12px; }
+.result-actions { display: flex; flex-direction: column; gap: 10px; }
+.result-wa-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #25D366; color: #fff; border: none; border-radius: var(--radius-sm);
+  padding: 14px 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+  font-family: inherit; text-decoration: none; transition: background 0.2s; width: 100%;
+}
+.result-wa-btn:hover { background: #1ebe5d; color: #fff; }
+.result-reset-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  background: none; color: var(--text-secondary); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 20px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: inherit; transition: border-color 0.2s, color 0.2s; width: 100%;
+}
+.result-reset-btn:hover { border-color: var(--green); color: var(--green); }
+.eval-card { text-align: center; padding: 2.5rem 1.75rem; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.5rem; }
+.eval-icon { font-size: 48px; margin-bottom: 1rem; }
+.eval-card h2 { font-size: 22px; font-weight: 600; margin-bottom: 0.5rem; }
+.eval-card p  { font-size: 14px; color: var(--text-secondary); max-width: 380px; margin: 0 auto 1.5rem; line-height: 1.6; }
+@media (max-width: 560px) {
+  .calc-hero { padding: 4rem 1.25rem 2rem; }
+  .calc-wrap { padding: 1.75rem 1rem 4rem; }
+  .result-body { padding: 1.25rem; }
+  .result-card-header { padding: 1.25rem; }
+}
+</style>
 </head>
 <body>
+
+<div class="lang-popup-overlay hidden" id="lang-popup-overlay">
+  <div class="lang-popup">
+    <h3>Alege limba / Choose language</h3>
+    <p>Selectează limba preferată pentru a continua.<br/>Select your preferred language to continue.</p>
+    <div class="lang-popup-btns">
+      <button class="lang-popup-btn" onclick="selectLangPopup('ro')">🇷🇴 Română</button>
+      <button class="lang-popup-btn" onclick="selectLangPopup('en')">🇬🇧 English</button>
+    </div>
+  </div>
+</div>
+
 <header class="nav">
 <div class="nav-inner">
 <a class="logo" href="/">exit<span>biz</span></a>
-<nav class="nav-links">
+<nav class="nav-links" id="nav-links">
 <div class="nav-dropdown">
 <button class="nav-link nav-dropdown-trigger" data-en="Services ▾" data-ro="Servicii ▾">Servicii ▾</button>
 <div class="nav-dropdown-menu">
 <a data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
-
-<a data-en="Price calculator" data-ro="Calculator preț" href="calculator.html">Calculator preț</a>
+<a data-en="Certificate of Standing" data-ro="Certificat Constatator" href="servicii/certificat-constatator.html">Certificat Constatator</a>
 </div>
 </div>
 <a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
 <a class="nav-link" data-en="Articles" data-ro="Articole" href="articole/index.html">Articole</a>
-<a class="nav-link" style="color:var(--green)" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
-<div class="lang-selector" id="lang-selector">
-<button class="lang-btn lang-ro" data-lang="ro">RO</button>
-<button class="lang-btn lang-en" data-lang="en">EN</button>
-</div>
+<a class="nav-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html" style="color:var(--green)">Prețuri</a>
+<div class="lang-selector" id="lang-selector"><button class="lang-btn lang-ro" data-lang="ro">RO</button><button class="lang-btn lang-en" data-lang="en">EN</button></div>
 <button aria-label="Toggle dark mode" class="theme-btn" id="theme-btn">🌙</button>
-<a class="btn-ghost" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+<a class="btn-ghost btn-account" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
 </nav>
-<button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+<button aria-label="Meniu" class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </div>
 </header>
+
 <div class="mobile-menu" id="mobile-menu">
 <div class="mobile-section-title" data-en="Services" data-ro="Servicii">Servicii</div>
 <a class="mobile-link" data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
-<a class="mobile-link" data-en="Price calculator" data-ro="Calculator preț" href="calculator.html">Calculator preț</a>
+<a class="mobile-link" data-en="Certificate of Standing" data-ro="Certificat Constatator" href="servicii/certificat-constatator.html">Certificat Constatator</a>
 <a class="mobile-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
 <a class="mobile-link" data-en="Articles" data-ro="Articole" href="articole/index.html">Articole</a>
 <a class="mobile-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
 <a class="mobile-link" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
 <div class="lang-selector mobile-lang-selector"><button class="lang-btn lang-ro" data-lang="ro">RO</button><button class="lang-btn lang-en" data-lang="en">EN</button></div>
 </div>
-<div class="pricing-hero">
-<div class="section-tag" data-en="Pricing" data-ro="Prețuri">Prețuri</div>
-<h1 data-en="Transparent, no surprises" data-ro="Transparent, fără surprize">Transparent, fără surprize</h1>
-<p data-en="The final price is set after the free preliminary analysis, based on the complexity of your case." data-ro="Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău.">Prețul final se stabilește după analiza preliminară gratuită, în funcție de complexitatea cazului tău.</p>
-<span class="pricing-notice" data-en="✓ Free preliminary analysis · No hidden costs" data-ro="✓ Analiză preliminară gratuită · Fără costuri ascunse">✓ Analiză preliminară gratuită · Fără costuri ascunse</span>
+
+<div class="calc-hero">
+  <div class="calc-hero-tag">Calculator gratuit</div>
+  <h1>Cât costă închiderea firmei tale?</h1>
+  <p>Răspunde la 6 întrebări rapide și primești un estimativ personalizat în câteva secunde.</p>
 </div>
-<div class="pricing-grid">
-<!-- TIER 1 -->
-<div class="pricing-card">
-<div class="pricing-tier" data-en="Low complexity" data-ro="Complexitate mică">Complexitate mică</div>
-<div class="pricing-name">Standard</div>
-<div class="pricing-desc" data-en="Simple cases, no complications. Ideal for PFA, II, IF or SRL with no employees and no debts." data-ro="Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii.">Cazuri simple, fără complicații. Ideal pentru PFA, II, IF sau SRL fără angajați și fără datorii.</div>
-<div class="pricing-price">
-<span class="pricing-currency">€</span><span class="pricing-amount">199</span>
-<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
+
+<div class="calc-wrap">
+
+  <div class="calc-progress-wrap" id="calc-progress-wrap">
+    <div class="calc-progress-header">
+      <span class="calc-progress-label" id="calc-progress-label">Pasul 1 din 6</span>
+      <span class="calc-progress-pct" id="calc-progress-pct">0%</span>
+    </div>
+    <div class="calc-progress-track"><div class="calc-progress-bar" id="calc-progress-bar"></div></div>
+  </div>
+
+  <div id="calc-steps">
+
+    <div class="calc-step active" id="calc-step-1">
+      <h2 class="calc-step-title">Ce dorești să faci?</h2>
+      <p class="calc-step-sub">Alege opțiunea care se potrivește cel mai bine situației tale.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s1" value="suspendare">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">⏸️</span>
+            <div><div class="calc-option-title">Suspendare temporară</div><div class="calc-option-desc">Oprești activitatea pentru o perioadă, firma rămâne înregistrată</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s1" value="inchidere">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🔒</span>
+            <div><div class="calc-option-title">Închidere firmă</div><div class="calc-option-desc">Dizolvare și radiere completă din Registrul Comerțului</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s1" value="nu-stiu">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🤔</span>
+            <div><div class="calc-option-title">Nu știu, am nevoie de ajutor</div><div class="calc-option-desc">Vrei să discuți cu un specialist înainte de a decide</div></div></div></label>
+      </div>
+      <div id="calc-err-1" class="calc-err"></div>
+      <div class="calc-nav"><div></div><button class="btn-primary" onclick="calcNext(1)">Continuă →</button></div>
+    </div>
+
+    <div class="calc-step" id="calc-step-2">
+      <h2 class="calc-step-title">Firma are angajați?</h2>
+      <p class="calc-step-sub">Angajații activi influențează complexitatea și costul procedurii.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s2" value="no-ang">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">👤</span>
+            <div><div class="calc-option-title">Nu are angajați</div><div class="calc-option-desc">Firma nu are salariați activi</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s2" value="1-5">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">👥</span>
+            <div><div class="calc-option-title">1 – 5 angajați</div><div class="calc-option-desc">Necesită proceduri suplimentare de concediere</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s2" value="5+">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🏢</span>
+            <div><div class="calc-option-title">Peste 5 angajați</div><div class="calc-option-desc">Concediere colectivă, notificări ANOFM obligatorii</div></div></div></label>
+      </div>
+      <div id="calc-err-2" class="calc-err"></div>
+      <div class="calc-nav"><button class="ccw-btn-back" onclick="calcBack(2)">← Înapoi</button><button class="btn-primary" onclick="calcNext(2)">Continuă →</button></div>
+    </div>
+
+    <div class="calc-step" id="calc-step-3">
+      <h2 class="calc-step-title">Firma are datorii?</h2>
+      <p class="calc-step-sub">Datoriile neachitate pot complica și prelungi procedura de radiere.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s3" value="no-dat">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">✅</span>
+            <div><div class="calc-option-title">Nu are datorii</div><div class="calc-option-desc">Firma este curată fiscal și comercial</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s3" value="dat-stat">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🏛️</span>
+            <div><div class="calc-option-title">Datorii la stat (ANAF, CAS etc.)</div><div class="calc-option-desc">Taxe, impozite sau contribuții neachitate</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s3" value="dat-furn">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🏦</span>
+            <div><div class="calc-option-title">Datorii la furnizori / bănci</div><div class="calc-option-desc">Credite, facturi neachitate, leasing</div></div></div></label>
+      </div>
+      <div id="calc-err-3" class="calc-err"></div>
+      <div class="calc-nav"><button class="ccw-btn-back" onclick="calcBack(3)">← Înapoi</button><button class="btn-primary" onclick="calcNext(3)">Continuă →</button></div>
+    </div>
+
+    <div class="calc-step" id="calc-step-4">
+      <h2 class="calc-step-title">Firma are active?</h2>
+      <p class="calc-step-sub">Activele (echipamente, stocuri, imobile) necesită lichidare înainte de radiere.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s4" value="no-act">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">✅</span>
+            <div><div class="calc-option-title">Nu are active</div><div class="calc-option-desc">Balanță zero sau aproape zero</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s4" value="act-10k">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">📦</span>
+            <div><div class="calc-option-title">Active sub 10.000 EUR</div><div class="calc-option-desc">Stocuri mici, echipamente de valoare redusă</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s4" value="act-10k+">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🏗️</span>
+            <div><div class="calc-option-title">Active peste 10.000 EUR</div><div class="calc-option-desc">Imobile, utilaje, stocuri semnificative</div></div></div></label>
+      </div>
+      <div id="calc-err-4" class="calc-err"></div>
+      <div class="calc-nav"><button class="ccw-btn-back" onclick="calcBack(4)">← Înapoi</button><button class="btn-primary" onclick="calcNext(4)">Continuă →</button></div>
+    </div>
+
+    <div class="calc-step" id="calc-step-5">
+      <h2 class="calc-step-title">De cât timp e inactivă firma?</h2>
+      <p class="calc-step-sub">Perioada de inactivitate influențează restanțele fiscale acumulate.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s5" value="activa">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🟢</span>
+            <div><div class="calc-option-title">Este activă / recent activă</div><div class="calc-option-desc">Firma a avut activitate recentă</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s5" value="1-3ani">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🟡</span>
+            <div><div class="calc-option-title">1 – 3 ani inactivă</div><div class="calc-option-desc">Fără activitate de 1 până la 3 ani</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s5" value="3ani+">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🔴</span>
+            <div><div class="calc-option-title">Peste 3 ani inactivă</div><div class="calc-option-desc">Perioadă lungă fără activitate comercială sau declarații</div></div></div></label>
+      </div>
+      <div id="calc-err-5" class="calc-err"></div>
+      <div class="calc-nav"><button class="ccw-btn-back" onclick="calcBack(5)">← Înapoi</button><button class="btn-primary" onclick="calcNext(5)">Continuă →</button></div>
+    </div>
+
+    <div class="calc-step" id="calc-step-6">
+      <h2 class="calc-step-title">Situația contabilității</h2>
+      <p class="calc-step-sub">Declarațiile nedepuse pot genera costuri suplimentare cu contabilul partener.</p>
+      <div class="calc-options">
+        <label class="calc-option"><input type="radio" name="s6" value="la-zi">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">✅</span>
+            <div><div class="calc-option-title">La zi</div><div class="calc-option-desc">Toate declarațiile sunt depuse, nu există restanțe</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s6" value="mici">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">⚠️</span>
+            <div><div class="calc-option-title">Mici restanțe (1 – 2 ani nedepuse)</div><div class="calc-option-desc">Câteva declarații lipsă, situație recuperabilă</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s6" value="mari">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">🚨</span>
+            <div><div class="calc-option-title">Restanțe mari (peste 3 ani)</div><div class="calc-option-desc">Volum mare de declarații nedepuse</div></div></div></label>
+        <label class="calc-option"><input type="radio" name="s6" value="nu-stiu-contab">
+          <div class="calc-option-card"><div class="calc-option-radio"></div><span class="calc-option-icon">❓</span>
+            <div><div class="calc-option-title">Nu știu</div><div class="calc-option-desc">Nu am informații despre situația contabilă curentă</div></div></div></label>
+      </div>
+      <div id="calc-err-6" class="calc-err"></div>
+      <div class="calc-nav"><button class="ccw-btn-back" onclick="calcBack(6)">← Înapoi</button><button class="btn-primary" onclick="calcNext(6)">Calculează prețul →</button></div>
+    </div>
+
+  </div>
+
+  <div id="calc-loading">
+    <div class="calc-spinner"></div>
+    <div class="calc-loading-title">Se analizează situația...</div>
+    <div class="calc-loading-msg" id="calc-loading-msg">Verificăm complexitatea cazului tău</div>
+    <div class="calc-loading-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div id="calc-result"></div>
+
 </div>
-<ul class="pricing-features">
-<li><span class="feat-icon">✓</span> <span data-en="PFA / II / IF strike-off" data-ro="Radiere PFA / II / IF">Radiere PFA / II / IF</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="SRL with no employees" data-ro="SRL fără angajați">SRL fără angajați</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Simple tax situation" data-ro="Situație fiscală simplă">Situație fiscală simplă</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="All documents included" data-ro="Toate documentele incluse">Toate documentele incluse</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Online ONRC filing" data-ro="Depunere ONRC online">Depunere ONRC online</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 5–14 days" data-ro="Timp estimat: 5–14 zile">Timp estimat: 5–14 zile</span></li>
-</ul>
-<button class="btn-ghost btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
-</div>
-<!-- TIER 2 -->
-<div class="pricing-card featured">
-<div class="featured-badge" data-en="Most popular" data-ro="Cel mai solicitat">Cel mai solicitat</div>
-<div class="pricing-tier" data-en="Medium complexity" data-ro="Complexitate medie">Complexitate medie</div>
-<div class="pricing-name">Business</div>
-<div class="pricing-desc" data-en="SRL with 1–3 shareholders, clear tax situation. Standard dissolution and strike-off process." data-ro="SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere.">SRL cu 1–3 asociați, situație fiscală clară. Procesul standard de dizolvare și radiere.</div>
-<div class="pricing-price">
-<span class="pricing-currency">€</span><span class="pricing-amount">499</span>
-<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
-</div>
-<ul class="pricing-features">
-<li><span class="feat-icon">✓</span> <span data-en="SRL with 1–3 shareholders" data-ro="SRL cu 1–3 asociați">SRL cu 1–3 asociați</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Up to 5 employees" data-ro="Până la 5 angajați">Până la 5 angajați</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Full dissolution + strike-off" data-ro="Dizolvare + radiere completă">Dizolvare + radiere completă</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Communication with authorities" data-ro="Comunicare cu autoritățile">Comunicare cu autoritățile</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="All documents included" data-ro="Toate documentele incluse">Toate documentele incluse</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="ONRC filing + tracking" data-ro="Depunere + urmărire ONRC">Depunere + urmărire ONRC</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 14–45 days" data-ro="Timp estimat: 14–45 zile">Timp estimat: 14–45 zile</span></li>
-</ul>
-<button class="btn-primary btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
-</div>
-<!-- TIER 3 -->
-<div class="pricing-card">
-<div class="pricing-tier" data-en="High complexity" data-ro="Complexitate mare">Complexitate mare</div>
-<div class="pricing-name">Enterprise</div>
-<div class="pricing-desc" data-en="Complex cases with liquidator, multiple shareholders, debts or special tax situations." data-ro="Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale.">Cazuri complexe cu lichidator, mai mulți asociați, datorii sau situații fiscale speciale.</div>
-<div class="pricing-price">
-<span class="pricing-currency">€</span><span class="pricing-amount">999</span>
-<div class="pricing-from" data-en="starting price · VAT included" data-ro="preț de pornire · TVA inclus">preț de pornire · TVA inclus</div>
-</div>
-<ul class="pricing-features">
-<li><span class="feat-icon">✓</span> <span data-en="SRL with multiple shareholders" data-ro="SRL cu mai mulți asociați">SRL cu mai mulți asociați</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Cases with liquidator" data-ro="Cazuri cu lichidator">Cazuri cu lichidator</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Complex tax situations" data-ro="Situații fiscale complexe">Situații fiscale complexe</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Full procedure management" data-ro="Management complet procedură">Management complet procedură</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Authorized liquidator recommended" data-ro="Lichidator autorizat recomandat">Lichidator autorizat recomandat</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Full communication with ANAF/ONRC" data-ro="Comunicare completă cu ANAF/ONRC">Comunicare completă cu ANAF/ONRC</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Case tracking dashboard" data-ro="Dashboard urmărire dosar">Dashboard urmărire dosar</span></li>
-<li><span class="feat-icon">✓</span> <span data-en="Estimated time: 30–90 days" data-ro="Timp estimat: 30–90 zile">Timp estimat: 30–90 zile</span></li>
-</ul>
-<button class="btn-ghost btn-full" data-en="Request a quote →" data-ro="Solicită ofertă →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500" style="justify-content:center">Solicită ofertă →</button>
-</div>
-</div>
-<div class="pricing-note" data-en="The final price is set after the free preliminary analysis. Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything." data-ro="Prețul final se stabilește după analiza preliminară gratuită. Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.">
-<strong data-en="The final price is set after the free preliminary analysis." data-ro="Prețul final se stabilește după analiza preliminară gratuită.">Prețul final se stabilește după analiza preliminară gratuită.</strong> <span data-en="Every case is unique — the starting price may vary depending on your company's specific situation. We guarantee full transparency before you sign anything." data-ro="Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.">Fiecare dosar este unic — prețul de pornire poate varia în funcție de situația specifică a firmei. Îți garantăm transparență totală înainte de a semna orice contract.</span>
-</div>
-<!-- COMPARISON TABLE -->
-<div class="comparison">
-<h2 data-en="Package comparison" data-ro="Comparație pachete">Comparație pachete</h2>
-<table class="comparison-table">
-<thead>
-<tr>
-<th data-en="Feature" data-ro="Caracteristică">Caracteristică</th>
-<th>Standard<br/><span style="font-weight:400;color:var(--text-secondary)">€199</span></th>
-<th style="color:var(--green)">Business<br/><span style="font-weight:400">€499</span></th>
-<th>Enterprise<br/><span style="font-weight:400;color:var(--text-secondary)">€999</span></th>
-</tr>
-</thead>
-<tbody>
-<tr><td>Radiere PFA / II / IF</td><td><span class="check">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
-<tr><td>Dizolvare SRL</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Lichidator autorizat</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Generare documente</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Depunere ONRC</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Dashboard personal</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Comunicare autorități</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-<tr><td>Cazuri complexe/datorii</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
-</tbody>
-</table>
-</div>
-<!-- FAQ PRICING -->
-<div class="faq-pricing">
-<h2 data-en="Pricing FAQ" data-ro="Întrebări despre prețuri">Întrebări despre prețuri</h2>
-<div style="display:flex;flex-direction:column;gap:1rem;">
-<details class="faq-item">
-<summary ?"="" data-en="What does the free preliminary analysis include?" data-ro="Ce include „analiza preliminară gratuită">Ce include „analiza preliminară gratuită"?</summary>
-<p data-en="We analyze your company's situation for free — entity type, tax status, number of employees, existing debts — and tell you exactly which procedure suits you and what the final price is. No commitments." data-ro="Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente.">Analizăm gratuit situația firmei tale — tip de entitate, situație fiscală, număr de angajați, existența datoriilor — și îți spunem exact ce procedură ți se potrivește și care e prețul final. Fără angajamente.</p>
-</details>
-<details class="faq-item">
-<summary data-en="Why might the price differ from what's shown?" data-ro="De ce prețul poate varia față de cel afișat?">De ce prețul poate varia față de cel afișat?</summary>
-<p data-en="Displayed prices are starting prices. Some cases may require additional steps. Any extra cost is communicated to you before we begin." data-ro="Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul.">Prețurile afișate sunt de pornire. Unele dosare pot necesita pași suplimentari. Orice cost suplimentar îți este comunicat înainte de a începe lucrul.</p>
-</details>
-<details class="faq-item">
-<summary data-en="How does payment work?" data-ro="Cum se face plata?">Cum se face plata?</summary>
-<p data-en="We accept online payment by bank card. We issue an invoice for all services. On request, we can also issue invoices in EUR for clients outside Romania." data-ro="Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României.">Acceptăm plata online prin card bancar. Emitem factură pentru toate serviciile. La cerere, putem emite și factură în EUR pentru clienți din afara României.</p>
-</details>
-<details class="faq-item">
-<summary data-en="Is there a guarantee if the process takes longer?" data-ro="Există o garanție dacă procesul durează mai mult?">Există o garanție dacă procesul durează mai mult?</summary>
-<p data-en="Timelines are estimates and depend largely on how quickly public institutions (ONRC, ANAF) process files. We cannot control institutional timelines, but we keep you informed at every step and ensure your case is prioritized." data-ro="Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat.">Termenele sunt estimative și depind în mare parte de viteza de procesare a instituțiilor publice (ONRC, ANAF). Nu putem controla termenele instituționale, dar te informăm la fiecare pas și ne asigurăm că dosarul tău este prioritizat.</p>
-</details>
-</div>
-</div>
-<!-- CTA -->
-<section class="section cta-section" id="contact" style="padding-top:0">
-<div class="section-inner">
-<div class="cta-box" style="text-align:center;display:block;padding:3rem 2rem;">
-<div class="section-tag" data-en="Not sure which package fits you?" data-ro="Nu ești sigur ce pachet ți se potrivește?" style="margin-bottom:0.75rem">Nu ești sigur ce pachet ți se potrivește?</div>
-<h2 data-en="Let's talk — for free" data-ro="Hai să discutăm — gratuit" style="margin-bottom:0.75rem">Hai să discutăm — gratuit</h2>
-<p data-en="We'll give you a free analysis and tell you exactly which procedure and price applies to you." data-ro="Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică." style="color:var(--text-secondary);max-width:480px;margin:0 auto 1.5rem;font-size:16px">Îți facem o analiză gratuită și îți spunem exact ce procedură și ce preț ți se aplică.</p>
-<button class="btn-primary btn-large" data-en="Request free analysis →" data-ro="Solicită analiză gratuită →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500">Solicită analiză gratuită →</button>
-</div>
-</div>
-</section>
+
 <footer class="footer">
 <div class="footer-inner">
-<div class="footer-brand">
-<a class="logo" href="/">exit<span>biz</span></a>
-<p data-en="Professional company closure services, fast and legal." data-ro="Servicii profesionale de închidere firme, rapid și legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
-</div>
+<div class="footer-brand"><a class="logo" href="/">exit<span>biz</span></a><p data-en="Professional company closure services, fast and legal." data-ro="Servicii profesionale de închidere firme, rapid și legal.">Servicii profesionale de închidere firme, rapid și legal.</p></div>
 <div class="footer-links">
 <div class="footer-col">
 <div class="footer-col-title" data-en="Services" data-ro="Servicii">Servicii</div>
 <a data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
+<a data-en="Certificate of Standing" data-ro="Certificat Constatator" href="servicii/certificat-constatator.html">Certificat Constatator</a>
+<a data-en="Price calculator" data-ro="Calculator preț" href="preturi.html">Calculator preț</a>
 </div>
 <div class="footer-col">
 <div class="footer-col-title" data-en="Legal" data-ro="Legal">Legal</div>
@@ -248,15 +333,222 @@
 </div>
 </div>
 </div>
-<div class="footer-bottom">
-<p>© 2026 ExitBiz · <span data-en="All rights reserved" data-ro="Toate drepturile rezervate">Toate drepturile rezervate</span></p>
-</div>
+<div class="footer-bottom"><p>© 2026 ExitBiz · <span data-en="All rights reserved" data-ro="Toate drepturile rezervate">Toate drepturile rezervate</span></p></div>
 </footer>
-<a aria-label="WhatsApp" class="whatsapp-btn" data-en="Message us" data-ro="Scrie-ne" href="https://wa.me/40772129941" rel="noopener" target="_blank">
-<svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
-<span data-en="Message us" data-ro="Scrie-ne">Scrie-ne</span>
-</a>
-<script async="" src="https://tally.so/widgets/embed.js"></script>
+
+<button class="whatsapp-btn" aria-label="Contactează-ne pe WhatsApp" onclick="openWaPopup()">
+<svg fill="currentColor" height="28" viewBox="0 0 24 24" width="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<span data-ro="Scrie-ne" data-en="Message us">Scrie-ne</span>
+</button>
+<div id="wa-qualify-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeWaPopup()">
+<div style="background:var(--bg-white);border-radius:var(--radius);padding:2rem 1.75rem 1.75rem;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.18);">
+<button onclick="closeWaPopup()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;color:var(--text-muted);cursor:pointer;padding:4px 8px;border-radius:6px;">✕</button>
+<div style="text-align:center;margin-bottom:.5rem"><svg fill="#25D366" width="36" height="36" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+<h3 data-ro="Cateva intrebari rapide" data-en="A few quick questions" style="text-align:center;font-size:20px;font-weight:600;margin-bottom:4px;">Cateva intrebari rapide</h3>
+<p data-ro="Completeaza mai jos si te conectam cu specialistul potrivit." data-en="Fill in below and we'll connect you with the right specialist." style="text-align:center;font-size:14px;color:var(--text-secondary);margin-bottom:1.5rem;">Completeaza mai jos si te conectam cu specialistul potrivit.</p>
+<form id="wa-qualify-form" onsubmit="submitWaPopup(event)">
+<div class="wa-q-block"><label class="wa-q-label" data-ro="1. Aveti o firma pe care doriti sa o inchideti?" data-en="1. Do you have a company you want to close?">1. Aveti o firma pe care doriti sa o inchideti?</label>
+<div class="wa-q-opts">
+<label class="wa-q-opt"><input type="radio" name="wq-firma" value="Da, vreau sa o inchid" data-en="Yes, I want to close it"><span data-ro="Da, vreau sa o inchid" data-en="Yes, I want to close it">Da, vreau sa o inchid</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-firma" value="Nu stiu sigur, vreau mai multe informatii" data-en="Not sure yet, I need more information"><span data-ro="Nu stiu sigur, vreau mai multe informatii" data-en="Not sure yet, I need more information">Nu stiu sigur, vreau informatii</span></label>
+</div></div>
+<div class="wa-q-block"><label class="wa-q-label" data-ro="2. Ce tip de firma / procedura aveti in vedere?" data-en="2. What type of company / procedure are you looking for?">2. Ce tip de firma / procedura aveti in vedere?</label>
+<div class="wa-q-opts">
+<label class="wa-q-opt"><input type="radio" name="wq-proc" value="Radiere PFA / II / IF" data-en="Strike-off PFA / II / IF"><span data-ro="Radiere PFA / II / IF" data-en="Strike-off PFA / II / IF">Radiere PFA / II / IF</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-proc" value="Inchidere SRL (dizolvare + radiere)" data-en="SRL Closure (dissolution + strike-off)"><span data-ro="Inchidere SRL (dizolvare + radiere)" data-en="SRL Closure (dissolution + strike-off)">Inchidere SRL</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-proc" value="Suspendare firma" data-en="Company suspension"><span data-ro="Suspendare firma" data-en="Company suspension">Suspendare firma</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-proc" value="Nu stiu, vreau o analiza" data-en="Not sure, I want an analysis"><span data-ro="Nu stiu, vreau o analiza" data-en="Not sure, I want an analysis">Nu stiu, vreau o analiza</span></label>
+</div></div>
+<div class="wa-q-block"><label class="wa-q-label" data-ro="3. Stiti cand a fost depus ultimul bilant anual?" data-en="3. Do you know when the last annual financial statement was filed?">3. Stiti cand a fost depus ultimul bilant anual?</label>
+<div class="wa-q-opts">
+<label class="wa-q-opt"><input type="radio" name="wq-bil" value="Da, este depus la zi" data-en="Yes, it is up to date"><span data-ro="Da, este depus la zi" data-en="Yes, it is up to date">Da, este la zi</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-bil" value="Nu stiu / Nu sunt sigur" data-en="I don't know / Not sure"><span data-ro="Nu stiu / Nu sunt sigur" data-en="I don't know / Not sure">Nu stiu / Nu sunt sigur</span></label>
+<label class="wa-q-opt"><input type="radio" name="wq-bil" value="Nu a fost depus (restanta)" data-en="Not filed yet (outstanding)"><span data-ro="Nu a fost depus (restanta)" data-en="Not filed yet (outstanding)">Nu a fost depus (restanta)</span></label>
+</div></div>
+<div id="wa-qualify-err" style="font-size:13px;color:#e53e3e;margin-bottom:.75rem;min-height:18px;"></div>
+<button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);padding:13px 20px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;">
+<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<span data-ro="Continua pe WhatsApp" data-en="Continue on WhatsApp">Continua pe WhatsApp</span>
+</button>
+</form>
+</div>
+</div>
+
 <script src="js/main.js"></script>
+<script>
+var calcAnswers = {};
+var calcStep = 1;
+var TOTAL_STEPS = 6;
+
+function updateProgress() {
+  var pct = Math.round(((calcStep - 1) / TOTAL_STEPS) * 100);
+  document.getElementById('calc-progress-bar').style.width = pct + '%';
+  document.getElementById('calc-progress-label').textContent = 'Pasul ' + calcStep + ' din ' + TOTAL_STEPS;
+  document.getElementById('calc-progress-pct').textContent = pct + '%';
+}
+
+function goToStep(n) {
+  document.getElementById('calc-step-' + calcStep).classList.remove('active');
+  calcStep = n;
+  document.getElementById('calc-step-' + calcStep).classList.add('active');
+  updateProgress();
+  var prev = calcAnswers['s' + n];
+  if (prev) {
+    var r = document.querySelector('#calc-step-' + n + ' input[value="' + prev + '"]');
+    if (r) r.checked = true;
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcNext(step) {
+  var sel = document.querySelector('#calc-step-' + step + ' input[type="radio"]:checked');
+  var errEl = document.getElementById('calc-err-' + step);
+  if (!sel) { errEl.textContent = 'Te rugăm să selectezi o opțiune pentru a continua.'; return; }
+  errEl.textContent = '';
+  calcAnswers['s' + step] = sel.value;
+  if (step === TOTAL_STEPS) { startLoading(); } else { goToStep(step + 1); }
+}
+
+function calcBack(step) { goToStep(step - 1); }
+
+function startLoading() {
+  document.getElementById('calc-steps').style.display = 'none';
+  document.getElementById('calc-progress-wrap').style.display = 'none';
+  document.getElementById('calc-loading').style.display = 'flex';
+  var messages = [
+    'Verificăm complexitatea cazului tău...',
+    'Calculăm procedura optimă...',
+    'Estimăm costurile în EUR...',
+    'Pregătim estimarea personalizată...'
+  ];
+  var msgEl = document.getElementById('calc-loading-msg');
+  msgEl.textContent = messages[0];
+  var idx = 0;
+  var iv = setInterval(function() {
+    idx++;
+    if (idx < messages.length) {
+      msgEl.style.opacity = '0';
+      setTimeout(function() { msgEl.textContent = messages[idx]; msgEl.style.opacity = '1'; }, 150);
+    }
+  }, 900);
+  setTimeout(function() { clearInterval(iv); showResult(); }, 3700);
+}
+
+function getContab(s6) {
+  if (s6 === 'la-zi')         return { label: '0 EUR', min: 0, max: 0 };
+  if (s6 === 'mici')          return { label: '100 – 300 EUR', min: 100, max: 300 };
+  if (s6 === 'mari')          return { label: '400 – 1.000 EUR', min: 400, max: 1000 };
+  return { label: 'Se stabilește după evaluare', min: null, max: null };
+}
+
+function calcPrice() {
+  var s1 = calcAnswers.s1, s2 = calcAnswers.s2, s3 = calcAnswers.s3,
+      s4 = calcAnswers.s4, s5 = calcAnswers.s5, s6 = calcAnswers.s6;
+  if (s1 === 'nu-stiu') return { type: 'evaluare' };
+  var contab = getContab(s6);
+  if (s1 === 'suspendare') {
+    return { type: 'suspendare', procedura: 80, contab: contab, timp: '2-4 săptămâni', proceduraTip: 'Suspendare temporară' };
+  }
+  var price = 200;
+  if (s2 === '1-5')       price += 100;
+  if (s2 === '5+')        price += 200;
+  if (s3 === 'dat-stat')  price += 150;
+  if (s3 === 'dat-furn')  price += 120;
+  if (s4 === 'act-10k')   price += 100;
+  if (s4 === 'act-10k+')  price += 300;
+  if (s5 === '1-3ani')    price += 40;
+  if (s5 === '3ani+')     price += 80;
+  var hasActive = s4 !== 'no-act', hasDat = s3 !== 'no-dat', big5 = s2 === '5+';
+  var timp = (big5 || (hasActive && hasDat) || s6 === 'mari') ? '12+ luni'
+           : (hasActive || hasDat) ? '6-12 luni' : '3-6 luni';
+  var tip = (hasDat || hasActive || s2 !== 'no-ang') ? 'Închidere SRL' : 'Închidere simplă SRL';
+  return { type: 'inchidere', procedura: price, contab: contab, timp: timp, proceduraTip: tip };
+}
+
+function buildWaMsg(result) {
+  var labels = {
+    s1: { suspendare:'Suspendare temporară', inchidere:'Închidere firmă', 'nu-stiu':'Nu știu, am nevoie de ajutor' },
+    s2: { 'no-ang':'Nu are angajați', '1-5':'1-5 angajați', '5+':'Peste 5 angajați' },
+    s3: { 'no-dat':'Nu are datorii', 'dat-stat':'Datorii la stat', 'dat-furn':'Datorii la furnizori/bănci' },
+    s4: { 'no-act':'Nu are active', 'act-10k':'Active sub 10.000 EUR', 'act-10k+':'Active peste 10.000 EUR' },
+    s5: { activa:'Este activă/recent activă', '1-3ani':'1-3 ani inactivă', '3ani+':'Peste 3 ani inactivă' },
+    s6: { 'la-zi':'La zi', mici:'Mici restanțe (1-2 ani)', mari:'Restanțe mari (peste 3 ani)', 'nu-stiu-contab':'Nu știu' }
+  };
+  var msg = 'Buna ziua, am completat calculatorul de preturi de pe ExitBiz.ro si as dori o oferta:\n\n';
+  msg += '- Serviciu dorit: '  + (labels.s1[calcAnswers.s1] || calcAnswers.s1) + '\n';
+  msg += '- Angajati: '        + (labels.s2[calcAnswers.s2] || calcAnswers.s2) + '\n';
+  msg += '- Datorii: '         + (labels.s3[calcAnswers.s3] || calcAnswers.s3) + '\n';
+  msg += '- Active: '          + (labels.s4[calcAnswers.s4] || calcAnswers.s4) + '\n';
+  msg += '- Inactivitate: '    + (labels.s5[calcAnswers.s5] || calcAnswers.s5) + '\n';
+  msg += '- Contabilitate: '   + (labels.s6[calcAnswers.s6] || calcAnswers.s6) + '\n';
+  if (result.type === 'inchidere' || result.type === 'suspendare') {
+    var tot;
+    if (result.contab.min === null) tot = result.procedura + ' EUR (procedura) + contabilitate dupa evaluare';
+    else if (result.contab.min === 0) tot = result.procedura + ' EUR + TVA';
+    else tot = (result.procedura + result.contab.min) + ' – ' + (result.procedura + result.contab.max) + ' EUR + TVA';
+    msg += '\nTotal estimat calculator: ' + tot;
+  }
+  return msg;
+}
+
+var WA_SVG = '<svg fill="currentColor" width="22" height="22" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+
+function showResult() {
+  document.getElementById('calc-loading').style.display = 'none';
+  var result = calcPrice();
+  var el = document.getElementById('calc-result');
+  var msg = buildWaMsg(result);
+  var waUrl = 'https://wa.me/40772129941?text=' + encodeURIComponent(msg);
+  var html = '';
+
+  if (result.type === 'evaluare') {
+    html = '<div class="eval-card"><div class="eval-icon">🎯</div>'
+      + '<h2>Ai nevoie de o evaluare gratuită</h2>'
+      + '<p>Situația ta necesită o analiză personalizată. Contactează-ne și îți oferim o consultație gratuită pentru a stabili cea mai bună soluție.</p>'
+      + '<div class="result-actions">'
+      + '<a class="result-wa-btn" href="' + waUrl + '" target="_blank" rel="noopener">' + WA_SVG + 'Consultație gratuită pe WhatsApp →</a>'
+      + '<button class="result-reset-btn" onclick="calcReset()">↩ Refă calculul</button>'
+      + '</div></div>';
+  } else {
+    var tMin = result.procedura + (result.contab.min || 0);
+    var tMax = result.procedura + (result.contab.max || 0);
+    var totLabel = result.contab.min === null ? result.procedura + ' EUR + contabilitate'
+                 : result.contab.min === 0    ? result.procedura + ' EUR'
+                 : tMin + ' – ' + tMax + ' EUR';
+    html = '<div class="result-card">'
+      + '<div class="result-card-header"><h2>' + result.proceduraTip + '</h2><p>Estimare calculată pe baza răspunsurilor tale</p><div class="result-badge">⏱ Timp estimat: ' + result.timp + '</div></div>'
+      + '<div class="result-body">'
+      + '<div class="result-row"><span class="result-row-label">Procedură ExitBiz</span><span class="result-row-value">' + result.procedura + ' EUR</span></div>'
+      + '<div class="result-row"><span class="result-row-label">Contabilitate (estimat)</span><span class="result-row-value">' + result.contab.label + '</span></div>'
+      + '<div class="result-total-row"><span class="result-total-label">Total estimat</span><span class="result-total-value">' + totLabel + '</span></div>'
+      + '<div class="result-tva">Prețuri fără TVA</div>'
+      + '<div class="result-note">* Prețul contabilității este estimativ și va fi confirmat de contabilul partener după analiza situației. Prețul final poate varia în funcție de complexitatea reală a dosarului.</div>'
+      + '</div></div>'
+      + '<div class="result-actions">'
+      + '<a class="result-wa-btn" href="' + waUrl + '" target="_blank" rel="noopener">' + WA_SVG + 'Vreau o ofertă exactă →</a>'
+      + '<button class="result-reset-btn" onclick="calcReset()">↩ Refă calculul</button>'
+      + '</div>';
+  }
+
+  el.innerHTML = html;
+  el.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcReset() {
+  calcAnswers = {}; calcStep = 1;
+  document.querySelectorAll('.calc-step input[type="radio"]').forEach(function(r) { r.checked = false; });
+  document.querySelectorAll('.calc-err').forEach(function(e) { e.textContent = ''; });
+  document.getElementById('calc-result').style.display = 'none';
+  document.getElementById('calc-result').innerHTML = '';
+  document.getElementById('calc-steps').style.display = 'block';
+  document.getElementById('calc-progress-wrap').style.display = 'block';
+  document.getElementById('calc-step-1').classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+updateProgress();
+</script>
 </body>
 </html>
