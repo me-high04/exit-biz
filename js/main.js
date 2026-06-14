@@ -320,115 +320,27 @@ document.getElementById('cui-input')?.addEventListener('keydown', function(e) {
 document.getElementById('mobile-menu').style.display = 'none';
 
 // ---- WHATSAPP QUALIFIER POPUP ----
-(function () {
-  var POPUP_ID = 'wa-qualify-popup';
-
-  function injectPopup() {
-    if (document.getElementById(POPUP_ID)) return;
-    var el = document.createElement('div');
-    el.id = POPUP_ID;
-    el.innerHTML = [
-      '<div id="wa-qualify-overlay">',
-      '<div id="wa-qualify-box">',
-      '<button id="wa-qualify-close" aria-label="Închide">✕</button>',
-      '<div id="wa-qualify-wa-icon"><svg fill="#25D366" width="32" height="32" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>',
-      '<h3 id="wa-qualify-title">Câteva întrebări rapide</h3>',
-      '<p id="wa-qualify-sub">Completează mai jos și te conectăm cu specialistul potrivit.</p>',
-      '<form id="wa-qualify-form">',
-      '<div class="wa-q-block">',
-      '<label class="wa-q-label">1. Aveți o firmă pe care doriți să o închiideți?</label>',
-      '<div class="wa-q-opts">',
-      '<label class="wa-q-opt"><input type="radio" name="firma" value="Da, vreau să o închid"> Da, vreau să o închid</label>',
-      '<label class="wa-q-opt"><input type="radio" name="firma" value="Nu știu sigur, vreau mai multe informații"> Nu știu sigur, vreau informații</label>',
-      '</div>',
-      '</div>',
-      '<div class="wa-q-block">',
-      '<label class="wa-q-label">2. Ce tip de firmă / procedură aveți în vedere?</label>',
-      '<div class="wa-q-opts">',
-      '<label class="wa-q-opt"><input type="radio" name="procedura" value="Radiere PFA / II / IF"> Radiere PFA / II / IF</label>',
-      '<label class="wa-q-opt"><input type="radio" name="procedura" value="Închidere SRL (dizolvare + radiere)"> Închidere SRL</label>',
-      '<label class="wa-q-opt"><input type="radio" name="procedura" value="Suspendare firmă"> Suspendare firmă</label>',
-      '<label class="wa-q-opt"><input type="radio" name="procedura" value="Nu știu, vreau o analiză"> Nu știu, vreau o analiză</label>',
-      '</div>',
-      '</div>',
-      '<div class="wa-q-block">',
-      '<label class="wa-q-label">3. Știți când a fost depus ultimul bilanț anual?</label>',
-      '<div class="wa-q-opts">',
-      '<label class="wa-q-opt"><input type="radio" name="bilant" value="Da, este depus la zi"> Da, este la zi</label>',
-      '<label class="wa-q-opt"><input type="radio" name="bilant" value="Nu știu / Nu sunt sigur"> Nu știu / Nu sunt sigur</label>',
-      '<label class="wa-q-opt"><input type="radio" name="bilant" value="Nu a fost depus (restanță)"> Nu a fost depus (restanță)</label>',
-      '</div>',
-      '</div>',
-      '<div id="wa-qualify-err"></div>',
-      '<button type="submit" id="wa-qualify-submit">',
-      '<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>',
-      'Continuă pe WhatsApp →',
-      '</button>',
-      '</form>',
-      '</div>',
-      '</div>'
-    ].join('');
-    document.body.appendChild(el);
-
-    document.getElementById('wa-qualify-close').addEventListener('click', closeWaPopup);
-    document.getElementById('wa-qualify-overlay').addEventListener('click', function(e) {
-      if (e.target === this) closeWaPopup();
-    });
-    document.getElementById('wa-qualify-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      submitWaPopup();
-    });
+function openWaPopup() {
+  document.getElementById('wa-qualify-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeWaPopup() {
+  document.getElementById('wa-qualify-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function submitWaPopup(e) {
+  e.preventDefault();
+  var form = document.getElementById('wa-qualify-form');
+  var errEl = document.getElementById('wa-qualify-err');
+  var firma = (form.querySelector('input[name="wq-firma"]:checked') || {}).value || '';
+  var proc  = (form.querySelector('input[name="wq-proc"]:checked')  || {}).value || '';
+  var bil   = (form.querySelector('input[name="wq-bil"]:checked')   || {}).value || '';
+  if (!firma || !proc || !bil) {
+    errEl.textContent = 'Te rugam sa raspunzi la toate intrebarile.';
+    return;
   }
-
-  function openWaPopup() {
-    injectPopup();
-    document.getElementById('wa-qualify-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeWaPopup() {
-    var overlay = document.getElementById('wa-qualify-overlay');
-    if (overlay) {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function submitWaPopup() {
-    var form = document.getElementById('wa-qualify-form');
-    var errEl = document.getElementById('wa-qualify-err');
-    var firma = (form.querySelector('input[name="firma"]:checked') || {}).value;
-    var procedura = (form.querySelector('input[name="procedura"]:checked') || {}).value;
-    var bilant = (form.querySelector('input[name="bilant"]:checked') || {}).value;
-
-    if (!firma || !procedura || !bilant) {
-      errEl.textContent = 'Te rugăm să răspunzi la toate întrebările.';
-      return;
-    }
-    errEl.textContent = '';
-
-    var msg = 'Bună ziua! Am câteva întrebări despre serviciile ExitBiz:\n\n';
-    msg += '1. Firmă: ' + firma + '\n';
-    msg += '2. Procedură: ' + procedura + '\n';
-    msg += '3. Bilanț: ' + bilant + '\n\n';
-    msg += 'Doresc mai multe informații și un sfat personalizat.';
-
-    closeWaPopup();
-    window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
-  }
-
-  function attachWaHandlers() {
-    document.querySelectorAll('.whatsapp-btn').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openWaPopup();
-      });
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', attachWaHandlers);
-  } else {
-    attachWaHandlers();
-  }
-})();
+  errEl.textContent = '';
+  var msg = 'Buna ziua!\n\n1. ' + firma + '\n2. ' + proc + '\n3. ' + bil + '\n\nDoresc informatii si un sfat personalizat.';
+  closeWaPopup();
+  window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
+}

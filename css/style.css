@@ -804,6 +804,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
   font-weight: 500;
   transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 .whatsapp-btn:hover {
   transform: translateY(-2px);
