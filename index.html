@@ -325,22 +325,14 @@ function ccSubmit() {
   var cuiFact = document.getElementById('ccs-fact-cui');
   var cuiFactVal = cuiFact ? cuiFact.value.trim() : '';
 
-  var msg = 'Comanda Certificat Constatator:
-';
-  if (firmName) msg += '- Firma: ' + firmName + ' (RO' + cui + ')
-';
-  else if (cui) msg += '- CUI: RO' + cui + '
-';
-  msg += '- Tip: Certificat constatator de baza - 79 RON + TVA
-';
-  msg += '- Scop: ' + scopVal + '
-';
-  msg += '- Facturare: ' + ccFact + (cuiFactVal ? ' / CUI: ' + cuiFactVal : '') + '
-';
-  msg += '- Email: ' + email + '
-';
-  if (phoneVal) msg += '- Tel: ' + phoneVal + '
-';
+  var msg = 'Comanda Certificat Constatator:\n';
+  if (firmName) msg += '- Firma: ' + firmName + ' (RO' + cui + ')\n';
+  else if (cui) msg += '- CUI: RO' + cui + '\n';
+  msg += '- Tip: Certificat constatator de baza - 79 RON + TVA\n';
+  msg += '- Scop: ' + scopVal + '\n';
+  msg += '- Facturare: ' + ccFact + (cuiFactVal ? ' / CUI: ' + cuiFactVal : '') + '\n';
+  msg += '- Email: ' + email + '\n';
+  if (phoneVal) msg += '- Tel: ' + phoneVal + '\n';
   msg += '- Total: 94 RON (incl. TVA)';
 
   setTimeout(function() {
