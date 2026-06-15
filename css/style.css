@@ -768,7 +768,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: calc(var(--nav-height) + 3rem); gap: 2rem; }
-  .hero-visual { display: none; }
+  .hero-visual { display: block; width: 100%; }
+  .cc-hero-card { max-height: none; }
   .mobile-cui-section { display: block; }
   .steps { flex-direction: column; }
   .step-arrow { padding: 0.5rem 0; transform: rotate(90deg); align-self: center; }
