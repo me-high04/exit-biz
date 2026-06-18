@@ -360,10 +360,15 @@ function submitWaPopup(e) {
     ? 'Hello! I filled in the contact form on ExitBiz.ro:\n\n'
     : 'Buna ziua! Am completat formularul de contact pe ExitBiz.ro:\n\n';
 
+  var alteleEl = document.getElementById('wq-altele');
+  var altele = alteleEl ? alteleEl.value.trim() : '';
+  var q4 = isEn ? 'Other questions or concerns' : 'Alte intrebari sau nelamuriri';
+
   var msg = intro
     + '1. ' + q1 + '\n   ' + ansLabel + ': ' + a1 + '\n\n'
     + '2. ' + q2 + '\n   ' + ansLabel + ': ' + a2 + '\n\n'
     + '3. ' + q3 + '\n   ' + ansLabel + ': ' + a3;
+  if (altele) msg += '\n\n4. ' + q4 + ':\n   ' + altele;
 
   closeWaPopup();
   window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');

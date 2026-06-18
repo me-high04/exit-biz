@@ -115,8 +115,16 @@
       <div class="ccs-content">
         <div class="ccs-label" data-ro="Tip Document" data-en="Document Type">Tip Document</div>
         <div id="ccs-body-2" style="display:none">
-          <div class="ccs-doc-box" style="margin:8px 0 10px"><span data-ro="Certificat constatator de bază" data-en="Certificate of Standing – basic">Certificat constatator de bază</span> <span style="color:var(--green);font-weight:700">79 RON + TVA</span></div>
-          <label class="ccs-lbl" style="font-size:11px" data-ro="Document solicitat pentru a servi la" data-en="Document requested to be used for">Document solicitat pentru a servi la</label>
+          <div class="ccs-doc-box" style="margin:8px 0 8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px">
+              <span data-ro="Certificat constatator de bază" data-en="Certificate of Standing – basic">Certificat constatator de bază</span>
+              <span style="color:var(--green);font-weight:700">79 RON + TVA</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+              <span>30 RON taxă ONRC</span><span style="opacity:.4">+</span><span>49 RON serviciu ExitBiz</span>
+            </div>
+          </div>
+          <label class="ccs-lbl" style="font-size:11px" data-ro="Document solicitat pentru a servi la *" data-en="Document requested to be used for *">Document solicitat pentru a servi la *</label>
           <select id="ccs-scop" class="ccw-select" style="margin-top:5px;width:100%">
             <option value="" data-ro="— Selectează scopul —" data-en="— Select purpose —">— Selectează scopul —</option>
             <option data-ro="Accesare Fonduri" data-en="Accessing Funds">Accesare Fonduri</option>
@@ -138,9 +146,10 @@
             <option data-ro="Înregistrare în scopuri de TVA" data-en="VAT registration">Înregistrare în scopuri de TVA</option>
             <option data-ro="Altul" data-en="Other">Altul</option>
           </select>
+          <div id="ccs-err-2" class="ccs-error" style="display:none;margin-top:5px"></div>
           <div class="ccs-nav" style="margin-top:10px">
             <button class="ccw-btn-back" onclick="ccShowStep(1)" data-ro="Înapoi" data-en="Back">Înapoi</button>
-            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccShowStep(3)" data-ro="Continuă" data-en="Continue">Continuă</button>
+            <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccStep2Next()" data-ro="Continuă" data-en="Continue">Continuă</button>
           </div>
         </div>
       </div>
@@ -151,24 +160,59 @@
       <div class="ccs-content">
         <div class="ccs-label" data-ro="Date Facturare" data-en="Billing Details">Date Facturare</div>
         <div id="ccs-body-3" style="display:none">
-          <div class="ccw-radio-group" style="margin:8px 0 10px">
+          <p style="font-size:12px;color:var(--text-secondary);margin:6px 0 10px" data-ro="Dorești facturare pe firma pentru care soliciți certificatul?" data-en="Do you want the invoice on the company from the certificate?">Dorești facturare pe firma pentru care soliciți certificatul?</p>
+          <div class="ccw-radio-group" style="margin:0 0 10px">
             <label class="ccw-radio selected" onclick="ccSelectFact(this,'firma')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name" data-ro="Firma din certificat" data-en="Company from certificate">Firma din certificat</div><div class="ccw-radio-sub" data-ro="Eliberează factura pe aceeași societate" data-en="Invoice on the same company">Eliberează factura pe aceeași societate</div></div>
+              <div><div class="ccw-radio-name" data-ro="Da, pe firma din certificat" data-en="Yes, on the company from certificate">Da, pe firma din certificat</div><div class="ccw-radio-sub" data-ro="Factura pe aceeași societate" data-en="Invoice on the same company">Factura pe aceeași societate</div></div>
             </label>
             <label class="ccw-radio" onclick="ccSelectFact(this,'pj')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name" data-ro="Persoană juridică" data-en="Other legal entity">Persoană juridică</div><div class="ccw-radio-sub" data-ro="Facturează pe o altă societate" data-en="Invoice on a different company">Facturează pe o altă societate</div></div>
+              <div><div class="ccw-radio-name" data-ro="Pe o altă societate (PJ)" data-en="On a different company (legal entity)">Pe o altă societate (PJ)</div><div class="ccw-radio-sub" data-ro="Facturează pe alt CUI" data-en="Invoice on a different company">Facturează pe alt CUI</div></div>
             </label>
             <label class="ccw-radio" onclick="ccSelectFact(this,'pf')">
               <div class="ccw-radio-dot"></div>
-              <div><div class="ccw-radio-name" data-ro="Persoană fizică" data-en="Individual (natural person)">Persoană fizică</div></div>
+              <div><div class="ccw-radio-name" data-ro="Pe persoană fizică" data-en="On an individual (natural person)">Pe persoană fizică</div><div class="ccw-radio-sub" data-ro="Eliberează factura pe persoană fizică" data-en="Invoice on a natural person">Eliberează factura pe persoană fizică</div></div>
             </label>
           </div>
           <div id="ccs-fact-cui-wrap" style="display:none;margin-bottom:10px">
             <label style="font-size:11px;font-weight:600;color:#e53e3e;display:block;margin-bottom:4px" data-ro="CUI/CIF facturare *" data-en="Billing company ID *">CUI/CIF facturare *</label>
             <input type="text" id="ccs-fact-cui" class="ccw-input" placeholder="CUI/CIF"/>
           </div>
+          <div id="ccs-fact-pf-wrap" style="display:none;margin-bottom:10px">
+            <div style="margin-bottom:8px">
+              <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px;color:#e53e3e" data-ro="Nume complet *" data-en="Full name *">Nume complet *</label>
+              <input type="text" id="ccs-fact-nume" class="ccw-input" placeholder="Nume / Prenume"/>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:3px" data-ro="Numele persoanei pe care va fi emisă factura" data-en="Name of the person the invoice will be issued to">Numele persoanei pe care va fi emisă factura</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div>
+                <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px" data-ro="Județ" data-en="County">Județ</label>
+                <select id="ccs-fact-judet" class="ccw-select" style="width:100%">
+                  <option value="" data-ro="Alege județ" data-en="Select county">Alege județ</option>
+                  <option>Alba</option><option>Arad</option><option>Argeș</option><option>Bacău</option>
+                  <option>Bihor</option><option>Bistrița-Năsăud</option><option>Botoșani</option>
+                  <option>Brăila</option><option>Brașov</option><option>București</option>
+                  <option>Buzău</option><option>Călărași</option><option>Cluj</option>
+                  <option>Constanța</option><option>Covasna</option><option>Dâmbovița</option>
+                  <option>Dolj</option><option>Galați</option><option>Giurgiu</option>
+                  <option>Gorj</option><option>Harghita</option><option>Hunedoara</option>
+                  <option>Ialomița</option><option>Iași</option><option>Ilfov</option>
+                  <option>Maramureș</option><option>Mehedinți</option><option>Mureș</option>
+                  <option>Neamț</option><option>Olt</option><option>Prahova</option>
+                  <option>Sălaj</option><option>Satu Mare</option><option>Sibiu</option>
+                  <option>Suceava</option><option>Teleorman</option><option>Timiș</option>
+                  <option>Tulcea</option><option>Vâlcea</option><option>Vaslui</option>
+                  <option>Vrancea</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px" data-ro="Localitate" data-en="City">Localitate</label>
+                <input type="text" id="ccs-fact-localitate" class="ccw-input" placeholder="Localitate"/>
+              </div>
+            </div>
+          </div>
+          <div id="ccs-err-3" class="ccs-error" style="display:none;margin-bottom:6px"></div>
           <div class="ccs-nav">
             <button class="ccw-btn-back" onclick="ccShowStep(2)" data-ro="Înapoi" data-en="Back">Înapoi</button>
             <button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="ccStep3Next()" data-ro="Continuă" data-en="Continue">Continuă</button>
@@ -183,14 +227,108 @@
         <div class="ccs-label" data-ro="Contact" data-en="Contact">Contact</div>
         <div id="ccs-body-4" style="display:none">
           <div style="margin:8px 0">
-            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px"><span data-ro="Adresa email" data-en="Email address">Adresa email</span> <span style="color:#e53e3e">*</span></label>
-            <input type="email" id="ccs-email" class="ccw-input" placeholder="Email"/>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px"><span data-ro="Adresă email" data-en="Email address">Adresă email</span> <span style="color:#e53e3e">*</span></label>
+            <input type="email" id="ccs-email" class="ccw-input" placeholder="email@exemplu.ro"/>
             <div id="ccs-err-email" class="ccs-error" style="display:none"></div>
           </div>
           <div style="margin:8px 0">
-            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px" data-ro="Telefon" data-en="Phone">Telefon</label>
-            <input type="text" id="ccs-phone" class="ccw-input" placeholder="Telefon"/>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:3px" data-ro="Opțional — notificare SMS despre stadiul comenzii" data-en="Optional — SMS notification about order status">Opțional — notificare SMS despre stadiul comenzii</div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px"><span data-ro="Confirmă email" data-en="Confirm email">Confirmă email</span> <span style="color:#e53e3e">*</span></label>
+            <input type="email" id="ccs-email-confirm" class="ccw-input" placeholder="email@exemplu.ro"/>
+            <div id="ccs-err-email-confirm" class="ccs-error" style="display:none"></div>
+          </div>
+          <div style="margin:8px 0">
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px"><span data-ro="Telefon" data-en="Phone">Telefon</span> <span style="color:#e53e3e">*</span></label>
+            <div style="display:flex;gap:6px">
+              <select id="ccs-phone-prefix" class="ccw-select" style="width:110px;flex-shrink:0">
+                <option value="+40">🇷🇴 +40</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+33">🇫🇷 +33</option>
+                <option value="+39">🇮🇹 +39</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+31">🇳🇱 +31</option>
+                <option value="+32">🇧🇪 +32</option>
+                <option value="+43">🇦🇹 +43</option>
+                <option value="+41">🇨🇭 +41</option>
+                <option value="+48">🇵🇱 +48</option>
+                <option value="+420">🇨🇿 +420</option>
+                <option value="+421">🇸🇰 +421</option>
+                <option value="+36">🇭🇺 +36</option>
+                <option value="+359">🇧🇬 +359</option>
+                <option value="+30">🇬🇷 +30</option>
+                <option value="+385">🇭🇷 +385</option>
+                <option value="+381">🇷🇸 +381</option>
+                <option value="+380">🇺🇦 +380</option>
+                <option value="+7">🇷🇺 +7</option>
+                <option value="+375">🇧🇾 +375</option>
+                <option value="+373">🇲🇩 +373</option>
+                <option value="+372">🇪🇪 +372</option>
+                <option value="+371">🇱🇻 +371</option>
+                <option value="+370">🇱🇹 +370</option>
+                <option value="+358">🇫🇮 +358</option>
+                <option value="+46">🇸🇪 +46</option>
+                <option value="+47">🇳🇴 +47</option>
+                <option value="+45">🇩🇰 +45</option>
+                <option value="+351">🇵🇹 +351</option>
+                <option value="+353">🇮🇪 +353</option>
+                <option value="+352">🇱🇺 +352</option>
+                <option value="+356">🇲🇹 +356</option>
+                <option value="+357">🇨🇾 +357</option>
+                <option value="+386">🇸🇮 +386</option>
+                <option value="+387">🇧🇦 +387</option>
+                <option value="+382">🇲🇪 +382</option>
+                <option value="+355">🇦🇱 +355</option>
+                <option value="+389">🇲🇰 +389</option>
+                <option value="+90">🇹🇷 +90</option>
+                <option value="+972">🇮🇱 +972</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+974">🇶🇦 +974</option>
+                <option value="+965">🇰🇼 +965</option>
+                <option value="+968">🇴🇲 +968</option>
+                <option value="+973">🇧🇭 +973</option>
+                <option value="+20">🇪🇬 +20</option>
+                <option value="+212">🇲🇦 +212</option>
+                <option value="+216">🇹🇳 +216</option>
+                <option value="+213">🇩🇿 +213</option>
+                <option value="+27">🇿🇦 +27</option>
+                <option value="+234">🇳🇬 +234</option>
+                <option value="+254">🇰🇪 +254</option>
+                <option value="+233">🇬🇭 +233</option>
+                <option value="+251">🇪🇹 +251</option>
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+86">🇨🇳 +86</option>
+                <option value="+81">🇯🇵 +81</option>
+                <option value="+82">🇰🇷 +82</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+60">🇲🇾 +60</option>
+                <option value="+66">🇹🇭 +66</option>
+                <option value="+84">🇻🇳 +84</option>
+                <option value="+62">🇮🇩 +62</option>
+                <option value="+63">🇵🇭 +63</option>
+                <option value="+92">🇵🇰 +92</option>
+                <option value="+880">🇧🇩 +880</option>
+                <option value="+94">🇱🇰 +94</option>
+                <option value="+98">🇮🇷 +98</option>
+                <option value="+964">🇮🇶 +964</option>
+                <option value="+55">🇧🇷 +55</option>
+                <option value="+52">🇲🇽 +52</option>
+                <option value="+54">🇦🇷 +54</option>
+                <option value="+56">🇨🇱 +56</option>
+                <option value="+57">🇨🇴 +57</option>
+                <option value="+51">🇵🇪 +51</option>
+                <option value="+58">🇻🇪 +58</option>
+                <option value="+593">🇪🇨 +593</option>
+                <option value="+591">🇧🇴 +591</option>
+                <option value="+598">🇺🇾 +598</option>
+                <option value="+595">🇵🇾 +595</option>
+                <option value="+61">🇦🇺 +61</option>
+                <option value="+64">🇳🇿 +64</option>
+              </select>
+              <input type="tel" id="ccs-phone" class="ccw-input" placeholder="07XX XXX XXX" style="flex:1;min-width:0"/>
+            </div>
+            <div id="ccs-err-phone" class="ccs-error" style="display:none;margin-top:4px"></div>
           </div>
           <div style="margin:10px 0">
             <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-secondary);cursor:pointer">
@@ -278,37 +416,77 @@ function ccLookup() {
     });
 }
 
+function ccStep2Next() {
+  var scop = document.getElementById('ccs-scop');
+  var err = document.getElementById('ccs-err-2');
+  if (!scop || !scop.value) {
+    if (err) { err.textContent = 'Te rugăm să selectezi scopul documentului.'; err.style.display = 'block'; }
+    return;
+  }
+  if (err) err.style.display = 'none';
+  ccShowStep(3);
+}
+
 function ccSelectFact(el, type) {
   var group = document.querySelectorAll('#ccs-body-3 .ccw-radio');
   for (var i = 0; i < group.length; i++) group[i].classList.remove('selected');
   el.classList.add('selected');
   ccFact = type;
-  var wrap = document.getElementById('ccs-fact-cui-wrap');
-  if (wrap) wrap.style.display = type !== 'firma' ? 'block' : 'none';
+  var wrapCui = document.getElementById('ccs-fact-cui-wrap');
+  var wrapPf  = document.getElementById('ccs-fact-pf-wrap');
+  if (wrapCui) wrapCui.style.display = type === 'pj' ? 'block' : 'none';
+  if (wrapPf)  wrapPf.style.display  = type === 'pf' ? 'block' : 'none';
 }
 
 function ccStep3Next() {
-  if (ccFact !== 'firma') {
+  var err = document.getElementById('ccs-err-3');
+  if (err) err.style.display = 'none';
+  if (ccFact === 'pj') {
     var cui = document.getElementById('ccs-fact-cui');
-    if (cui && !cui.value.trim()) { cui.focus(); return; }
+    if (cui && !cui.value.trim()) {
+      if (err) { err.textContent = 'CUI-ul de facturare este obligatoriu.'; err.style.display = 'block'; }
+      cui.focus(); return;
+    }
+  }
+  if (ccFact === 'pf') {
+    var nume = document.getElementById('ccs-fact-nume');
+    if (nume && !nume.value.trim()) {
+      if (err) { err.textContent = 'Numele complet este obligatoriu.'; err.style.display = 'block'; }
+      nume.focus(); return;
+    }
   }
   ccShowStep(4);
 }
 
 function ccSubmit() {
-  var emailEl = document.getElementById('ccs-email');
-  var termsEl = document.getElementById('ccs-terms');
-  var errEmail = document.getElementById('ccs-err-email');
-  var errTerms = document.getElementById('ccs-err-terms');
-  var email = emailEl ? emailEl.value.trim() : '';
-  var terms = termsEl ? termsEl.checked : false;
+  var emailEl    = document.getElementById('ccs-email');
+  var emailConf  = document.getElementById('ccs-email-confirm');
+  var termsEl    = document.getElementById('ccs-terms');
+  var phoneEl    = document.getElementById('ccs-phone');
+  var prefixEl   = document.getElementById('ccs-phone-prefix');
+  var errEmail   = document.getElementById('ccs-err-email');
+  var errConfirm = document.getElementById('ccs-err-email-confirm');
+  var errPhone   = document.getElementById('ccs-err-phone');
+  var errTerms   = document.getElementById('ccs-err-terms');
 
-  if (errEmail) errEmail.style.display = 'none';
-  if (errTerms) errTerms.style.display = 'none';
+  var email   = emailEl   ? emailEl.value.trim()   : '';
+  var confirm = emailConf ? emailConf.value.trim()  : '';
+  var phone   = phoneEl   ? phoneEl.value.trim()    : '';
+  var prefix  = prefixEl  ? prefixEl.value          : '+40';
+  var terms   = termsEl   ? termsEl.checked         : false;
+
+  [errEmail, errConfirm, errPhone, errTerms].forEach(function(e) { if (e) e.style.display = 'none'; });
 
   var ok = true;
   if (!email || email.indexOf('@') < 0) {
     if (errEmail) { errEmail.textContent = 'Email-ul este obligatoriu.'; errEmail.style.display = 'block'; }
+    ok = false;
+  } else if (email !== confirm) {
+    if (errConfirm) { errConfirm.textContent = 'Adresele de email nu coincid.'; errConfirm.style.display = 'block'; }
+    ok = false;
+  }
+  if (!phone) {
+    if (errPhone) { errPhone.textContent = 'Numărul de telefon este obligatoriu.'; errPhone.style.display = 'block'; }
     ok = false;
   }
   if (!terms) {
@@ -320,30 +498,39 @@ function ccSubmit() {
   var btn = document.getElementById('ccs-submit-btn');
   if (btn) { btn.textContent = 'Se procesează...'; btn.disabled = true; }
 
-  var cuiEl = document.getElementById('ccs-cui-input');
-  var cui = cuiEl ? cuiEl.value.trim().replace(/[^0-9]/g, '') : '';
-  var infoEl = document.getElementById('ccs-firm-info');
+  var cuiEl    = document.getElementById('ccs-cui-input');
+  var cui      = cuiEl ? cuiEl.value.trim().replace(/[^0-9]/g, '') : '';
+  var infoEl   = document.getElementById('ccs-firm-info');
   var firmName = '';
   if (infoEl && infoEl.style.display !== 'none') {
     var strong = infoEl.querySelector('strong');
     if (strong) firmName = strong.textContent;
   }
-  var scop = document.getElementById('ccs-scop');
-  var scopVal = scop ? (scop.value || 'Nespecificat') : 'Nespecificat';
-  var phone = document.getElementById('ccs-phone');
-  var phoneVal = phone ? phone.value.trim() : '';
-  var cuiFact = document.getElementById('ccs-fact-cui');
+  var scop     = document.getElementById('ccs-scop');
+  var scopVal  = scop ? (scop.value || 'Nespecificat') : 'Nespecificat';
+  var cuiFact  = document.getElementById('ccs-fact-cui');
   var cuiFactVal = cuiFact ? cuiFact.value.trim() : '';
+  var numeEl   = document.getElementById('ccs-fact-nume');
+  var numeVal  = numeEl ? numeEl.value.trim() : '';
+  var judetEl  = document.getElementById('ccs-fact-judet');
+  var judetVal = judetEl ? judetEl.value : '';
+  var locEl    = document.getElementById('ccs-fact-localitate');
+  var locVal   = locEl ? locEl.value.trim() : '';
+
+  var factLabel = ccFact === 'firma' ? 'Pe firma din certificat'
+                : ccFact === 'pj'   ? 'Persoana juridica (CUI: ' + cuiFactVal + ')'
+                : 'Persoana fizica' + (numeVal ? ' / Nume: ' + numeVal : '') + (judetVal ? ' / ' + judetVal : '') + (locVal ? ', ' + locVal : '');
 
   var msg = 'Comanda Certificat Constatator:\n';
   if (firmName) msg += '- Firma: ' + firmName + ' (RO' + cui + ')\n';
   else if (cui) msg += '- CUI: RO' + cui + '\n';
   msg += '- Tip: Certificat constatator de baza - 79 RON + TVA\n';
+  msg += '  (30 RON taxa ONRC + 49 RON serviciu ExitBiz)\n';
   msg += '- Scop: ' + scopVal + '\n';
-  msg += '- Facturare: ' + ccFact + (cuiFactVal ? ' / CUI: ' + cuiFactVal : '') + '\n';
+  msg += '- Facturare: ' + factLabel + '\n';
   msg += '- Email: ' + email + '\n';
-  if (phoneVal) msg += '- Tel: ' + phoneVal + '\n';
-  msg += '- Total: 94 RON (incl. TVA)';
+  msg += '- Telefon: ' + prefix + ' ' + phone + '\n';
+  msg += '- Total: 94 RON (incl. TVA 19%)';
 
   setTimeout(function() {
     window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
@@ -518,6 +705,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <label class="wa-q-opt"><input type="radio" name="wq-bil" value="Nu stiu / Nu sunt sigur" data-en="I don't know / Not sure"><span data-ro="Nu stiu / Nu sunt sigur" data-en="I don't know / Not sure">Nu stiu / Nu sunt sigur</span></label>
 <label class="wa-q-opt"><input type="radio" name="wq-bil" value="Nu a fost depus (restanta)" data-en="Not filed yet (outstanding)"><span data-ro="Nu a fost depus (restanta)" data-en="Not filed yet (outstanding)">Nu a fost depus (restanta)</span></label>
 </div>
+</div>
+<div class="wa-q-block">
+<label class="wa-q-label" data-ro="4. Alte întrebări sau nelămuriri (opțional)" data-en="4. Any other questions or concerns (optional)">4. Alte întrebări sau nelămuriri (opțional)</label>
+<textarea id="wq-altele" name="wq-altele" rows="3" style="width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;font-size:13px;font-family:inherit;resize:vertical;background:var(--bg-white);color:var(--text-primary);box-sizing:border-box;margin-top:4px" data-ro="Descrie pe scurt situația ta sau orice alt detaliu relevant..." data-en="Briefly describe your situation or any other relevant detail..." placeholder="Descrie pe scurt situația ta sau orice alt detaliu relevant..."></textarea>
 </div>
 <div id="wa-qualify-err" style="font-size:13px;color:#e53e3e;margin-bottom:.75rem;min-height:18px;"></div>
 <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);padding:13px 20px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;">
