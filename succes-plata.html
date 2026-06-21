@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Plată confirmată — ExitBiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<style>
+.success-wrap {
+  min-height: 80vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
+}
+.success-card {
+  max-width: 520px; width: 100%;
+  background: var(--bg-surface, #fff);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+  border: 1px solid var(--border, #e2e8f0);
+}
+.success-icon {
+  width: 80px; height: 80px;
+  background: #dcfce7; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; margin: 0 auto 1.5rem;
+  animation: pop-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes pop-in { from { transform:scale(0); opacity:0; } to { transform:scale(1); opacity:1; } }
+.success-title { font-size: 26px; font-weight: 700; margin-bottom: 0.5rem; color: var(--text, #0f172a); }
+.success-sub   { font-size: 15px; color: var(--text-secondary, #64748b); line-height: 1.6; margin-bottom: 2rem; }
+.success-box {
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; text-align: left;
+}
+.success-box p { font-size: 14px; color: #166534; margin: 4px 0; }
+.success-box strong { color: #14532d; }
+.success-actions { display: flex; flex-direction: column; gap: 10px; }
+.success-actions a, .success-actions button {
+  display: block; width: 100%; padding: 13px;
+  border-radius: 10px; font-size: 15px; font-weight: 600;
+  text-align: center; text-decoration: none; cursor: pointer;
+  font-family: inherit;
+}
+.btn-main   { background: #1d9e75; color: #fff; border: none; }
+.btn-ghost2 { background: none; color: #64748b; border: 1px solid #e2e8f0; }
+.btn-ghost2:hover { border-color: #94a3b8; color: #334155; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+<div class="nav-inner">
+<a class="logo" href="/">exit<span>biz</span></a>
+<nav class="nav-links" id="nav-links">
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Services ▾" data-ro="Servicii ▾">Servicii ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
+<a data-en="Certificate of Standing" data-ro="Certificat Constatator" href="/#certificat-constatator">Certificat Constatator</a>
+<a data-en="Price calculator" data-ro="Calculator preț" href="calculator.html">Calculator preț</a>
+</div>
+</div>
+<a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="nav-link" data-en="Articles" data-ro="Articole" href="articole/index.html">Articole</a>
+<a class="nav-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
+<div class="lang-selector" id="lang-selector">
+<button class="lang-btn lang-ro" data-lang="ro">RO</button>
+<button class="lang-btn lang-en" data-lang="en">EN</button>
+</div>
+<button aria-label="Toggle dark mode" class="theme-btn" id="theme-btn">🌙</button>
+<a class="btn-ghost btn-account" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+</nav>
+<button aria-label="Meniu" class="hamburger" id="hamburger">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header>
+<div class="mobile-menu" id="mobile-menu">
+<a class="mobile-link" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
+<a class="mobile-link" href="/#certificat-constatator">Certificat Constatator</a>
+<a class="mobile-link" href="preturi.html">Prețuri</a>
+<a class="mobile-link" href="login.html">Contul meu</a>
+</div>
+
+<main>
+<div class="success-wrap">
+  <div class="success-card">
+    <div class="success-icon">✅</div>
+    <h1 class="success-title">Plată confirmată!</h1>
+    <p class="success-sub">
+      Mulțumim pentru comandă! Echipa ExitBiz va procesa Certificatul Constatator
+      și îl vei primi pe email în <strong>1–2 zile lucrătoare</strong>.
+    </p>
+    <div class="success-box">
+      <p>📧 Vei primi un email de confirmare în câteva minute.</p>
+      <p>📞 Dacă ai întrebări, suntem pe WhatsApp: <strong>0772 129 941</strong></p>
+      <p>⏱ Termen livrare: <strong>1–2 zile lucrătoare</strong></p>
+    </div>
+    <div class="success-actions">
+      <a href="https://wa.me/40772129941" class="btn-main">Contactează-ne pe WhatsApp →</a>
+      <a href="/" class="btn-ghost2">Înapoi pe pagina principală</a>
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

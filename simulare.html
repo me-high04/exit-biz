@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tu vs. Birocrația — ExitBiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red:    #ef4444;
+  --red-bg: #1a0808;
+  --red-mid:#2d1010;
+  --green:  #1d9e75;
+  --green-bg:#081a10;
+  --green-mid:#0d2b1a;
+  --text:   #f0f0f0;
+  --muted:  #888;
+  --border: rgba(255,255,255,0.08);
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: #0b0b10;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero-band {
+  text-align: center;
+  padding: 3.5rem 1.5rem 2rem;
+  background: linear-gradient(180deg, #13131f 0%, #0b0b10 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--green); border: 1px solid var(--green);
+  border-radius: 99px; padding: 4px 14px; margin-bottom: 1.25rem;
+}
+.hero-title {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.hero-title .vs {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 300;
+  color: var(--muted);
+  margin: 0 0.3em;
+}
+.hero-title .t-red   { color: var(--red); }
+.hero-title .t-green { color: var(--green); }
+.hero-sub {
+  font-size: 16px; color: var(--muted); max-width: 500px; margin: 0 auto 2rem; line-height: 1.6;
+}
+
+/* ── START BUTTON ── */
+.start-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--green); color: #fff;
+  border: none; border-radius: 50px;
+  padding: 16px 36px; font-size: 17px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 0 40px rgba(29,158,117,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+.start-btn:hover { transform: scale(1.04); box-shadow: 0 0 60px rgba(29,158,117,0.6); }
+.start-btn:disabled { opacity: 0.5; cursor: default; animation: none; transform: none; }
+@keyframes pulse-btn {
+  0%,100% { box-shadow: 0 0 40px rgba(29,158,117,0.4); }
+  50%      { box-shadow: 0 0 60px rgba(29,158,117,0.65); }
+}
+
+/* ── ARENA ── */
+.arena {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  min-height: 480px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  gap: 0;
+}
+
+/* ── SIDE PANELS ── */
+.side {
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  position: relative; overflow: hidden;
+}
+.side-left  { background: var(--red-bg);   border: 1px solid rgba(239,68,68,0.2); }
+.side-right { background: var(--green-bg); border: 1px solid rgba(29,158,117,0.2); }
+
+.side-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.side-left  .side-label { color: var(--red); }
+.side-right .side-label { color: var(--green); }
+
+.side-name {
+  font-size: 22px; font-weight: 700; line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.side-desc {
+  font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 0.5rem;
+}
+
+/* ── TIMER ── */
+.timer-box {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px; padding: 1rem;
+  text-align: center; border: 1px solid var(--border);
+}
+.timer-val {
+  font-size: 42px; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+.side-left  .timer-val { color: var(--red); }
+.side-right .timer-val { color: var(--green); }
+.timer-unit { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ── PROGRESS BAR ── */
+.prog-wrap { background: rgba(255,255,255,0.06); border-radius: 99px; height: 8px; overflow: hidden; }
+.prog-fill {
+  height: 100%; border-radius: 99px; width: 0%;
+  transition: width 0.3s ease;
+}
+.side-left  .prog-fill { background: linear-gradient(90deg, #7f1d1d, var(--red)); }
+.side-right .prog-fill { background: linear-gradient(90deg, #064e3b, var(--green)); }
+.prog-label { font-size: 11px; color: var(--muted); text-align: right; margin-top: 4px; }
+
+/* ── EVENT LOG ── */
+.event-log { display: flex; flex-direction: column; gap: 6px; min-height: 160px; }
+.event-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12.5px; line-height: 1.4;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px; padding: 8px 10px;
+  opacity: 0; transform: translateY(8px);
+  animation: popIn 0.35s ease forwards;
+  border-left: 3px solid transparent;
+}
+.side-left  .event-item { border-left-color: var(--red); }
+.side-right .event-item { border-left-color: var(--green); }
+@keyframes popIn { to { opacity:1; transform:translateY(0); } }
+.event-icon { font-size: 16px; flex-shrink: 0; }
+.event-text { color: #d0d0d0; }
+.event-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-left: auto; padding-left: 8px; }
+
+/* ── STATUS BADGE ── */
+.status-badge {
+  display: none; text-align: center; padding: 0.75rem;
+  border-radius: 10px; font-size: 14px; font-weight: 600;
+}
+.badge-done    { background: rgba(29,158,117,0.15); border: 1px solid var(--green); color: var(--green); }
+.badge-running { background: rgba(239,68,68,0.1);   border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+
+/* ── VS DIVIDER ── */
+.vs-col {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+}
+.vs-badge {
+  background: #1a1a28; border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 50%; width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--muted);
+}
+.vs-line { flex: 1; width: 1px; background: var(--border); }
+
+/* ── FLYING EMOJIS ── */
+.emoji-float {
+  position: absolute; font-size: 22px;
+  animation: fly linear infinite;
+  pointer-events: none; opacity: 0;
+  user-select: none;
+}
+@keyframes fly {
+  0%   { opacity: 0; transform: translate(0,0) rotate(0deg); }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)); }
+}
+
+/* ── RESULT PANEL ── */
+.result-panel {
+  display: none;
+  max-width: 700px; margin: 0 auto 3rem;
+  padding: 0 1rem;
+  animation: fadeUp 0.5s ease;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.result-card {
+  background: linear-gradient(135deg, #0d2b1a 0%, #081a10 100%);
+  border: 1px solid rgba(29,158,117,0.4);
+  border-radius: 20px; padding: 2.5rem 2rem; text-align: center;
+  box-shadow: 0 0 60px rgba(29,158,117,0.15);
+}
+.result-trophy { font-size: 56px; margin-bottom: 1rem; animation: bounce 1s ease infinite alternate; }
+@keyframes bounce { from { transform: scale(1); } to { transform: scale(1.08); } }
+.result-title { font-size: 26px; font-weight: 700; margin-bottom: 0.5rem; }
+.result-sub { color: var(--muted); font-size: 15px; margin-bottom: 2rem; line-height: 1.6; }
+.result-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;
+}
+.result-stat {
+  background: rgba(255,255,255,0.04); border-radius: 12px; padding: 1rem;
+  border: 1px solid var(--border);
+}
+.result-stat-val { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.result-stat.bad  .result-stat-val { color: var(--red); }
+.result-stat.good .result-stat-val { color: var(--green); }
+.result-stat-label { font-size: 12px; color: var(--muted); }
+.result-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--green); color: #fff; text-decoration: none;
+  border-radius: 50px; padding: 14px 32px; font-size: 16px; font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 30px rgba(29,158,117,0.4);
+}
+.result-cta:hover { transform: scale(1.03); box-shadow: 0 0 50px rgba(29,158,117,0.6); color: #fff; }
+.replay-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: none; color: var(--muted); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px; padding: 12px 24px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: inherit; margin-top: 1rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.replay-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+
+/* ── SHAKE ANIMATION ── */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-4px); }
+  40%     { transform: translateX(4px); }
+  60%     { transform: translateX(-3px); }
+  80%     { transform: translateX(3px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .arena { grid-template-columns: 1fr; grid-template-rows: auto 40px auto; }
+  .vs-col { flex-direction: row; height: 40px; }
+  .vs-line { flex: 1; height: 1px; width: auto; }
+  .side { padding: 1.25rem 1rem; }
+  .timer-val { font-size: 32px; }
+  .result-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-tag">Simulare interactivă</div>
+  <h1 class="hero-title">
+    <span class="t-red">Tu singur</span>
+    <span class="vs">vs</span>
+    <span class="t-green">ExitBiz</span>
+  </h1>
+  <p class="hero-sub">Pornește simularea și vezi în timp real cum arată închiderea firmei singur față de cu noi.</p>
+  <button class="start-btn" id="start-btn" onclick="startSim()">
+    ▶ &nbsp;Pornește simularea
+  </button>
+</div>
+
+<!-- ARENA -->
+<div class="arena" id="arena">
+
+  <!-- LEFT: SINGUR -->
+  <div class="side side-left" id="side-left">
+    <div>
+      <div class="side-label">Fără ajutor</div>
+      <div class="side-name">Tu singur 😰</div>
+      <div class="side-desc">Ghișee, hârtii, notari, respingeri, așteptare... pe cont propriu.</div>
+    </div>
+    <div class="timer-box">
+      <div class="timer-val" id="timer-left">0</div>
+      <div class="timer-unit">luni scurse</div>
+    </div>
+    <div>
+      <div class="prog-wrap"><div class="prog-fill" id="prog-left"></div></div>
+      <div class="prog-label" id="prog-label-left">0%</div>
+    </div>
+    <div class="event-log" id="log-left"></div>
+    <div class="status-badge badge-running" id="badge-left"></div>
+  </div>
+
+  <!-- VS -->
+  <div class="vs-col">
+    <div class="vs-line"></div>
+    <div class="vs-badge">VS</div>
+    <div class="vs-line"></div>
+  </div>
+
+  <!-- RIGHT: EXITBIZ -->
+  <div class="side side-right" id="side-right">
+    <div>
+      <div class="side-label">Cu ExitBiz</div>
+      <div class="side-name">ExitBiz ⚡</div>
+      <div class="side-desc">Noi ne ocupăm de tot. Tu aștepți rezultatul, nu la ghișeu.</div>
+    </div>
+    <div class="timer-box">
+      <div class="timer-val" id="timer-right">0</div>
+      <div class="timer-unit">zile</div>
+    </div>
+    <div>
+      <div class="prog-wrap"><div class="prog-fill" id="prog-right"></div></div>
+      <div class="prog-label" id="prog-label-right">0%</div>
+    </div>
+    <div class="event-log" id="log-right"></div>
+    <div class="status-badge badge-done" id="badge-right"></div>
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div class="result-panel" id="result-panel">
+  <div class="result-card">
+    <div class="result-trophy">🏆</div>
+    <div class="result-title">ExitBiz câștigă cu 9+ luni avans</div>
+    <div class="result-sub">
+      În timp ce birocrația te ținea blocat luni de zile,<br/>
+      noi am rezolvat totul în 30 de zile.
+    </div>
+    <div class="result-stats">
+      <div class="result-stat bad">
+        <div class="result-stat-val">9–12 luni</div>
+        <div class="result-stat-label">Singur — timp mediu real</div>
+      </div>
+      <div class="result-stat good">
+        <div class="result-stat-val">~30 zile</div>
+        <div class="result-stat-label">Cu ExitBiz — garantat</div>
+      </div>
+      <div class="result-stat bad">
+        <div class="result-stat-val">❌ 6+</div>
+        <div class="result-stat-label">Deplasări la ghișee, notari, ANAF</div>
+      </div>
+      <div class="result-stat good">
+        <div class="result-stat-val">✅ 0</div>
+        <div class="result-stat-label">Deplasări necesare din partea ta</div>
+      </div>
+    </div>
+    <a href="index.html#certificat-constatator" class="result-cta">Închide firma în 30 de zile →</a>
+    <br/>
+    <button class="replay-btn" onclick="resetSim()">↩ Reia simularea</button>
+  </div>
+</div>
+
+<script>
+var simRunning = false;
+var timers = [];
+var emojis = [];
+
+var eventsLeft = [
+  { at: 0.8,  icon: '📋', text: 'Depui cererea la ONRC',               time: 'Luna 1' },
+  { at: 2.0,  icon: '❌', text: 'Dosar incomplet — refaci documentele', time: 'Luna 1.5' },
+  { at: 3.2,  icon: '🏛️', text: 'Programare notar: 3 săptămâni',        time: 'Luna 2' },
+  { at: 4.4,  icon: '😤', text: 'Declarații ANAF lipsă — amendă',       time: 'Luna 3' },
+  { at: 5.5,  icon: '🔴', text: 'Cerere respinsă — motiv neclar',       time: 'Luna 4' },
+  { at: 6.8,  icon: '💼', text: 'Proceduri ITM pentru angajat',         time: 'Luna 5' },
+  { at: 8.0,  icon: '📄', text: 'A doua încercare la ONRC',             time: 'Luna 7' },
+  { at: 9.5,  icon: '⏳', text: 'Aștepți publicare Monitor Oficial',    time: 'Luna 9' },
+  { at: 11.0, icon: '😩', text: 'Mai sunt câteva luni...',              time: 'Luna 11' },
+];
+
+var eventsRight = [
+  { at: 0.5,  icon: '🔍', text: 'Analiza firmei completată',            time: 'Ziua 1' },
+  { at: 1.5,  icon: '📝', text: 'Documente pregătite și verificate',    time: 'Ziua 3' },
+  { at: 2.5,  icon: '📬', text: 'Depus la ONRC — prima încercare',      time: 'Ziua 7' },
+  { at: 3.5,  icon: '📰', text: 'Publicat în Monitorul Oficial',        time: 'Ziua 20' },
+  { at: 4.2,  icon: '✅', text: 'Firma radiată oficial. Gata!',         time: 'Ziua 30' },
+];
+
+function addEvent(logId, icon, text, time) {
+  var log = document.getElementById(logId);
+  var item = document.createElement('div');
+  item.className = 'event-item';
+  item.innerHTML = '<span class="event-icon">' + icon + '</span>'
+                 + '<span class="event-text">' + text + '</span>'
+                 + '<span class="event-time">' + time + '</span>';
+  log.appendChild(item);
+  log.scrollTop = log.scrollHeight;
+}
+
+function spawnEmoji(container) {
+  var pool = ['📄','📋','🖊️','🏛️','📎','💼','🗂️','📑','✏️','📮'];
+  var el = document.createElement('div');
+  el.className = 'emoji-float';
+  el.textContent = pool[Math.floor(Math.random() * pool.length)];
+  var startX = Math.random() * 80 + 5;
+  var tx = (Math.random() - 0.5) * 120;
+  var ty = -(Math.random() * 100 + 60);
+  var rot = (Math.random() - 0.5) * 360;
+  var dur = (Math.random() * 2 + 2).toFixed(1);
+  var delay = (Math.random() * 2).toFixed(1);
+  el.style.cssText = 'left:' + startX + '%;bottom:10%;'
+    + '--tx:' + tx + 'px;--ty:' + ty + 'px;--rot:' + rot + 'deg;'
+    + 'animation-duration:' + dur + 's;animation-delay:' + delay + 's;';
+  container.appendChild(el);
+  emojis.push(el);
+  return el;
+}
+
+function shakePanel(id) {
+  var el = document.getElementById(id);
+  el.classList.remove('shake');
+  void el.offsetWidth;
+  el.classList.add('shake');
+  setTimeout(function() { el.classList.remove('shake'); }, 400);
+}
+
+function startSim() {
+  if (simRunning) return;
+  simRunning = true;
+  document.getElementById('start-btn').disabled = true;
+  document.getElementById('result-panel').style.display = 'none';
+  document.getElementById('log-left').innerHTML = '';
+  document.getElementById('log-right').innerHTML = '';
+  document.getElementById('badge-left').style.display = 'none';
+  document.getElementById('badge-right').style.display = 'none';
+
+  var leftPanel = document.getElementById('side-left');
+
+  // Spawn floating emojis on left
+  for (var i = 0; i < 12; i++) spawnEmoji(leftPanel);
+
+  var START = Date.now();
+  var TOTAL_DURATION = 12500; // ms — full animation length
+  var RIGHT_DONE_AT  = 4500;  // ms — when ExitBiz finishes
+
+  var leftMonths  = 12;
+  var rightDays   = 30;
+  var rightDone   = false;
+
+  // Schedule left events
+  eventsLeft.forEach(function(ev) {
+    var t = setTimeout(function() {
+      if (!simRunning) return;
+      addEvent('log-left', ev.icon, ev.text, ev.time);
+      if (ev.icon === '❌' || ev.icon === '🔴') shakePanel('side-left');
+    }, ev.at * 1000);
+    timers.push(t);
+  });
+
+  // Schedule right events
+  eventsRight.forEach(function(ev) {
+    var t = setTimeout(function() {
+      if (!simRunning) return;
+      addEvent('log-right', ev.icon, ev.text, ev.time);
+    }, ev.at * 1000);
+    timers.push(t);
+  });
+
+  // Right side done
+  var tRightDone = setTimeout(function() {
+    if (!simRunning) return;
+    rightDone = true;
+    document.getElementById('timer-right').textContent = '30';
+    document.getElementById('prog-right').style.width = '100%';
+    document.getElementById('prog-label-right').textContent = '100% — Finalizat';
+    var badge = document.getElementById('badge-right');
+    badge.textContent = '🎉 GATA — 30 de zile!';
+    badge.style.display = 'block';
+    document.getElementById('side-right').style.boxShadow = '0 0 40px rgba(29,158,117,0.35)';
+  }, RIGHT_DONE_AT);
+  timers.push(tRightDone);
+
+  // Left side still running badge
+  var tLeftBadge = setTimeout(function() {
+    if (!simRunning) return;
+    var badge = document.getElementById('badge-left');
+    badge.textContent = '⏳ Încă mai aștepți...';
+    badge.style.display = 'block';
+  }, RIGHT_DONE_AT + 500);
+  timers.push(tLeftBadge);
+
+  // Show result
+  var tResult = setTimeout(function() {
+    if (!simRunning) return;
+    simRunning = false;
+    document.getElementById('result-panel').style.display = 'block';
+    document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, TOTAL_DURATION);
+  timers.push(tResult);
+
+  // Tick interval
+  var tick = setInterval(function() {
+    var elapsed = Date.now() - START;
+    if (!simRunning && elapsed < TOTAL_DURATION) { clearInterval(tick); return; }
+    if (elapsed >= TOTAL_DURATION) { clearInterval(tick); return; }
+
+    // Left counter: 0 → 12 months over TOTAL_DURATION
+    var lMonths = Math.min(leftMonths, (elapsed / TOTAL_DURATION) * leftMonths);
+    document.getElementById('timer-left').textContent = lMonths.toFixed(1);
+    var lPct = Math.min(100, (elapsed / TOTAL_DURATION) * 85); // never quite finishes
+    document.getElementById('prog-left').style.width = lPct.toFixed(1) + '%';
+    document.getElementById('prog-label-left').textContent = lPct.toFixed(0) + '% — încă în progres';
+
+    // Right counter: 0 → 30 days, done at RIGHT_DONE_AT
+    if (!rightDone) {
+      var rDays = Math.min(rightDays, (elapsed / RIGHT_DONE_AT) * rightDays);
+      document.getElementById('timer-right').textContent = Math.floor(rDays);
+      var rPct = Math.min(100, (elapsed / RIGHT_DONE_AT) * 100);
+      document.getElementById('prog-right').style.width = rPct.toFixed(1) + '%';
+      document.getElementById('prog-label-right').textContent = rPct.toFixed(0) + '%';
+    }
+  }, 60);
+  timers.push(tick);
+}
+
+function resetSim() {
+  simRunning = false;
+  timers.forEach(function(t) { clearTimeout(t); clearInterval(t); });
+  timers = [];
+  emojis.forEach(function(e) { if (e.parentNode) e.parentNode.removeChild(e); });
+  emojis = [];
+
+  document.getElementById('start-btn').disabled = false;
+  document.getElementById('timer-left').textContent = '0';
+  document.getElementById('timer-right').textContent = '0';
+  document.getElementById('prog-left').style.width = '0%';
+  document.getElementById('prog-right').style.width = '0%';
+  document.getElementById('prog-label-left').textContent = '0%';
+  document.getElementById('prog-label-right').textContent = '0%';
+  document.getElementById('log-left').innerHTML = '';
+  document.getElementById('log-right').innerHTML = '';
+  document.getElementById('badge-left').style.display = 'none';
+  document.getElementById('badge-right').style.display = 'none';
+  document.getElementById('side-right').style.boxShadow = '';
+  document.getElementById('result-panel').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

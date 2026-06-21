@@ -83,7 +83,7 @@
 <li><span class="check-icon">✓</span> <span data-en="Processing cases across Romania" data-ro="Procesăm dosare în toată România">Procesăm dosare în toată România</span></li>
 </ul>
 <div class="hero-actions">
-<button class="btn-primary btn-large" data-en="I want to close my company →" data-ro="Vreau să închid firma →" data-tally-layout="modal" data-tally-open="b5zx50" data-tally-width="500">Vreau să închid firma →</button>
+<button class="btn-primary btn-large" data-en="I want to close my company →" data-ro="Vreau să închid firma →" onclick="openSimModal()">Vreau să închid firma →</button>
 <a class="btn-ghost" data-en="How does it work?" data-ro="Cum funcționează?" href="#cum-functioneaza">Cum funcționează?</a>
 </div>
 </div>
@@ -521,21 +521,31 @@ function ccSubmit() {
                 : ccFact === 'pj'   ? 'Persoana juridica (CUI: ' + cuiFactVal + ')'
                 : 'Persoana fizica' + (numeVal ? ' / Nume: ' + numeVal : '') + (judetVal ? ' / ' + judetVal : '') + (locVal ? ', ' + locVal : '');
 
-  var msg = 'Comanda Certificat Constatator:\n';
-  if (firmName) msg += '- Firma: ' + firmName + ' (RO' + cui + ')\n';
-  else if (cui) msg += '- CUI: RO' + cui + '\n';
-  msg += '- Tip: Certificat constatator de baza - 79 RON + TVA\n';
-  msg += '  (30 RON taxa ONRC + 49 RON serviciu ExitBiz)\n';
-  msg += '- Scop: ' + scopVal + '\n';
-  msg += '- Facturare: ' + factLabel + '\n';
-  msg += '- Email: ' + email + '\n';
-  msg += '- Telefon: ' + prefix + ' ' + phone + '\n';
-  msg += '- Total: 94 RON (incl. TVA 19%)';
-
-  setTimeout(function() {
-    window.open('https://wa.me/40772129941?text=' + encodeURIComponent(msg), '_blank');
+  fetch('/.netlify/functions/create-checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      cui:        cui,
+      firmName:   firmName,
+      scop:       scopVal,
+      facturare:  factLabel,
+      email:      email,
+      phone:      prefix + ' ' + phone,
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert('Eroare la inițierea plății: ' + (data.error || 'necunoscută'));
+      if (btn) { btn.textContent = 'Continuă'; btn.disabled = false; }
+    }
+  })
+  .catch(function() {
+    alert('Eroare de rețea. Te rugăm să încerci din nou.');
     if (btn) { btn.textContent = 'Continuă'; btn.disabled = false; }
-  }, 400);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -732,7 +742,322 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 </div>
+<!-- SIMULARE MODAL -->
+<div id="sim-modal-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:#0b0b10;overflow-y:auto;">
+  <style>
+    #sim-modal-overlay { font-family:'Sora',sans-serif; }
+    .sm-close { position:fixed;top:16px;right:20px;z-index:9999;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s; }
+    .sm-close:hover { background:rgba(255,255,255,0.2); }
+    .sm-hero { text-align:center;padding:3rem 1.5rem 1.5rem;background:linear-gradient(180deg,#13131f 0%,#0b0b10 100%); }
+    .sm-tag { display:inline-block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#1d9e75;border:1px solid #1d9e75;border-radius:99px;padding:4px 14px;margin-bottom:1rem; }
+    .sm-title { font-size:clamp(24px,4.5vw,44px);font-weight:700;line-height:1.15;margin-bottom:0.6rem;color:#f0f0f0; }
+    .sm-title .t-red { color:#ef4444; } .sm-title .t-green { color:#1d9e75; } .sm-title .t-vs { font-size:.6em;font-weight:300;color:#888;margin:0 .25em; }
+    .sm-sub { font-size:15px;color:#888;max-width:460px;margin:0 auto 1.5rem;line-height:1.6; }
+    .sm-start-btn { display:inline-flex;align-items:center;gap:10px;background:#1d9e75;color:#fff;border:none;border-radius:50px;padding:15px 34px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 0 40px rgba(29,158,117,.4);transition:transform .2s,box-shadow .2s;animation:sm-pulse 2s ease-in-out infinite; }
+    .sm-start-btn:hover { transform:scale(1.04); } .sm-start-btn:disabled { opacity:.5;cursor:default;animation:none;transform:none; }
+    @keyframes sm-pulse { 0%,100%{box-shadow:0 0 40px rgba(29,158,117,.4)}50%{box-shadow:0 0 60px rgba(29,158,117,.65)} }
+    .sm-arena { display:grid;grid-template-columns:1fr 60px 1fr;max-width:1060px;margin:0 auto;padding:1.5rem 1rem 2rem;gap:0; }
+    .sm-side { border-radius:16px;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.875rem;position:relative;overflow:hidden; }
+    .sm-left  { background:#1a0808;border:1px solid rgba(239,68,68,.2); }
+    .sm-right { background:#081a10;border:1px solid rgba(29,158,117,.2); }
+    .sm-label { font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase; }
+    .sm-left .sm-label { color:#ef4444; } .sm-right .sm-label { color:#1d9e75; }
+    .sm-name  { font-size:20px;font-weight:700;line-height:1.2;color:#f0f0f0; }
+    .sm-desc  { font-size:12px;color:#888;line-height:1.5; }
+    .sm-timer-box { background:rgba(255,255,255,.05);border-radius:12px;padding:.875rem;text-align:center;border:1px solid rgba(255,255,255,.08); }
+    .sm-timer-val { font-size:38px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums; }
+    .sm-left  .sm-timer-val { color:#ef4444; } .sm-right .sm-timer-val { color:#1d9e75; }
+    .sm-timer-unit { font-size:12px;color:#888;margin-top:4px; }
+    .sm-prog-wrap { background:rgba(255,255,255,.06);border-radius:99px;height:8px;overflow:hidden; }
+    .sm-prog-fill { height:100%;border-radius:99px;width:0%;transition:width .3s ease; }
+    .sm-left  .sm-prog-fill { background:linear-gradient(90deg,#7f1d1d,#ef4444); }
+    .sm-right .sm-prog-fill { background:linear-gradient(90deg,#064e3b,#1d9e75); }
+    .sm-prog-lbl { font-size:11px;color:#888;text-align:right;margin-top:4px; }
+    .sm-log { display:flex;flex-direction:column;gap:6px;min-height:150px; }
+    .sm-event { display:flex;align-items:flex-start;gap:8px;font-size:12px;line-height:1.4;background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;opacity:0;transform:translateY(8px);animation:sm-pop .35s ease forwards;border-left:3px solid transparent;color:#d0d0d0; }
+    .sm-left  .sm-event { border-left-color:#ef4444; } .sm-right .sm-event { border-left-color:#1d9e75; }
+    @keyframes sm-pop { to { opacity:1;transform:translateY(0); } }
+    .sm-ev-icon { font-size:15px;flex-shrink:0; } .sm-ev-time { font-size:10px;color:#666;white-space:nowrap;margin-left:auto;padding-left:6px; }
+    .sm-badge { display:none;text-align:center;padding:.65rem;border-radius:10px;font-size:13px;font-weight:600; }
+    .sm-badge-done { background:rgba(29,158,117,.15);border:1px solid #1d9e75;color:#1d9e75; }
+    .sm-badge-run  { background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5; }
+    .sm-vs-col { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px; }
+    .sm-vs-badge { background:#1a1a28;border:2px solid rgba(255,255,255,.12);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#888; }
+    .sm-vs-line { flex:1;width:1px;background:rgba(255,255,255,.08); }
+    .sm-emoji { position:absolute;font-size:20px;animation:sm-fly linear infinite;pointer-events:none;opacity:0;user-select:none; }
+    @keyframes sm-fly { 0%{opacity:0;transform:translate(0,0) rotate(0deg)} 10%{opacity:.7} 90%{opacity:.5} 100%{opacity:0;transform:translate(var(--stx),var(--sty)) rotate(var(--srot))} }
+    .sm-result { display:none;max-width:660px;margin:0 auto 2rem;padding:0 1rem;animation:sm-fadeup .5s ease; }
+    @keyframes sm-fadeup { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .sm-result-card { background:linear-gradient(135deg,#0d2b1a 0%,#081a10 100%);border:1px solid rgba(29,158,117,.4);border-radius:20px;padding:2rem 1.75rem;text-align:center;box-shadow:0 0 60px rgba(29,158,117,.15); }
+    .sm-trophy { font-size:52px;margin-bottom:.75rem;animation:sm-bounce 1s ease infinite alternate; display:block; }
+    @keyframes sm-bounce { from{transform:scale(1)} to{transform:scale(1.08)} }
+    .sm-res-title { font-size:22px;font-weight:700;margin-bottom:.4rem;color:#f0f0f0; }
+    .sm-res-sub { color:#888;font-size:14px;margin-bottom:1.5rem;line-height:1.6; }
+    .sm-res-stats { display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem; }
+    .sm-stat { background:rgba(255,255,255,.04);border-radius:12px;padding:.875rem;border:1px solid rgba(255,255,255,.08); }
+    .sm-stat-val { font-size:24px;font-weight:700;margin-bottom:4px; }
+    .sm-stat.bad .sm-stat-val { color:#ef4444; } .sm-stat.good .sm-stat-val { color:#1d9e75; }
+    .sm-stat-lbl { font-size:11px;color:#888; }
+    .sm-cta-btn { display:inline-flex;align-items:center;gap:8px;background:#1d9e75;color:#fff;border:none;border-radius:50px;padding:14px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 0 30px rgba(29,158,117,.4);transition:transform .2s,box-shadow .2s; }
+    .sm-cta-btn:hover { transform:scale(1.03); }
+    .sm-replay-btn { display:inline-flex;align-items:center;gap:8px;background:none;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:11px 22px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:.75rem;transition:border-color .2s,color .2s; }
+    .sm-replay-btn:hover { border-color:rgba(255,255,255,.3);color:#fff; }
+    @media(max-width:660px) {
+      .sm-arena { grid-template-columns:1fr;grid-template-rows:auto 36px auto; }
+      .sm-vs-col { flex-direction:row;height:36px; }
+      .sm-vs-line { flex:1;height:1px;width:auto; }
+      .sm-res-stats { grid-template-columns:1fr; }
+      .sm-timer-val { font-size:30px; }
+    }
+  </style>
+  <button class="sm-close" onclick="closeSimModal()" title="Închide">✕</button>
+  <!-- Hero -->
+  <div class="sm-hero">
+    <div class="sm-tag">Simulare interactivă</div>
+    <h2 class="sm-title">
+      <span class="t-red">Tu singur</span><span class="t-vs">vs</span><span class="t-green">ExitBiz</span>
+    </h2>
+    <p class="sm-sub">Pornește simularea și vezi în timp real cum arată închiderea firmei singur față de cu noi.</p>
+    <button class="sm-start-btn" id="sm-start-btn" onclick="smStartSim()">▶ &nbsp;Pornește simularea</button>
+  </div>
+  <!-- Arena -->
+  <div class="sm-arena">
+    <div class="sm-side sm-left" id="sm-left">
+      <div>
+        <div class="sm-label">Fără ajutor</div>
+        <div class="sm-name">Tu singur 😰</div>
+        <div class="sm-desc">Ghișee, hârtii, notari, respingeri, așteptare... pe cont propriu.</div>
+      </div>
+      <div class="sm-timer-box">
+        <div class="sm-timer-val" id="sm-timer-left">0</div>
+        <div class="sm-timer-unit">luni scurse</div>
+      </div>
+      <div>
+        <div class="sm-prog-wrap"><div class="sm-prog-fill" id="sm-prog-left"></div></div>
+        <div class="sm-prog-lbl" id="sm-prog-lbl-left">0%</div>
+      </div>
+      <div class="sm-log" id="sm-log-left"></div>
+      <div class="sm-badge sm-badge-run" id="sm-badge-left"></div>
+    </div>
+    <div class="sm-vs-col">
+      <div class="sm-vs-line"></div>
+      <div class="sm-vs-badge">VS</div>
+      <div class="sm-vs-line"></div>
+    </div>
+    <div class="sm-side sm-right" id="sm-right">
+      <div>
+        <div class="sm-label">Cu ExitBiz</div>
+        <div class="sm-name">ExitBiz ⚡</div>
+        <div class="sm-desc">Noi ne ocupăm de tot. Tu aștepți rezultatul, nu la ghișeu.</div>
+      </div>
+      <div class="sm-timer-box">
+        <div class="sm-timer-val" id="sm-timer-right">0</div>
+        <div class="sm-timer-unit">zile</div>
+      </div>
+      <div>
+        <div class="sm-prog-wrap"><div class="sm-prog-fill" id="sm-prog-right"></div></div>
+        <div class="sm-prog-lbl" id="sm-prog-lbl-right">0%</div>
+      </div>
+      <div class="sm-log" id="sm-log-right"></div>
+      <div class="sm-badge sm-badge-done" id="sm-badge-right"></div>
+    </div>
+  </div>
+  <!-- Result -->
+  <div class="sm-result" id="sm-result">
+    <div class="sm-result-card">
+      <span class="sm-trophy">🏆</span>
+      <div class="sm-res-title">ExitBiz câștigă cu 9+ luni avans</div>
+      <div class="sm-res-sub">În timp ce birocrația te ținea blocată luni de zile,<br/>noi am rezolvat totul în 30 de zile.</div>
+      <div class="sm-res-stats">
+        <div class="sm-stat bad"><div class="sm-stat-val">9–12 luni</div><div class="sm-stat-lbl">Singur — timp mediu real</div></div>
+        <div class="sm-stat good"><div class="sm-stat-val">~30 zile</div><div class="sm-stat-lbl">Cu ExitBiz — garantat</div></div>
+        <div class="sm-stat bad"><div class="sm-stat-val">❌ 6+</div><div class="sm-stat-lbl">Deplasări la ghișee, notari, ANAF</div></div>
+        <div class="sm-stat good"><div class="sm-stat-val">✅ 0</div><div class="sm-stat-lbl">Deplasări necesare din partea ta</div></div>
+      </div>
+      <button class="sm-cta-btn" onclick="smGoToForm()">Închide firma în 30 de zile →</button>
+      <br/>
+      <button class="sm-replay-btn" onclick="smResetSim()">↩ Reia simularea</button>
+    </div>
+  </div>
+</div>
+
 <script async="" src="https://tally.so/widgets/embed.js"></script>
 <script src="js/main.js"></script>
+<script>
+// ---- SIMULARE MODAL ----
+var smRunning = false, smTimers = [], smEmojis = [];
+var SM_EVENTS_LEFT = [
+  { at:0.8,  icon:'📋', text:'Depui cererea la ONRC',               time:'Luna 1' },
+  { at:2.0,  icon:'❌', text:'Dosar incomplet — refaci documentele', time:'Luna 1.5' },
+  { at:3.2,  icon:'🏛️', text:'Programare notar: 3 săptămâni',        time:'Luna 2' },
+  { at:4.4,  icon:'😤', text:'Declarații ANAF lipsă — amendă',       time:'Luna 3' },
+  { at:5.5,  icon:'🔴', text:'Cerere respinsă — motiv neclar',       time:'Luna 4' },
+  { at:6.8,  icon:'💼', text:'Proceduri ITM pentru angajat',         time:'Luna 5' },
+  { at:8.0,  icon:'📄', text:'A doua încercare la ONRC',             time:'Luna 7' },
+  { at:9.5,  icon:'⏳', text:'Aștepți publicare Monitor Oficial',    time:'Luna 9' },
+  { at:11.0, icon:'😩', text:'Mai sunt câteva luni...',              time:'Luna 11' },
+];
+var SM_EVENTS_RIGHT = [
+  { at:0.5,  icon:'🔍', text:'Analiza firmei completată',            time:'Ziua 1' },
+  { at:1.5,  icon:'📝', text:'Documente pregătite și verificate',    time:'Ziua 3' },
+  { at:2.5,  icon:'📬', text:'Depus la ONRC — prima încercare',      time:'Ziua 7' },
+  { at:3.5,  icon:'📰', text:'Publicat în Monitorul Oficial',        time:'Ziua 20' },
+  { at:4.2,  icon:'✅', text:'Firma radiată oficial. Gata!',         time:'Ziua 30' },
+];
+
+function openSimModal() {
+  document.getElementById('sim-modal-overlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeSimModal() {
+  document.getElementById('sim-modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+  smClearAll();
+}
+function smGoToForm() {
+  closeSimModal();
+  setTimeout(function() {
+    var el = document.getElementById('certificat-constatator');
+    if (el) { var top = el.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: top, behavior: 'smooth' }); }
+  }, 150);
+}
+function smAddEvent(logId, icon, text, time) {
+  var log = document.getElementById(logId);
+  if (!log) return;
+  var item = document.createElement('div');
+  item.className = 'sm-event';
+  item.innerHTML = '<span class="sm-ev-icon">'+icon+'</span><span>'+text+'</span><span class="sm-ev-time">'+time+'</span>';
+  log.appendChild(item);
+  log.scrollTop = log.scrollHeight;
+}
+function smSpawnEmoji(container) {
+  var pool = ['📄','📋','🖊️','🏛️','📎','💼','🗂️','📑','✏️','📮'];
+  var el = document.createElement('div');
+  el.className = 'sm-emoji';
+  el.textContent = pool[Math.floor(Math.random()*pool.length)];
+  var sx = Math.random()*80+5;
+  var tx = (Math.random()-.5)*110;
+  var ty = -(Math.random()*90+50);
+  var rot = (Math.random()-.5)*350;
+  var dur = (Math.random()*2+2).toFixed(1);
+  var delay = (Math.random()*2).toFixed(1);
+  el.style.cssText = 'left:'+sx+'%;bottom:8%;--stx:'+tx+'px;--sty:'+ty+'px;--srot:'+rot+'deg;animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+  container.appendChild(el);
+  smEmojis.push(el);
+}
+function smShake(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.style.animation='';
+  void el.offsetWidth;
+  el.style.animation='sm-shake .4s ease';
+  setTimeout(function(){ el.style.animation=''; }, 400);
+}
+function smClearAll() {
+  smRunning = false;
+  smTimers.forEach(function(t){ clearTimeout(t); clearInterval(t); });
+  smTimers = [];
+  smEmojis.forEach(function(e){ if(e.parentNode) e.parentNode.removeChild(e); });
+  smEmojis = [];
+}
+function smResetSim() {
+  smClearAll();
+  document.getElementById('sm-start-btn').disabled = false;
+  document.getElementById('sm-timer-left').textContent = '0';
+  document.getElementById('sm-timer-right').textContent = '0';
+  document.getElementById('sm-prog-left').style.width = '0%';
+  document.getElementById('sm-prog-right').style.width = '0%';
+  document.getElementById('sm-prog-lbl-left').textContent = '0%';
+  document.getElementById('sm-prog-lbl-right').textContent = '0%';
+  document.getElementById('sm-log-left').innerHTML = '';
+  document.getElementById('sm-log-right').innerHTML = '';
+  document.getElementById('sm-badge-left').style.display = 'none';
+  document.getElementById('sm-badge-right').style.display = 'none';
+  document.getElementById('sm-right').style.boxShadow = '';
+  document.getElementById('sm-result').style.display = 'none';
+  document.getElementById('sim-modal-overlay').scrollTop = 0;
+}
+function smStartSim() {
+  if (smRunning) return;
+  smRunning = true;
+  document.getElementById('sm-start-btn').disabled = true;
+  document.getElementById('sm-result').style.display = 'none';
+  document.getElementById('sm-log-left').innerHTML = '';
+  document.getElementById('sm-log-right').innerHTML = '';
+  document.getElementById('sm-badge-left').style.display = 'none';
+  document.getElementById('sm-badge-right').style.display = 'none';
+
+  var leftPanel = document.getElementById('sm-left');
+  for (var i = 0; i < 12; i++) smSpawnEmoji(leftPanel);
+
+  var START = Date.now();
+  var TOTAL = 12500, RIGHT_DONE = 4500;
+  var rightDone = false;
+
+  SM_EVENTS_LEFT.forEach(function(ev) {
+    var t = setTimeout(function() {
+      if (!smRunning) return;
+      smAddEvent('sm-log-left', ev.icon, ev.text, ev.time);
+      if (ev.icon === '❌' || ev.icon === '🔴') smShake('sm-left');
+    }, ev.at * 1000);
+    smTimers.push(t);
+  });
+  SM_EVENTS_RIGHT.forEach(function(ev) {
+    var t = setTimeout(function() {
+      if (!smRunning) return;
+      smAddEvent('sm-log-right', ev.icon, ev.text, ev.time);
+    }, ev.at * 1000);
+    smTimers.push(t);
+  });
+
+  smTimers.push(setTimeout(function() {
+    if (!smRunning) return;
+    rightDone = true;
+    document.getElementById('sm-timer-right').textContent = '30';
+    document.getElementById('sm-prog-right').style.width = '100%';
+    document.getElementById('sm-prog-lbl-right').textContent = '100% — Finalizat';
+    var b = document.getElementById('sm-badge-right');
+    b.textContent = '🎉 GATA — 30 de zile!'; b.style.display = 'block';
+    document.getElementById('sm-right').style.boxShadow = '0 0 40px rgba(29,158,117,0.35)';
+  }, RIGHT_DONE));
+
+  smTimers.push(setTimeout(function() {
+    if (!smRunning) return;
+    var b = document.getElementById('sm-badge-left');
+    b.textContent = '⏳ Încă mai aștepți...'; b.style.display = 'block';
+  }, RIGHT_DONE + 600));
+
+  smTimers.push(setTimeout(function() {
+    if (!smRunning) return;
+    smRunning = false;
+    var res = document.getElementById('sm-result');
+    res.style.display = 'block';
+    res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, TOTAL));
+
+  var tick = setInterval(function() {
+    var elapsed = Date.now() - START;
+    if (elapsed >= TOTAL) { clearInterval(tick); return; }
+    var lm = Math.min(12, (elapsed/TOTAL)*12);
+    document.getElementById('sm-timer-left').textContent = lm.toFixed(1);
+    var lp = Math.min(85, (elapsed/TOTAL)*85);
+    document.getElementById('sm-prog-left').style.width = lp.toFixed(1)+'%';
+    document.getElementById('sm-prog-lbl-left').textContent = lp.toFixed(0)+'% — încă în progres';
+    if (!rightDone) {
+      var rd = Math.min(30, (elapsed/RIGHT_DONE)*30);
+      document.getElementById('sm-timer-right').textContent = Math.floor(rd);
+      var rp = Math.min(100, (elapsed/RIGHT_DONE)*100);
+      document.getElementById('sm-prog-right').style.width = rp.toFixed(1)+'%';
+      document.getElementById('sm-prog-lbl-right').textContent = rp.toFixed(0)+'%';
+    }
+  }, 60);
+  smTimers.push(tick);
+}
+
+// Close sim on ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('sim-modal-overlay').style.display !== 'none') closeSimModal();
+});
+</script>
 </body>
 </html>
