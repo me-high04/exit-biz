@@ -65,6 +65,7 @@ exports.handler = async (event) => {
         </p>
       </div>`;
 
+    // Email către client
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -72,10 +73,38 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'ExitBiz <noreply@exitbiz.ro>',
+        from: 'ExitBiz <onboarding@resend.dev>',
         to: [email],
         subject: 'Comandă confirmată — Certificat Constatator ExitBiz',
         html
+      })
+    });
+
+    // Email intern către echipa ExitBiz
+    const internalHtml = `
+      <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px 16px;">
+        <h2 style="margin:0 0 16px;font-size:18px;">🛎️ Comandă nouă — Certificat Constatator</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr><td style="padding:6px 0;color:#64748b;width:120px;">Firmă</td><td style="padding:6px 0;font-weight:500;">${firm_name || '—'}${cui ? ` (RO${cui})` : ''}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b;">Scop</td><td style="padding:6px 0;">${scop || '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b;">Facturare</td><td style="padding:6px 0;">${facturare || '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b;">Email client</td><td style="padding:6px 0;">${email}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b;">Telefon</td><td style="padding:6px 0;">${phone || '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b;">Total</td><td style="padding:6px 0;font-weight:700;color:#1d9e75;">79 RON</td></tr>
+        </table>
+      </div>`;
+
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'ExitBiz <onboarding@resend.dev>',
+        to: ['ducaduca124@gmail.com'],
+        subject: `🛎️ Comandă nouă CC — ${firm_name || email}`,
+        html: internalHtml
       })
     });
   }
