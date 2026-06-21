@@ -130,6 +130,7 @@ if (hamburger && mobileMenu) hamburger.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   mobileMenu.style.display = isOpen ? 'flex' : 'none';
+  document.body.style.overflow = isOpen ? 'hidden' : '';
   setTimeout(() => {
     if (isOpen) mobileMenu.classList.add('open');
   }, 10);
@@ -141,6 +142,7 @@ if (hamburger && mobileMenu) {
     link.addEventListener('click', () => {
       mobileMenu.classList.remove('open');
       hamburger.classList.remove('open');
+      document.body.style.overflow = '';
       setTimeout(() => { mobileMenu.style.display = 'none'; }, 250);
     });
   });
