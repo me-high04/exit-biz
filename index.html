@@ -816,24 +816,24 @@ document.addEventListener('DOMContentLoaded', function() {
   <button class="sm-close" onclick="closeSimModal()" title="Închide">✕</button>
   <!-- Hero -->
   <div class="sm-hero">
-    <div class="sm-tag">Simulare interactivă</div>
+    <div class="sm-tag" data-ro="Simulare interactivă" data-en="Interactive simulation">Simulare interactivă</div>
     <h2 class="sm-title">
-      <span class="t-red">Tu singur</span><span class="t-vs">vs</span><span class="t-green">ExitBiz</span>
+      <span class="t-red" data-ro="Tu singur" data-en="On your own">Tu singur</span><span class="t-vs">vs</span><span class="t-green">ExitBiz</span>
     </h2>
-    <p class="sm-sub">Pornește simularea și vezi în timp real cum arată închiderea firmei singur față de cu noi.</p>
-    <button class="sm-start-btn" id="sm-start-btn" onclick="smStartSim()">▶ &nbsp;Pornește simularea</button>
+    <p class="sm-sub" data-ro="Pornește simularea și vezi în timp real cum arată închiderea firmei singur față de cu noi." data-en="Start the simulation and see in real time what closing your company looks like on your own versus with us.">Pornește simularea și vezi în timp real cum arată închiderea firmei singur față de cu noi.</p>
+    <button class="sm-start-btn" id="sm-start-btn" onclick="smStartSim()" data-ro="▶  Pornește simularea" data-en="▶  Start simulation">▶ &nbsp;Pornește simularea</button>
   </div>
   <!-- Arena -->
   <div class="sm-arena">
     <div class="sm-side sm-left" id="sm-left">
       <div>
-        <div class="sm-label">Fără ajutor</div>
-        <div class="sm-name">Tu singur 😰</div>
-        <div class="sm-desc">Ghișee, hârtii, notari, respingeri, așteptare... pe cont propriu.</div>
+        <div class="sm-label" data-ro="Fără ajutor" data-en="Without help">Fără ajutor</div>
+        <div class="sm-name" data-ro="Tu singur 😰" data-en="On your own 😰">Tu singur 😰</div>
+        <div class="sm-desc" data-ro="Ghișee, hârtii, notari, respingeri, așteptare... pe cont propriu." data-en="Queues, paperwork, notaries, rejections, waiting... on your own.">Ghișee, hârtii, notari, respingeri, așteptare... pe cont propriu.</div>
       </div>
       <div class="sm-timer-box">
         <div class="sm-timer-val" id="sm-timer-left">0</div>
-        <div class="sm-timer-unit">luni scurse</div>
+        <div class="sm-timer-unit" data-ro="luni scurse" data-en="months elapsed">luni scurse</div>
       </div>
       <div>
         <div class="sm-prog-wrap"><div class="sm-prog-fill" id="sm-prog-left"></div></div>
@@ -849,13 +849,13 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="sm-side sm-right" id="sm-right">
       <div>
-        <div class="sm-label">Cu ExitBiz</div>
-        <div class="sm-name">ExitBiz ⚡</div>
-        <div class="sm-desc">Noi ne ocupăm de tot. Tu aștepți rezultatul, nu la ghișeu.</div>
+        <div class="sm-label" data-ro="Cu ExitBiz" data-en="With ExitBiz">Cu ExitBiz</div>
+        <div class="sm-name" data-ro="ExitBiz ⚡" data-en="ExitBiz ⚡">ExitBiz ⚡</div>
+        <div class="sm-desc" data-ro="Noi ne ocupăm de tot. Tu aștepți rezultatul, nu la ghișeu." data-en="We handle everything. You wait for the result, not in a queue.">Noi ne ocupăm de tot. Tu aștepți rezultatul, nu la ghișeu.</div>
       </div>
       <div class="sm-timer-box">
         <div class="sm-timer-val" id="sm-timer-right">0</div>
-        <div class="sm-timer-unit">zile</div>
+        <div class="sm-timer-unit" data-ro="zile" data-en="days">zile</div>
       </div>
       <div>
         <div class="sm-prog-wrap"><div class="sm-prog-fill" id="sm-prog-right"></div></div>
@@ -869,17 +869,17 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="sm-result" id="sm-result">
     <div class="sm-result-card">
       <span class="sm-trophy">🏆</span>
-      <div class="sm-res-title">ExitBiz câștigă cu 9+ luni avans</div>
-      <div class="sm-res-sub">În timp ce birocrația te ținea blocată luni de zile,<br/>noi am rezolvat totul în 30 de zile.</div>
+      <div class="sm-res-title" data-ro="ExitBiz câștigă cu 9+ luni avans" data-en="ExitBiz wins by 9+ months">ExitBiz câștigă cu 9+ luni avans</div>
+      <div class="sm-res-sub" data-ro="În timp ce birocrația te ținea blocată luni de zile, noi am rezolvat totul în 30 de zile." data-en="While bureaucracy kept you stuck for months, we resolved everything in 30 days.">În timp ce birocrația te ținea blocată luni de zile,<br/>noi am rezolvat totul în 30 de zile.</div>
       <div class="sm-res-stats">
-        <div class="sm-stat bad"><div class="sm-stat-val">9–12 luni</div><div class="sm-stat-lbl">Singur — timp mediu real</div></div>
-        <div class="sm-stat good"><div class="sm-stat-val">~30 zile</div><div class="sm-stat-lbl">Cu ExitBiz — garantat</div></div>
-        <div class="sm-stat bad"><div class="sm-stat-val">❌ 6+</div><div class="sm-stat-lbl">Deplasări la ghișee, notari, ANAF</div></div>
-        <div class="sm-stat good"><div class="sm-stat-val">✅ 0</div><div class="sm-stat-lbl">Deplasări necesare din partea ta</div></div>
+        <div class="sm-stat bad"><div class="sm-stat-val">9–12 luni</div><div class="sm-stat-lbl" data-ro="Singur — timp mediu real" data-en="Alone — real average time">Singur — timp mediu real</div></div>
+        <div class="sm-stat good"><div class="sm-stat-val">~30 zile</div><div class="sm-stat-lbl" data-ro="Cu ExitBiz — garantat" data-en="With ExitBiz — guaranteed">Cu ExitBiz — garantat</div></div>
+        <div class="sm-stat bad"><div class="sm-stat-val">❌ 6+</div><div class="sm-stat-lbl" data-ro="Deplasări la ghișee, notari, ANAF" data-en="Trips to offices, notaries, ANAF">Deplasări la ghișee, notari, ANAF</div></div>
+        <div class="sm-stat good"><div class="sm-stat-val">✅ 0</div><div class="sm-stat-lbl" data-ro="Deplasări necesare din partea ta" data-en="Trips required on your part">Deplasări necesare din partea ta</div></div>
       </div>
-      <button class="sm-cta-btn" onclick="smGoToForm()">Închide firma în 30 de zile →</button>
+      <button class="sm-cta-btn" onclick="smGoToForm()" data-ro="Închide firma în 30 de zile →" data-en="Close your company in 30 days →">Închide firma în 30 de zile →</button>
       <br/>
-      <button class="sm-replay-btn" onclick="smResetSim()">↩ Reia simularea</button>
+      <button class="sm-replay-btn" onclick="smResetSim()" data-ro="↩ Reia simularea" data-en="↩ Replay simulation">↩ Reia simularea</button>
     </div>
   </div>
 </div>
@@ -890,22 +890,22 @@ document.addEventListener('DOMContentLoaded', function() {
 // ---- SIMULARE MODAL ----
 var smRunning = false, smTimers = [], smEmojis = [];
 var SM_EVENTS_LEFT = [
-  { at:0.8,  icon:'📋', text:'Depui cererea la ONRC',               time:'Luna 1' },
-  { at:2.0,  icon:'❌', text:'Dosar incomplet — refaci documentele', time:'Luna 1.5' },
-  { at:3.2,  icon:'🏛️', text:'Programare notar: 3 săptămâni',        time:'Luna 2' },
-  { at:4.4,  icon:'😤', text:'Declarații ANAF lipsă — amendă',       time:'Luna 3' },
-  { at:5.5,  icon:'🔴', text:'Cerere respinsă — motiv neclar',       time:'Luna 4' },
-  { at:6.8,  icon:'💼', text:'Proceduri ITM pentru angajat',         time:'Luna 5' },
-  { at:8.0,  icon:'📄', text:'A doua încercare la ONRC',             time:'Luna 7' },
-  { at:9.5,  icon:'⏳', text:'Aștepți publicare Monitor Oficial',    time:'Luna 9' },
-  { at:11.0, icon:'😩', text:'Mai sunt câteva luni...',              time:'Luna 11' },
+  { at:0.8,  icon:'📋', text:'Depui cererea la ONRC',               en:'You file the request at ONRC',               time:'Luna 1',   timeEn:'Month 1' },
+  { at:2.0,  icon:'❌', text:'Dosar incomplet — refaci documentele', en:'Incomplete file — redo the documents',        time:'Luna 1.5', timeEn:'Month 1.5' },
+  { at:3.2,  icon:'🏛️', text:'Programare notar: 3 săptămâni',        en:'Notary appointment: 3 weeks wait',           time:'Luna 2',   timeEn:'Month 2' },
+  { at:4.4,  icon:'😤', text:'Declarații ANAF lipsă — amendă',       en:'Missing ANAF returns — penalty',             time:'Luna 3',   timeEn:'Month 3' },
+  { at:5.5,  icon:'🔴', text:'Cerere respinsă — motiv neclar',       en:'Request rejected — reason unclear',          time:'Luna 4',   timeEn:'Month 4' },
+  { at:6.8,  icon:'💼', text:'Proceduri ITM pentru angajat',         en:'ITM procedures for employee',                time:'Luna 5',   timeEn:'Month 5' },
+  { at:8.0,  icon:'📄', text:'A doua încercare la ONRC',             en:'Second attempt at ONRC',                     time:'Luna 7',   timeEn:'Month 7' },
+  { at:9.5,  icon:'⏳', text:'Aștepți publicare Monitor Oficial',    en:'Waiting for Official Gazette publication',   time:'Luna 9',   timeEn:'Month 9' },
+  { at:11.0, icon:'😩', text:'Mai sunt câteva luni...',              en:'Still a few more months...',                 time:'Luna 11',  timeEn:'Month 11' },
 ];
 var SM_EVENTS_RIGHT = [
-  { at:0.5,  icon:'🔍', text:'Analiza firmei completată',            time:'Ziua 1' },
-  { at:1.5,  icon:'📝', text:'Documente pregătite și verificate',    time:'Ziua 3' },
-  { at:2.5,  icon:'📬', text:'Depus la ONRC — prima încercare',      time:'Ziua 7' },
-  { at:3.5,  icon:'📰', text:'Publicat în Monitorul Oficial',        time:'Ziua 20' },
-  { at:4.2,  icon:'✅', text:'Firma radiată oficial. Gata!',         time:'Ziua 30' },
+  { at:0.5,  icon:'🔍', text:'Analiza firmei completată',            en:'Company analysis complete',                  time:'Ziua 1',  timeEn:'Day 1' },
+  { at:1.5,  icon:'📝', text:'Documente pregătite și verificate',    en:'Documents prepared and verified',            time:'Ziua 3',  timeEn:'Day 3' },
+  { at:2.5,  icon:'📬', text:'Depus la ONRC — prima încercare',      en:'Filed at ONRC — first attempt',              time:'Ziua 7',  timeEn:'Day 7' },
+  { at:3.5,  icon:'📰', text:'Publicat în Monitorul Oficial',        en:'Published in the Official Gazette',          time:'Ziua 20', timeEn:'Day 20' },
+  { at:4.2,  icon:'✅', text:'Firma radiată oficial. Gata!',         en:'Company officially struck off. Done!',       time:'Ziua 30', timeEn:'Day 30' },
 ];
 
 function openSimModal() {
@@ -997,10 +997,11 @@ function smStartSim() {
   var TOTAL = 12500, RIGHT_DONE = 4500;
   var rightDone = false;
 
+  var smLang = localStorage.getItem('lang') || 'ro';
   SM_EVENTS_LEFT.forEach(function(ev) {
     var t = setTimeout(function() {
       if (!smRunning) return;
-      smAddEvent('sm-log-left', ev.icon, ev.text, ev.time);
+      smAddEvent('sm-log-left', ev.icon, smLang === 'en' ? ev.en : ev.text, smLang === 'en' ? ev.timeEn : ev.time);
       if (ev.icon === '❌' || ev.icon === '🔴') smShake('sm-left');
     }, ev.at * 1000);
     smTimers.push(t);
@@ -1008,7 +1009,7 @@ function smStartSim() {
   SM_EVENTS_RIGHT.forEach(function(ev) {
     var t = setTimeout(function() {
       if (!smRunning) return;
-      smAddEvent('sm-log-right', ev.icon, ev.text, ev.time);
+      smAddEvent('sm-log-right', ev.icon, smLang === 'en' ? ev.en : ev.text, smLang === 'en' ? ev.timeEn : ev.time);
     }, ev.at * 1000);
     smTimers.push(t);
   });
@@ -1018,16 +1019,16 @@ function smStartSim() {
     rightDone = true;
     document.getElementById('sm-timer-right').textContent = '30';
     document.getElementById('sm-prog-right').style.width = '100%';
-    document.getElementById('sm-prog-lbl-right').textContent = '100% — Finalizat';
+    document.getElementById('sm-prog-lbl-right').textContent = smLang === 'en' ? '100% — Completed' : '100% — Finalizat';
     var b = document.getElementById('sm-badge-right');
-    b.textContent = '🎉 GATA — 30 de zile!'; b.style.display = 'block';
+    b.textContent = smLang === 'en' ? '🎉 DONE — 30 days!' : '🎉 GATA — 30 de zile!'; b.style.display = 'block';
     document.getElementById('sm-right').style.boxShadow = '0 0 40px rgba(29,158,117,0.35)';
   }, RIGHT_DONE));
 
   smTimers.push(setTimeout(function() {
     if (!smRunning) return;
     var b = document.getElementById('sm-badge-left');
-    b.textContent = '⏳ Încă mai aștepți...'; b.style.display = 'block';
+    b.textContent = smLang === 'en' ? '⏳ Still waiting...' : '⏳ Încă mai aștepți...'; b.style.display = 'block';
   }, RIGHT_DONE + 600));
 
   smTimers.push(setTimeout(function() {
@@ -1045,7 +1046,7 @@ function smStartSim() {
     document.getElementById('sm-timer-left').textContent = lm.toFixed(1);
     var lp = Math.min(85, (elapsed/TOTAL)*85);
     document.getElementById('sm-prog-left').style.width = lp.toFixed(1)+'%';
-    document.getElementById('sm-prog-lbl-left').textContent = lp.toFixed(0)+'% — încă în progres';
+    document.getElementById('sm-prog-lbl-left').textContent = lp.toFixed(0)+(smLang === 'en' ? '% — still in progress' : '% — încă în progres');
     if (!rightDone) {
       var rd = Math.min(30, (elapsed/RIGHT_DONE)*30);
       document.getElementById('sm-timer-right').textContent = Math.floor(rd);
