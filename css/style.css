@@ -232,18 +232,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
 .mobile-menu {
   display: none;
   position: fixed;
-  top: var(--nav-height);
-  left: 0; right: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: var(--bg-white);
-  border-bottom: 1px solid var(--border);
-  padding: 1.5rem 2rem;
+  padding: calc(var(--nav-height) + 1.5rem) 2rem 2rem;
   flex-direction: column;
   gap: 1rem;
-  z-index: 99;
+  z-index: 98;
   transform: translateY(-10px);
   opacity: 0;
   transition: transform 0.25s, opacity 0.25s;
-  max-height: calc(100vh - var(--nav-height));
   overflow-y: auto;
 }
 .mobile-menu.open { opacity: 1; transform: translateY(0); }
@@ -785,6 +782,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 300; line-height: 1.
   .btn-ghost, .btn-primary { width: 100%; justify-content: center; }
   .footer-inner { flex-direction: column; gap: 2rem; }
   .footer-links { gap: 2rem; }
+  .hero-inner { text-align: center; align-items: center; }
+  .hero-badge { align-self: center; }
+  .hero-checks { align-items: flex-start; width: 100%; }
+  .hero-checks li { text-align: left; }
+  .hero-sub { max-width: 100%; }
 }
 
 /* ---- WHATSAPP BUTTON ---- */
