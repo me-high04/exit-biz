@@ -1,0 +1,24 @@
+{
+  "name": "exitbiz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-high04/exit-biz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/me-high04/exit-biz/issues"
+  },
+  "homepage": "https://github.com/me-high04/exit-biz#readme",
+  "dependencies": {
+    "stripe": "^22.2.2"
+  }
+}
