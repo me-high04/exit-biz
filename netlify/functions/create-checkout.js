@@ -40,15 +40,7 @@ exports.handler = async (event) => {
               name: 'Certificat Constatator — ExitBiz',
               description: '30 RON taxă ONRC + 49 RON serviciu ExitBiz',
             },
-            unit_amount: 7900, // RON în bani (1 RON = 100 bani)
-          },
-          quantity: 1,
-        },
-        {
-          price_data: {
-            currency: 'ron',
-            product_data: { name: 'TVA 19%' },
-            unit_amount: Math.round(7900 * 0.19),
+            unit_amount: 7900, // 79 RON (fără TVA)
           },
           quantity: 1,
         }

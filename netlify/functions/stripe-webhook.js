@@ -46,13 +46,18 @@ exports.handler = async (event) => {
           ${scop     ? `<p style="margin:4px 0;font-size:14px;"><strong>Scop:</strong> ${scop}</p>` : ''}
           ${facturare? `<p style="margin:4px 0;font-size:14px;"><strong>Facturare:</strong> ${facturare}</p>` : ''}
           ${phone    ? `<p style="margin:4px 0;font-size:14px;"><strong>Telefon:</strong> ${phone}</p>` : ''}
-          <p style="margin:10px 0 0;font-size:14px;"><strong>Total plătit:</strong> 94,01 RON (incl. TVA)</p>
+          <p style="margin:10px 0 0;font-size:14px;"><strong>Total plătit:</strong> 79 RON</p>
         </div>
         <div style="background:#eff6ff;border-radius:10px;padding:16px;margin-bottom:24px;">
-          <p style="margin:0;font-size:14px;color:#1e40af;">
-            ⏱ Termenul de livrare este de <strong>1–2 zile lucrătoare</strong>.
-            Dacă ai întrebări, ne poți contacta oricând pe WhatsApp:
-            <a href="https://wa.me/40772129941" style="color:#1d9e75;">0772 129 941</a>
+          <p style="margin:0 0 8px;font-size:14px;color:#1e40af;font-weight:600;">⏱ Termen de livrare</p>
+          <p style="margin:0 0 6px;font-size:13px;color:#1e40af;">
+            • Comenzi plasate <strong>luni–vineri între 07:00–12:00</strong>: vei primi certificatul în maxim <strong>6 ore</strong>.
+          </p>
+          <p style="margin:0 0 10px;font-size:13px;color:#1e40af;">
+            • Comenzi plasate <strong>după ora 12:00</strong>: certificatul va fi livrat cel târziu până la <strong>ora 10:00 a următoarei zile lucrătoare</strong> (posibil și mai devreme).
+          </p>
+          <p style="margin:0;font-size:13px;color:#1e40af;">
+            Întrebări? Scrie-ne pe WhatsApp: <a href="https://wa.me/40772129941" style="color:#1d9e75;font-weight:600;">0772 129 941</a>
           </p>
         </div>
         <p style="font-size:12px;color:#94a3b8;text-align:center;">
