@@ -73,7 +73,7 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'ExitBiz <onboarding@resend.dev>',
+        from: 'ExitBiz <noreply@exitbiz.ro>',
         to: [email],
         subject: 'Comandă confirmată — Certificat Constatator ExitBiz',
         html
@@ -101,7 +101,7 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'ExitBiz <onboarding@resend.dev>',
+        from: 'ExitBiz <noreply@exitbiz.ro>',
         to: ['ducaduca124@gmail.com'],
         subject: `🛎️ Comandă nouă CC — ${firm_name || email}`,
         html: internalHtml
