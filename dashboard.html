@@ -43,6 +43,24 @@
     .empty-state p { font-size: 15px; color: var(--text-secondary); margin-bottom: 1.5rem; }
     .loading { text-align: center; padding: 4rem; color: var(--text-secondary); }
     .btn-sm { padding: 7px 16px; font-size: 13px; }
+
+    /* Document section */
+    .doc-section { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+    .doc-section-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
+    .doc-group { margin-bottom: 1rem; }
+    .doc-group-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 0.5rem; }
+    .doc-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; }
+    .doc-item-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .doc-item-date { font-size: 11px; color: var(--text-secondary); }
+    .doc-download-btn { font-size: 12px; font-weight: 500; color: var(--green); background: var(--green-light); border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+    .doc-empty { font-size: 13px; color: var(--text-secondary); font-style: italic; padding: 6px 0; }
+    .doc-upload-area { margin-top: 0.75rem; }
+    .doc-upload-label { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1.5px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: border-color .2s; }
+    .doc-upload-label:hover { border-color: var(--green); color: var(--green); }
+    .doc-upload-label input { display: none; }
+    .doc-upload-btn { margin-top: 8px; font-size: 13px; font-weight: 600; padding: 8px 18px; background: var(--green); color: #fff; border: none; border-radius: 8px; cursor: pointer; display: none; }
+    .doc-upload-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .doc-selected-name { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -73,75 +91,32 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script>
-    // ---- BILINGUAL LABELS ----
     const LABELS = {
       ro: {
         steps: ['Lead', 'Diagnostic', 'Analiză', 'Documente', 'Pregătire', 'Depus', 'Finalizat'],
-        services: {
-          suspendare: 'Suspendare activitate',
-          dizolvare:  'Dizolvare voluntară',
-          radiere:    'Radiere ONRC',
-          cabinet:    'Cabinet profesionist'
-        },
-        statuses: {
-          lead:       'Lead',
-          diagnostic: 'Diagnostic',
-          analiza:    'Analiză',
-          documente:  'Documente',
-          pregatire:  'Pregătire',
-          depus:      'Depus',
-          finalizat:  'Finalizat'
-        },
-        cui_prefix: 'CUI',
-        opened: 'Deschis pe',
-        note_label: 'Notă de la ExitBiz',
+        services: { suspendare: 'Suspendare activitate', dizolvare: 'Dizolvare voluntară', radiere: 'Radiere ONRC', cabinet: 'Cabinet profesionist' },
+        statuses: { lead: 'Lead', diagnostic: 'Diagnostic', analiza: 'Analiză', documente: 'Documente', pregatire: 'Pregătire', depus: 'Depus', finalizat: 'Finalizat' },
+        cui_prefix: 'CUI', opened: 'Deschis pe', note_label: 'Notă de la ExitBiz',
         empty_title: 'Niciun dosar activ momentan',
         empty_sub: 'Dosarul tău va apărea aici imediat ce echipa ExitBiz îl creează.',
         how_title: 'Cum funcționează?',
-        how_steps: [
-          'Trimiți cererea prin formularul de pe site',
-          'Echipa noastră creează dosarul și primești email de confirmare',
-          'Urmărești statusul în timp real chiar aici'
-        ],
-        send_req: 'Trimite o cerere →',
-        whatsapp: 'Scrie-ne pe WhatsApp',
-        loading: 'Se încarcă dosarele...',
-        greeting: 'Bună',
-        sign_out: 'Ieși din cont',
+        how_steps: ['Trimiți cererea prin formularul de pe site', 'Echipa noastră creează dosarul și primești email de confirmare', 'Urmărești statusul în timp real chiar aici'],
+        send_req: 'Trimite o cerere →', whatsapp: 'Scrie-ne pe WhatsApp', loading: 'Se încarcă dosarele...', greeting: 'Bună', sign_out: 'Ieși din cont',
+        docs_title: 'Documente', docs_from_cabinet: 'De descărcat (de la cabinet)', docs_from_client: 'Trimise de tine',
+        docs_empty: 'Niciun document încă.', docs_upload: 'Încarcă document semnat', docs_upload_btn: 'Trimite documentul', docs_uploading: 'Se încarcă...',
       },
       en: {
         steps: ['Lead', 'Diagnostic', 'Analysis', 'Documents', 'Preparation', 'Filed', 'Completed'],
-        services: {
-          suspendare: 'Activity suspension',
-          dizolvare:  'Voluntary dissolution',
-          radiere:    'ONRC Strike-off',
-          cabinet:    'Professional office'
-        },
-        statuses: {
-          lead:       'Lead',
-          diagnostic: 'Diagnostic',
-          analiza:    'Analysis',
-          documente:  'Documents',
-          pregatire:  'Preparation',
-          depus:      'Filed',
-          finalizat:  'Completed'
-        },
-        cui_prefix: 'CUI',
-        opened: 'Opened on',
-        note_label: 'Note from ExitBiz',
+        services: { suspendare: 'Activity suspension', dizolvare: 'Voluntary dissolution', radiere: 'ONRC Strike-off', cabinet: 'Professional office' },
+        statuses: { lead: 'Lead', diagnostic: 'Diagnostic', analiza: 'Analysis', documente: 'Documents', pregatire: 'Preparation', depus: 'Filed', finalizat: 'Completed' },
+        cui_prefix: 'CUI', opened: 'Opened on', note_label: 'Note from ExitBiz',
         empty_title: 'No active cases yet',
         empty_sub: 'Your case will appear here as soon as the ExitBiz team creates it.',
         how_title: 'How does it work?',
-        how_steps: [
-          'Submit a request through the form on the site',
-          'Our team creates the case and you receive a confirmation email',
-          'Track the status in real time right here'
-        ],
-        send_req: 'Submit a request →',
-        whatsapp: 'Message us on WhatsApp',
-        loading: 'Loading cases...',
-        greeting: 'Hi',
-        sign_out: 'Sign out',
+        how_steps: ['Submit a request through the form on the site', 'Our team creates the case and you receive a confirmation email', 'Track the status in real time right here'],
+        send_req: 'Submit a request →', whatsapp: 'Message us on WhatsApp', loading: 'Loading cases...', greeting: 'Hi', sign_out: 'Sign out',
+        docs_title: 'Documents', docs_from_cabinet: 'To download (from cabinet)', docs_from_client: 'Sent by you',
+        docs_empty: 'No documents yet.', docs_upload: 'Upload signed document', docs_upload_btn: 'Send document', docs_uploading: 'Uploading...',
       }
     };
 
@@ -151,8 +126,11 @@
     const STEP_KEYS = ['lead', 'diagnostic', 'analiza', 'documente', 'pregatire', 'depus', 'finalizat'];
 
     function formatDate(iso) {
-      const lang = getLang();
-      return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-GB' : 'ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+      return new Date(iso).toLocaleDateString(getLang() === 'en' ? 'en-GB' : 'ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function formatDateShort(iso) {
+      return new Date(iso).toLocaleDateString(getLang() === 'en' ? 'en-GB' : 'ro-RO', { day: 'numeric', month: 'short' });
     }
 
     function renderTimeline(currentStatus) {
@@ -174,7 +152,7 @@
       const serviceLabel = L('services')[d.service_type] || d.service_type;
       const statusLabel = L('statuses')[d.status] || d.status;
       const cuiPart = d.cui ? `${L('cui_prefix')}: ${d.cui} · ` : '';
-      return `<div class="dosar-card">
+      return `<div class="dosar-card" id="card-${d.id}">
         <div class="dosar-header">
           <div>
             <div class="dosar-title">${serviceLabel}</div>
@@ -184,6 +162,9 @@
         </div>
         <div class="status-timeline">${renderTimeline(d.status)}</div>
         ${d.notes ? `<div class="dosar-notes"><strong>${L('note_label')}:</strong> ${d.notes}</div>` : ''}
+        <div class="doc-section" id="docs-${d.id}">
+          <div style="font-size:13px;color:var(--text-secondary);">Se încarcă documentele...</div>
+        </div>
       </div>`;
     }
 
@@ -204,6 +185,96 @@
           <a href="https://wa.me/40772129941" target="_blank" class="btn-ghost">${L('whatsapp')}</a>
         </div>
       </div>`;
+    }
+
+    async function loadAndRenderDocs(dosar) {
+      const el = document.getElementById(`docs-${dosar.id}`);
+      if (!el) return;
+
+      const { data: docs } = await db.from('documente').select('*').eq('dosar_id', dosar.id).order('created_at', { ascending: false });
+      const cabinetDocs = (docs || []).filter(d => d.uploaded_by === 'cabinet');
+      const clientDocs  = (docs || []).filter(d => d.uploaded_by === 'client');
+
+      const cabinetList = cabinetDocs.length
+        ? cabinetDocs.map(d => `<div class="doc-item">
+            <div class="doc-item-name">📄 ${d.name} <span class="doc-item-date">${formatDateShort(d.created_at)}</span></div>
+            <button class="doc-download-btn" onclick="downloadDoc('${d.path}','${d.name}')">Descarcă</button>
+          </div>`).join('')
+        : `<div class="doc-empty">${L('docs_empty')}</div>`;
+
+      const clientList = clientDocs.length
+        ? clientDocs.map(d => `<div class="doc-item">
+            <div class="doc-item-name">✅ ${d.name} <span class="doc-item-date">${formatDateShort(d.created_at)}</span></div>
+          </div>`).join('')
+        : `<div class="doc-empty">${L('docs_empty')}</div>`;
+
+      el.innerHTML = `
+        <div class="doc-section-title">📄 ${L('docs_title')}</div>
+        <div class="doc-group">
+          <div class="doc-group-label">${L('docs_from_cabinet')}</div>
+          ${cabinetList}
+        </div>
+        <div class="doc-group">
+          <div class="doc-group-label">${L('docs_from_client')}</div>
+          ${clientList}
+        </div>
+        <div class="doc-upload-area">
+          <label class="doc-upload-label">
+            <input type="file" id="file-input-${dosar.id}" onchange="onFileSelected('${dosar.id}')" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+            + ${L('docs_upload')}
+          </label>
+          <div class="doc-selected-name" id="file-name-${dosar.id}"></div>
+          <button class="doc-upload-btn" id="upload-btn-${dosar.id}" onclick="uploadDoc('${dosar.id}','${dosar.firm_name || ''}','${dosar.client_email || ''}')">
+            ${L('docs_upload_btn')}
+          </button>
+        </div>`;
+    }
+
+    function onFileSelected(dosarId) {
+      const input = document.getElementById(`file-input-${dosarId}`);
+      const nameEl = document.getElementById(`file-name-${dosarId}`);
+      const btn = document.getElementById(`upload-btn-${dosarId}`);
+      if (input.files[0]) {
+        nameEl.textContent = input.files[0].name;
+        btn.style.display = 'inline-block';
+      }
+    }
+
+    async function uploadDoc(dosarId, firmName, clientEmail) {
+      const input = document.getElementById(`file-input-${dosarId}`);
+      const btn = document.getElementById(`upload-btn-${dosarId}`);
+      const file = input.files[0];
+      if (!file) return;
+
+      btn.disabled = true;
+      btn.textContent = L('docs_uploading');
+
+      const path = `${dosarId}/${Date.now()}_${file.name}`;
+      const { error } = await db.storage.from('documente').upload(path, file);
+      if (error) { alert('Eroare la upload: ' + error.message); btn.disabled = false; btn.textContent = L('docs_upload_btn'); return; }
+
+      await db.from('documente').insert({ dosar_id: dosarId, name: file.name, path, size: file.size, uploaded_by: 'client' });
+
+      await fetch('/.netlify/functions/notify-document', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dosarId, firmName, clientEmail, fileName: file.name, uploadedBy: 'client' })
+      });
+
+      const dosar = dosareData.find(d => d.id === dosarId);
+      if (dosar) await loadAndRenderDocs(dosar);
+    }
+
+    async function downloadDoc(path, name) {
+      const { data, error } = await db.storage.from('documente').createSignedUrl(path, 60);
+      if (error || !data?.signedUrl) { alert('Eroare la descărcare.'); return; }
+      const a = document.createElement('a');
+      a.href = data.signedUrl;
+      a.download = name;
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     let dosareData = [];
@@ -238,6 +309,10 @@
 
       container.innerHTML = dosareData.map(renderDosar).join('');
 
+      for (const d of dosareData) {
+        await loadAndRenderDocs(d);
+      }
+
       db.channel('dosare-changes')
         .on('postgres_changes', {
           event: 'UPDATE', schema: 'public', table: 'dosare',
@@ -245,6 +320,7 @@
         }, payload => {
           dosareData = dosareData.map(d => d.id === payload.new.id ? payload.new : d);
           container.innerHTML = dosareData.map(renderDosar).join('');
+          for (const d of dosareData) loadAndRenderDocs(d);
         })
         .subscribe();
     }
