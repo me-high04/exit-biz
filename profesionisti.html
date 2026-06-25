@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Platformă pentru profesioniști — ExitBiz</title>
+<meta name="description" content="ExitBiz oferă avocaților și contabililor specializați în radieri un dashboard complet și un portal de documente pentru a gestiona eficient dosarele clienților."/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<style>
+  .pro-hero { background: var(--surface-dark); padding: 5rem 2rem 4rem; text-align: center; }
+  .pro-hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); border: 1px solid var(--green-mid); color: var(--green); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 99px; margin-bottom: 1.5rem; opacity: .9; }
+  .pro-hero h1 { font-size: clamp(30px, 5vw, 50px); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 1rem; }
+  .pro-hero h1 em { color: var(--green-mid); font-style: normal; }
+  .pro-hero p { font-size: 17px; color: #94a3b8; max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.65; }
+  .pro-hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: var(--bg-white); color: var(--text-primary); padding: 13px 26px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .btn-outline { background: none; border: 1.5px solid var(--green); color: var(--green); padding: 13px 26px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block; }
+
+  /* PENTRU CINE */
+  .for-who { background: var(--bg-white); padding: 4rem 2rem; }
+  .for-who-inner { max-width: 900px; margin: 0 auto; }
+  .for-who h2 { font-size: 26px; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+  .for-who-sub { text-align: center; color: var(--text-secondary); font-size: 15px; margin-bottom: 3rem; }
+  .who-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+  .who-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+  .who-icon { font-size: 32px; margin-bottom: 0.75rem; }
+  .who-title { font-size: 15px; font-weight: 600; margin-bottom: 0.5rem; }
+  .who-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+
+  /* TOOLS */
+  .tools-section { background: var(--bg); padding: 4rem 2rem; }
+  .tools-inner { max-width: 900px; margin: 0 auto; }
+  .tools-header { text-align: center; margin-bottom: 3rem; }
+  .tools-header h2 { font-size: 26px; font-weight: 700; margin-bottom: 0.5rem; }
+  .tools-header p { font-size: 15px; color: var(--text-secondary); }
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 620px) { .tools-grid { grid-template-columns: 1fr; } }
+  .tool-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+  .tool-icon { font-size: 40px; margin-bottom: 1rem; }
+  .tool-title { font-size: 19px; font-weight: 700; margin-bottom: 0.5rem; }
+  .tool-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; }
+  .tool-features { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .tool-features li { font-size: 13px; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 9px; }
+  .tool-features li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 5px; }
+
+  /* HOW IT WORKS */
+  .how-pro { background: var(--bg-white); padding: 4rem 2rem; }
+  .how-pro-inner { max-width: 900px; margin: 0 auto; }
+  .how-pro h2 { font-size: 26px; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+  .how-pro-sub { text-align: center; color: var(--text-secondary); font-size: 15px; margin-bottom: 3rem; }
+  .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.25rem; }
+  .how-step { text-align: center; padding: 1.5rem 1rem; }
+  .how-num { width: 44px; height: 44px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green); color: var(--green); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .how-step h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.4rem; }
+  .how-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* PRET */
+  .pricing-pro { background: var(--bg); padding: 4rem 2rem; }
+  .pricing-pro-inner { max-width: 560px; margin: 0 auto; text-align: center; }
+  .pricing-pro h2 { font-size: 26px; font-weight: 700; margin-bottom: 0.5rem; }
+  .pricing-pro-sub { color: var(--text-secondary); font-size: 15px; margin-bottom: 2rem; }
+  .price-card { background: var(--surface-dark); border-radius: 20px; padding: 2.5rem; color: #fff; }
+  .price-tag { font-size: 42px; font-weight: 700; color: var(--green-mid); margin-bottom: 4px; }
+  .price-sub { font-size: 14px; color: #94a3b8; margin-bottom: 1.5rem; }
+  .price-features { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+  .price-features li { font-size: 14px; color: #cbd5e1; display: flex; align-items: center; gap: 10px; }
+  .price-features li::before { content: '✓'; color: var(--green-mid); font-weight: 700; flex-shrink: 0; }
+  .price-note { font-size: 12px; color: #64748b; margin-top: 1rem; }
+
+  /* CTA FINAL */
+  .cta-pro { background: var(--bg-white); padding: 4rem 2rem; text-align: center; }
+  .cta-pro h2 { font-size: 26px; font-weight: 700; margin-bottom: 0.75rem; }
+  .cta-pro p { font-size: 15px; color: var(--text-secondary); margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+<div class="nav-inner">
+<a class="logo" href="/">exit<span>biz</span></a>
+<nav class="nav-links" id="nav-links">
+<div class="nav-dropdown">
+<button class="nav-link nav-dropdown-trigger" data-en="Services ▾" data-ro="Servicii ▾">Servicii ▾</button>
+<div class="nav-dropdown-menu">
+<a data-en="Company closure / suspension" data-ro="Închidere / Suspendare firmă" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
+<a data-en="Certificate of Standing" data-ro="Certificat Constatator" href="/#certificat-constatator">Certificat Constatator</a>
+<a data-en="For professionals" data-ro="Pentru profesioniști" href="profesionisti.html">Pentru profesioniști</a>
+</div>
+</div>
+<a class="nav-link" data-en="Blog" data-ro="Blog" href="blog/index.html">Blog</a>
+<a class="nav-link" data-en="Articles" data-ro="Articole" href="articole/index.html">Articole</a>
+<a class="nav-link" data-en="Pricing" data-ro="Prețuri" href="preturi.html">Prețuri</a>
+<div class="lang-selector" id="lang-selector">
+<button class="lang-btn lang-ro" data-lang="ro">RO</button>
+<button class="lang-btn lang-en" data-lang="en">EN</button>
+</div>
+<button aria-label="Toggle dark mode" class="theme-btn" id="theme-btn">🌙</button>
+<a class="btn-ghost btn-account" data-en="My account" data-ro="Contul meu" href="login.html">Contul meu</a>
+</nav>
+<button aria-label="Meniu" class="hamburger" id="hamburger">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header>
+<div class="mobile-menu" id="mobile-menu">
+<a class="mobile-link" href="servicii/inchidere-srl.html">Închidere / Suspendare firmă</a>
+<a class="mobile-link" href="/#certificat-constatator">Certificat Constatator</a>
+<a class="mobile-link" href="profesionisti.html">Pentru profesioniști</a>
+<a class="mobile-link" href="preturi.html">Prețuri</a>
+<a class="mobile-link" href="login.html">Contul meu</a>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="pro-hero">
+  <div class="pro-hero-badge">⚙️ Platformă pentru profesioniști</div>
+  <h1>Gestionează dosarele de radiere<br/><em>dintr-un singur loc.</em></h1>
+  <p>ExitBiz oferă avocaților și contabililor specializați în radieri un dashboard complet și un portal de documente — fără haos pe WhatsApp și email.</p>
+  <div class="pro-hero-actions">
+    <a href="login.html" class="btn-white">Înscrie-te gratuit →</a>
+    <a href="#cum-functioneaza-pro" class="btn-outline">Cum funcționează?</a>
+  </div>
+</section>
+
+<!-- PENTRU CINE -->
+<section class="for-who">
+  <div class="for-who-inner">
+    <h2>Pentru cine este ExitBiz?</h2>
+    <p class="for-who-sub">Orice profesionist care lucrează cu clienți ce vor să-și închidă firma.</p>
+    <div class="who-cards">
+      <div class="who-card">
+        <div class="who-icon">⚖️</div>
+        <div class="who-title">Avocați</div>
+        <div class="who-desc">Specializați în dizolvare și radiere SRL, SA sau lichidare voluntară. Gestionezi dosarele fără să pierzi timp cu emailuri dezorganizate.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">📊</div>
+        <div class="who-title">Contabili autorizați</div>
+        <div class="who-desc">Expert contabil sau contabil autorizat care se ocupă de radieri PFA, II sau IF. Toate documentele și comunicarea cu clientul, centralizate.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🏛️</div>
+        <div class="who-title">Cabinete combinate</div>
+        <div class="who-desc">Cabinet juridic și contabil care gestionează cazuri complete — de la dizolvare la radiere. Urmărești fiecare pas din același dashboard.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section">
+  <div class="tools-inner">
+    <div class="tools-header">
+      <h2>Ce îți oferă ExitBiz</h2>
+      <p>Două instrumente gândite special pentru profesioniști în radieri de firme.</p>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">📊</div>
+        <div class="tool-title">Dashboard dosare</div>
+        <div class="tool-desc">Toate cazurile tale active într-un singur loc. Creezi dosare noi, schimbi statusul și comunici cu clientul direct din platformă.</div>
+        <ul class="tool-features">
+          <li>Creare dosar nou în 30 de secunde</li>
+          <li>Status dosar actualizat în timp real</li>
+          <li>Clientul vede progresul din contul său</li>
+          <li>Note interne vizibile pentru client</li>
+          <li>Notificări automate la schimbare status</li>
+        </ul>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📁</div>
+        <div class="tool-title">Portal documente</div>
+        <div class="tool-desc">Trimite documente de semnat direct în contul clientului. Clientul le descarcă, le semnează și le reîncarcă — totul organizat pe dosar.</div>
+        <ul class="tool-features">
+          <li>Upload documente per dosar, oricâte fișiere</li>
+          <li>Clientul descarcă, semnează, reîncarcă</li>
+          <li>Email automat la fiecare document nou</li>
+          <li>Toate fișierele stocate securizat în cloud</li>
+          <li>Fără confuzii pe WhatsApp sau email</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUM FUNCȚIONEAZĂ -->
+<section class="how-pro" id="cum-functioneaza-pro">
+  <div class="how-pro-inner">
+    <h2>Cum funcționează</h2>
+    <p class="how-pro-sub">De la primul contact cu clientul până la radiere — totul în ExitBiz.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h4>Creezi un cont</h4>
+        <p>Te înscrii gratuit, completezi profilul de profesionist și ești gata să primești primul dosar.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h4>Adaugi un dosar</h4>
+        <p>Introduci datele clientului (firmă, CUI, email) și creezi dosarul. Clientul primește automat invitație pe email.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h4>Încarci documente</h4>
+        <p>Trimiți documentele de semnat direct în portalul clientului. El le descarcă, semnează și reîncarcă.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <h4>Actualizezi statusul</h4>
+        <p>La fiecare etapă (ONRC, Monitor Oficial, radiat) schimbi statusul — clientul vede progresul în timp real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREȚ -->
+<section class="pricing-pro">
+  <div class="pricing-pro-inner">
+    <h2>Simplu și transparent</h2>
+    <p class="pricing-pro-sub">Un singur plan. Fără surprize.</p>
+    <div class="price-card">
+      <div class="price-tag">Gratuit</div>
+      <div class="price-sub">în perioada de lansare · fără card, fără abonament</div>
+      <ul class="price-features">
+        <li>Dashboard complet de gestionare dosare</li>
+        <li>Portal documente cu clienții</li>
+        <li>Dosare nelimitate</li>
+        <li>Notificări email automate</li>
+        <li>Acces imediat după înregistrare</li>
+      </ul>
+      <a href="login.html" class="btn-primary" style="display:block;text-align:center;padding:14px;">Înscrie-te gratuit acum →</a>
+    </div>
+    <p class="price-note">După perioada de lansare, vom anunța planul de prețuri cu minim 30 de zile înainte. Cei înscriși în lansare vor beneficia de condiții speciale.</p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-pro">
+  <h2>Gata să înceapă?</h2>
+  <p>Înscrie-te în câteva minute și gestionează primul dosar chiar azi. Fără birocrație, fără costuri ascunse.</p>
+  <a href="login.html" class="btn-primary" style="font-size:15px;padding:14px 30px;">Creează cont gratuit →</a>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/">exit<span>biz</span></a>
+<p data-en="Professional company closure services, fast and legal." data-ro="Servicii profesionale de închidere firme, rapid și legal.">Servicii profesionale de închidere firme, rapid și legal.</p>
+</div>
+<div class="footer-links">
+<div class="footer-col">
+<div class="footer-col-title" data-en="Services" data-ro="Servicii">Servicii</div>
+<a href="servicii/inchidere-srl.html" data-en="Company closure" data-ro="Închidere firmă">Închidere firmă</a>
+<a href="/#certificat-constatator" data-en="Certificate of Standing" data-ro="Certificat Constatator">Certificat Constatator</a>
+<a href="profesionisti.html" data-en="For professionals" data-ro="Pentru profesioniști">Pentru profesioniști</a>
+</div>
+<div class="footer-col">
+<div class="footer-col-title" data-en="Company" data-ro="Companie">Companie</div>
+<a href="preturi.html" data-en="Pricing" data-ro="Prețuri">Prețuri</a>
+<a href="blog/index.html" data-en="Blog" data-ro="Blog">Blog</a>
+<a href="articole/index.html" data-en="Articles" data-ro="Articole">Articole</a>
+</div>
+<div class="footer-col">
+<div class="footer-col-title" data-en="Legal" data-ro="Legal">Legal</div>
+<a href="termeni.html" data-en="Terms & Conditions" data-ro="Termeni și Condiții">Termeni și Condiții</a>
+<a href="confidentialitate.html" data-en="Privacy Policy" data-ro="Politică de Confidențialitate">Politică de Confidențialitate</a>
+<a href="gdpr.html">GDPR</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2025 ExitBiz. Toate drepturile rezervate.</span>
+</div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
