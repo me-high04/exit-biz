@@ -5,70 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — ExitBiz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    body { background: var(--bg); }
-    .adm-nav { background: var(--bg-white); border-bottom: 1px solid var(--border); padding: 0 2rem; height: var(--nav-height); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: var(--bg); font-family: 'Sora', sans-serif; }
+
+    /* NAV */
+    .adm-nav { background: var(--bg-white); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
     .adm-nav-right { display: flex; align-items: center; gap: 1rem; }
-    .adm-main { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+    /* LAYOUT */
+    .adm-main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1.5rem; }
     .adm-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-    .adm-header h1 { font-size: 24px; font-weight: 500; }
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .stat-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; }
-    .stat-num { font-size: 28px; font-weight: 600; color: var(--green); }
-    .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-    .dosar-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem; overflow: hidden; }
-    .dosar-card-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; cursor: pointer; gap: 1rem; flex-wrap: wrap; }
+    .adm-header h1 { font-size: 22px; font-weight: 600; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 700; color: var(--green); }
+    .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+    /* DOSAR CARD */
+    .dosar-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1rem; overflow: hidden; }
+    .dosar-card-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; cursor: pointer; gap: 1rem; flex-wrap: wrap; }
     .dosar-card-header:hover { background: var(--bg); }
     .dosar-info { flex: 1; min-width: 0; }
-    .dosar-firm { font-size: 15px; font-weight: 500; color: var(--text-primary); }
-    .dosar-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .dosar-firm { font-size: 15px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dosar-sub { font-size: 12px; color: var(--text-secondary); margin-top: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .svc-badge { display: inline-block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; padding: 2px 8px; border-radius: 20px; background: var(--green-light); color: var(--green); }
+    .step-badge { display: inline-block; font-size: 11px; color: var(--text-secondary); padding: 2px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; }
     .dosar-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-    .status-select { font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-white); cursor: pointer; color: var(--text-primary); font-family: inherit; }
-    .expand-icon { font-size: 14px; color: var(--text-secondary); transition: transform .2s; }
+    .expand-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; cursor: pointer; font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+    .expand-btn:hover { background: var(--bg); }
+    .expand-icon { transition: transform .2s; display: inline-block; }
     .expand-icon.open { transform: rotate(180deg); }
-    .dosar-details { display: none; padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--border); }
+
+    /* DOSAR DETAILS */
+    .dosar-details { display: none; border-top: 1px solid var(--border); }
     .dosar-details.open { display: block; }
-    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.25rem; }
-    @media (max-width: 640px) { .details-grid { grid-template-columns: 1fr; } }
-    .details-col h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: .4px; }
-    .note-area { width: 100%; padding: 10px 12px; font-size: 13px; font-family: inherit; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text-primary); resize: vertical; min-height: 80px; box-sizing: border-box; }
+
+    /* STEP TRACKER */
+    .step-tracker { padding: 1.25rem 1.5rem; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .step-tracker-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap; }
+    .step-tracker-title { font-size: 13px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: .4px; }
+    .step-nav-btns { display: flex; gap: 6px; align-items: center; }
+    .step-nav-btn { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-white); cursor: pointer; color: var(--text-primary); }
+    .step-nav-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+    .step-nav-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .step-edit-btn { font-size: 11px; color: var(--text-secondary); background: none; border: none; cursor: pointer; text-decoration: underline; }
+    .step-progress-bar { width: 100%; height: 4px; background: var(--border); border-radius: 99px; margin-bottom: 1rem; overflow: hidden; }
+    .step-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .4s; }
+    .step-list { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .step-pill { font-size: 11px; padding: 3px 9px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: all .15s; background: var(--bg-white); color: var(--text-secondary); white-space: nowrap; }
+    .step-pill.done { background: var(--green-light); color: var(--green); border-color: var(--green-light); }
+    .step-pill.active { background: var(--green); color: #fff; border-color: var(--green); }
+    .step-detail-box { background: var(--bg-white); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
+    .step-detail-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .step-detail-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1rem; }
+    .step-docs-title { font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 0.75rem; }
+    .step-doc-slot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; background: var(--bg); flex-wrap: wrap; }
+    .step-doc-slot-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .step-doc-slot-uploaded { font-size: 11px; color: #16a34a; font-weight: 500; }
+    .step-doc-upload-label { font-size: 12px; padding: 4px 12px; border-radius: 6px; border: 1px dashed var(--border); cursor: pointer; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
+    .step-doc-upload-label:hover { border-color: var(--green); color: var(--green); }
+    .step-doc-upload-label input { display: none; }
+
+    /* DETAILS GRID */
+    .details-body { padding: 1.5rem; }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 700px) { .details-grid { grid-template-columns: 1fr; } }
+    .details-col h4 { font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 0.85rem; text-transform: uppercase; letter-spacing: .5px; }
+    .client-info-table { font-size: 13px; width: 100%; }
+    .client-info-table td { padding: 4px 0; vertical-align: top; }
+    .client-info-table td:first-child { color: var(--text-secondary); width: 90px; font-size: 12px; }
+    .note-area { width: 100%; padding: 10px 12px; font-size: 13px; font-family: inherit; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text-primary); resize: vertical; min-height: 80px; }
     .note-area:focus { outline: none; border-color: var(--green); }
     .save-note-btn { margin-top: 8px; font-size: 13px; font-weight: 600; padding: 7px 16px; background: var(--green); color: #fff; border: none; border-radius: 8px; cursor: pointer; }
     .save-note-btn:disabled { opacity: .6; cursor: not-allowed; }
-    .doc-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; }
-    .doc-item-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .invite-btn { font-size: 13px; font-weight: 600; padding: 7px 16px; background: #fff; color: var(--green); border: 1.5px solid var(--green); border-radius: 8px; cursor: pointer; font-family: inherit; transition: background .15s; }
+    .invite-btn:hover:not(:disabled) { background: var(--green-light); }
+    .invite-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .invite-btn.sent { background: #f0fdf4; color: #166534; border-color: #86efac; }
+    .invite-status { font-size: 12px; margin-left: 10px; color: var(--text-secondary); }
+
+    /* DOCS */
+    .doc-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 5px; gap: 8px; flex-wrap: wrap; }
+    .doc-item-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; }
     .doc-item-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
-    .doc-item-date { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
+    .doc-item-meta { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
     .doc-download-btn { font-size: 12px; font-weight: 500; color: var(--green); background: var(--green-light); border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .doc-empty { font-size: 13px; color: var(--text-secondary); font-style: italic; padding: 4px 0; }
     .doc-upload-label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1.5px dashed var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
     .doc-upload-label:hover { border-color: var(--green); color: var(--green); }
     .doc-upload-label input { display: none; }
-    .doc-upload-send-btn { margin-top: 8px; font-size: 13px; font-weight: 600; padding: 7px 16px; background: var(--green); color: #fff; border: none; border-radius: 8px; cursor: pointer; display: none; }
+    .doc-upload-send-btn { margin-top: 6px; font-size: 13px; font-weight: 600; padding: 7px 16px; background: var(--green); color: #fff; border: none; border-radius: 8px; cursor: pointer; display: none; }
     .doc-upload-send-btn:disabled { opacity: .6; cursor: not-allowed; }
     .doc-selected-name { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
-    .client-info-table { font-size: 13px; width: 100%; }
-    .client-info-table td { padding: 3px 0; }
-    .client-info-table td:first-child { color: var(--text-secondary); width: 90px; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 500; display: none; align-items: center; justify-content: center; padding: 1rem; }
+
+    /* MODALS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 500; display: none; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--bg-white); border-radius: 16px; padding: 2rem; width: 100%; max-width: 480px; }
-    .modal h2 { font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; }
+    .modal { background: var(--bg-white); border-radius: 16px; padding: 2rem; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+    .modal h2 { font-size: 20px; font-weight: 700; margin-bottom: 1.5rem; }
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 5px; color: var(--text-primary); }
-    .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; background: var(--bg-white); color: var(--text-primary); box-sizing: border-box; }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--green); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; background: var(--bg-white); color: var(--text-primary); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--green); }
+    .form-req { color: #e53e3e; }
     .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; justify-content: flex-end; }
     .btn-sm { padding: 8px 18px; font-size: 14px; }
+
+    /* STEP EDIT MODAL */
+    .step-edit-modal { max-width: 680px; }
+    .step-row-edit { display: grid; grid-template-columns: 28px 1fr 1fr; gap: 8px; align-items: start; margin-bottom: 8px; }
+    .step-num { font-size: 12px; color: var(--text-muted); font-weight: 600; padding-top: 10px; }
+    .step-row-edit input { padding: 8px 10px; border: 1px solid var(--border); border-radius: 7px; font-size: 13px; font-family: inherit; background: var(--bg-white); color: var(--text-primary); width: 100%; }
+    .step-row-edit input:focus { outline: none; border-color: var(--green); }
+    .step-docs-input { font-size: 12px; color: var(--text-secondary); }
+    .step-edit-header { display: grid; grid-template-columns: 28px 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+    .step-edit-col-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .4px; }
+
     .loading-full { text-align: center; padding: 4rem; color: var(--text-secondary); }
   </style>
 </head>
 <body>
 
   <nav class="adm-nav">
-    <a href="/" class="logo">exit<span>biz</span> <span style="font-size:12px;color:var(--text-secondary);font-weight:400;">admin</span></a>
+    <a href="/" class="logo">exit<span>biz</span> <span style="font-size:12px;color:var(--text-secondary);font-weight:400;margin-left:4px;">admin</span></a>
     <div class="adm-nav-right">
       <span style="font-size:13px;color:var(--text-secondary);" id="admin-email"></span>
       <button class="btn-ghost btn-sm" id="logout-btn">Ieși din cont</button>
@@ -78,7 +142,7 @@
   <div class="adm-main">
     <div class="adm-header">
       <h1>Dosare clienți</h1>
-      <button class="btn-primary btn-sm" onclick="openModal()">+ Dosar nou</button>
+      <button class="btn-primary btn-sm" onclick="openCreateModal()">+ Dosar nou</button>
     </div>
 
     <div class="stats-row">
@@ -91,24 +155,63 @@
     <div id="dosare-list"><div class="loading-full">Se încarcă...</div></div>
   </div>
 
-  <div class="modal-overlay" id="modal-overlay">
+  <!-- ===== MODAL DOSAR NOU ===== -->
+  <div class="modal-overlay" id="modal-create">
     <div class="modal">
       <h2>Dosar nou</h2>
-      <div class="form-group"><label>Nume firmă</label><input id="f-firm" placeholder="Ex: ACME SRL" /></div>
-      <div class="form-group"><label>CUI</label><input id="f-cui" placeholder="Ex: 12345678" /></div>
-      <div class="form-group"><label>Email client</label><input id="f-email" type="email" placeholder="client@email.com" /></div>
-      <div class="form-group"><label>Telefon</label><input id="f-phone" placeholder="07xx xxx xxx" /></div>
-      <div class="form-group"><label>Tip serviciu</label>
-        <select id="f-service">
-          <option value="suspendare">Suspendare activitate</option>
-          <option value="dizolvare">Dizolvare voluntară</option>
-          <option value="radiere">Radiere ONRC</option>
-          <option value="cabinet">Cabinet profesionist</option>
+      <div class="form-group">
+        <label>Nume firmă <span class="form-req">*</span></label>
+        <input id="f-firm" placeholder="Ex: ACME SRL" />
+      </div>
+      <div class="form-group">
+        <label>CUI <span class="form-req">*</span></label>
+        <input id="f-cui" placeholder="Ex: 12345678 (fără RO)" />
+      </div>
+      <div class="form-group">
+        <label>Email client <span class="form-req">*</span></label>
+        <input id="f-email" type="email" placeholder="client@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Telefon <span class="form-req">*</span></label>
+        <input id="f-phone" placeholder="07XX XXX XXX" />
+      </div>
+      <div class="form-group">
+        <label>Tip serviciu <span class="form-req">*</span></label>
+        <select id="f-service" onchange="onServiceChange()">
+          <option value="">— Selectează serviciul —</option>
+          <option value="inchidere_voluntara">Închidere voluntară</option>
+          <option value="inchidere_cu_administrator">Închidere cu administrator</option>
+          <option value="inchidere_cu_vanzare">Închidere cu vânzare firmă</option>
+          <option value="exit_cesiune">Exit cesiune</option>
+          <option value="altul">Altul (specifică mai jos)</option>
         </select>
       </div>
+      <div class="form-group" id="f-custom-wrap" style="display:none;">
+        <label>Descrie procesul <span class="form-req">*</span></label>
+        <input id="f-custom" placeholder="Ex: Dizolvare judiciară, Insolventă etc." />
+      </div>
+      <div id="f-error" style="font-size:13px;color:#e53e3e;min-height:18px;margin-bottom:4px;"></div>
       <div class="modal-actions">
-        <button class="btn-ghost btn-sm" onclick="closeModal()">Anulează</button>
+        <button class="btn-ghost btn-sm" onclick="closeCreateModal()">Anulează</button>
         <button class="btn-primary btn-sm" id="create-btn" onclick="createDosar()">Creează dosar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL EDITARE PAȘI ===== -->
+  <div class="modal-overlay" id="modal-steps">
+    <div class="modal step-edit-modal">
+      <h2>Configurează cei 20 de pași</h2>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1.5rem;">Editează numele fiecărui pas și documentele necesare (separate prin virgulă).</p>
+      <div class="step-edit-header">
+        <div></div>
+        <div class="step-edit-col-label">Denumire pas</div>
+        <div class="step-edit-col-label">Documente necesare (separate prin virgulă)</div>
+      </div>
+      <div id="steps-editor"></div>
+      <div class="modal-actions">
+        <button class="btn-ghost btn-sm" onclick="closeStepsModal()">Anulează</button>
+        <button class="btn-primary btn-sm" onclick="saveSteps()">Salvează pașii</button>
       </div>
     </div>
   </div>
@@ -116,221 +219,603 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script>
-    const STATUSES = ['lead','diagnostic','analiza','documente','pregatire','depus','finalizat'];
-    const STATUS_LABELS = { lead:'Lead', diagnostic:'Diagnostic', analiza:'Analiză', documente:'Documente', pregatire:'Pregătire', depus:'Depus ONRC', finalizat:'Finalizat' };
-    const SERVICE_LABELS = { suspendare:'Suspendare', dizolvare:'Dizolvare', radiere:'Radiere ONRC', cabinet:'Cabinet' };
 
-    function formatDate(iso) {
-      return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
+  /* ===================================================
+     PROCESS TEMPLATES — 20 steps per service type
+     Each step: { name, desc, docs[] }
+  =================================================== */
+  const PROCESS_TEMPLATES = {
+    inchidere_voluntara: [
+      { name: 'Intake & Analiză dosar', desc: 'Colectare documente constitutive, verificare situație fiscală.', docs: ['Act constitutiv', 'Certificat constatator', 'Ultimul bilanț depus'] },
+      { name: 'Hotărâre AGA dizolvare', desc: 'Pregătire hotărâre AGA pentru dizolvarea voluntară.', docs: ['Draft hotărâre AGA', 'Copii CI asociați'] },
+      { name: 'Semnătură administratori', desc: 'Semnarea actelor de către toți administratorii și asociații.', docs: ['Hotărâre AGA semnată'] },
+      { name: 'Autentificare notar', desc: 'Autentificarea actelor la birou notarial (dacă actul constitutiv o impune).', docs: ['Hotărâre AGA autentificată'] },
+      { name: 'Depunere dosar dizolvare ONRC', desc: 'Depunerea cererii de dizolvare la Oficiul Registrului Comerțului.', docs: ['Cerere înregistrare ONRC', 'Dovadă taxă ONRC', 'Hotărâre AGA'] },
+      { name: 'Înregistrare dizolvare ONRC', desc: 'Așteptare înregistrare și emitere rezoluție de dizolvare.', docs: ['Rezoluție dizolvare ONRC'] },
+      { name: 'Publicare mențiune BPI', desc: 'Publicarea mențiunii de dizolvare în Buletinul Procedurilor de Insolvență.', docs: ['Dovadă publicare BPI'] },
+      { name: 'Termen 30 zile opoziții', desc: 'Perioadă legală în care creditorii pot formula opoziții.', docs: [] },
+      { name: 'Verificare opoziții creditori', desc: 'Confirmarea că nu s-au formulat opoziții la dizolvare.', docs: ['Confirmare lipsa opoziții'] },
+      { name: 'Notificare ANAF', desc: 'Transmiterea notificării de intenție de radiere către ANAF.', docs: ['Notificare ANAF înregistrată'] },
+      { name: 'Pregătire bilanț lichidare', desc: 'Inventar active și pasive, pregătire bilanț de lichidare cu expertul contabil.', docs: ['Inventar active/pasive', 'Draft bilanț lichidare'] },
+      { name: 'Control fiscal ANAF', desc: 'Inspecție fiscală efectuată de ANAF la sediul firmei sau online.', docs: ['Raport control ANAF'] },
+      { name: 'Certificat atestare fiscală', desc: 'Obținerea certificatului de atestare fiscală (dovada lipsei datoriilor la ANAF).', docs: ['Certificat atestare fiscală ANAF'] },
+      { name: 'Semnare bilanț lichidare', desc: 'Bilanțul de lichidare semnat de expertul contabil autorizat.', docs: ['Bilanț lichidare semnat expert contabil'] },
+      { name: 'Depunere situații financiare finale', desc: 'Depunerea situațiilor financiare finale la ANAF.', docs: ['Dovadă depunere situații fin. ANAF'] },
+      { name: 'Hotărâre AGA aprobare lichidare', desc: 'Hotărârea AGA de aprobare a bilanțului de lichidare.', docs: ['Hotărâre AGA aprobare lichidare'] },
+      { name: 'Dosar radiere ONRC', desc: 'Depunerea dosarului complet de radiere la ONRC.', docs: ['Cerere radiere ONRC', 'Bilanț lichidare', 'Certificat fiscal', 'Hotărâre AGA'] },
+      { name: 'Procesare radiere ONRC', desc: 'Așteptarea procesării dosarului de radiere de către ONRC.', docs: [] },
+      { name: 'Emitere certificat de radiere', desc: 'Primirea certificatului de radiere de la ONRC.', docs: ['Certificat de radiere'] },
+      { name: 'Arhivare & Finalizare', desc: 'Arhivarea documentelor și confirmarea finalizării dosarului cu clientul.', docs: ['Confirmare finalizare dosar'] }
+    ],
+    inchidere_cu_administrator: [
+      { name: 'Intake & Analiză dosar', desc: 'Colectare acte constitutive, evaluare situație financiară și juridică.', docs: ['Act constitutiv', 'Certificat constatator', 'Ultimul bilanț'] },
+      { name: 'Identificare lichidator', desc: 'Identificarea și contactarea unui lichidator autorizat sau administrator judiciar.', docs: ['CV lichidator', 'Autorizație lichidator'] },
+      { name: 'Pregătire acte numire', desc: 'Redactarea actelor pentru numirea administratorului/lichidatorului.', docs: ['Draft hotărâre numire lichidator', 'Contract mandat lichidator'] },
+      { name: 'Hotărâre AGA numire lichidator', desc: 'Adoptarea hotărârii AGA de numire a lichidatorului.', docs: ['Hotărâre AGA numire semnată'] },
+      { name: 'Autentificare notar', desc: 'Autentificarea actelor la notar.', docs: ['Hotărâre AGA autentificată'] },
+      { name: 'Depunere numire la ONRC', desc: 'Înregistrarea lichidatorului la ONRC.', docs: ['Cerere înregistrare ONRC', 'Taxă ONRC'] },
+      { name: 'Publicare BPI', desc: 'Publicarea mențiunii de dizolvare și numire lichidator în BPI.', docs: ['Dovadă publicare BPI'] },
+      { name: 'Inventariere active & pasive', desc: 'Inventarierea completă a activelor și pasivelor firmei de către lichidator.', docs: ['Raport inventariere lichidator'] },
+      { name: 'Notificare creditori', desc: 'Notificarea oficială a creditorilor cunoscuți.', docs: ['Dovezi notificare creditori'] },
+      { name: 'Termen legal opoziții', desc: 'Perioadă de așteptare opoziții (30 de zile de la publicare).', docs: [] },
+      { name: 'Verificare opoziții', desc: 'Confirmarea lipsei sau rezolvarea opozițiilor creditorilor.', docs: ['Confirmare opoziții'] },
+      { name: 'Notificare ANAF', desc: 'Notificarea ANAF cu privire la intenția de radiere.', docs: ['Notificare ANAF'] },
+      { name: 'Control fiscal ANAF', desc: 'Inspecție fiscală ANAF.', docs: ['Raport control ANAF'] },
+      { name: 'Certificat atestare fiscală', desc: 'Obținere certificat fiscal de la ANAF.', docs: ['Certificat atestare fiscală'] },
+      { name: 'Bilanț de lichidare', desc: 'Bilanțul de lichidare întocmit și semnat de lichidator + expert contabil.', docs: ['Bilanț lichidare semnat'] },
+      { name: 'Hotărâre aprobare lichidare', desc: 'Aprobarea formală a bilanțului de lichidare.', docs: ['Hotărâre aprobare bilanț'] },
+      { name: 'Depunere dosar radiere ONRC', desc: 'Depunerea dosarului complet de radiere.', docs: ['Cerere radiere', 'Bilanț lichidare', 'Certificat fiscal', 'Hotărâre aprobare'] },
+      { name: 'Procesare ONRC', desc: 'Așteptare soluționare dosar la ONRC.', docs: [] },
+      { name: 'Emitere certificat de radiere', desc: 'Primire certificat de radiere.', docs: ['Certificat de radiere'] },
+      { name: 'Arhivare & Finalizare', desc: 'Arhivare și predare documente finale clientului.', docs: ['Confirmare finalizare'] }
+    ],
+    inchidere_cu_vanzare: [
+      { name: 'Intake & Evaluare firmă', desc: 'Analiza situației firmei în vederea pregătirii pentru vânzare.', docs: ['Act constitutiv', 'Ultimul bilanț', 'CUI'] },
+      { name: 'Pregătire pachet informații', desc: 'Pregătirea unui pachet complet de informații despre firmă pentru potențiali cumpărători.', docs: ['Memorandum firmă', 'Situații financiare 3 ani'] },
+      { name: 'Due diligence intern', desc: 'Verificarea internă a obligațiilor fiscale, juridice și comerciale.', docs: ['Raport due diligence intern', 'Situație datorii'] },
+      { name: 'Identificare cumpărător', desc: 'Identificarea și calificarea potențialilor cumpărători.', docs: ['Acord confidențialitate NDA'] },
+      { name: 'Due diligence cumpărător', desc: 'Procesul de due diligence efectuat de cumpărător.', docs: ['Raport due diligence cumpărător'] },
+      { name: 'Negociere condiții', desc: 'Negocierea prețului și condițiilor de transfer.', docs: ['Scrisoare intenție (LOI)'] },
+      { name: 'Pregătire contract cesiune', desc: 'Redactarea contractului de cesiune a părților sociale.', docs: ['Draft contract cesiune'] },
+      { name: 'Aprobare asociați', desc: 'Hotărârea AGA de aprobare a cesiunii.', docs: ['Hotărâre AGA cesiune'] },
+      { name: 'Autentificare contract notar', desc: 'Semnarea și autentificarea contractului de cesiune la notar.', docs: ['Contract cesiune autentificat'] },
+      { name: 'Depunere cesiune ONRC', desc: 'Înregistrarea cesiunii la ONRC.', docs: ['Cerere ONRC', 'Contract cesiune', 'Taxă ONRC'] },
+      { name: 'Înregistrare noi asociați', desc: 'Finalizarea înregistrării noilor asociați/administratori.', docs: ['Rezoluție ONRC noi asociați'] },
+      { name: 'Transfer management', desc: 'Predarea fizică a documentelor, ștampilelor și acceselor.', docs: ['Proces verbal predare-primire'] },
+      { name: 'Notificare ANAF schimbare', desc: 'Notificarea ANAF despre schimbarea acționarilor/administratorilor.', docs: ['Notificare ANAF'] },
+      { name: 'Transfer conturi bancare', desc: 'Actualizarea semnătarilor pe conturile bancare.', docs: ['Confirmare bancă'] },
+      { name: 'Transfer contracte active', desc: 'Notificarea partenerilor comerciali și transferul contractelor.', docs: ['Notificări parteneri', 'Acte adiționale contracte'] },
+      { name: 'Plată preț cesiune', desc: 'Confirmarea efectuării plății prețului de cesiune.', docs: ['Confirmare plată / ordin de plată'] },
+      { name: 'Ultima situație financiară vânzător', desc: 'Întocmirea situației financiare la data cesiunii.', docs: ['Situație fin. la data cesiunii'] },
+      { name: 'Mențiuni finale ONRC', desc: 'Înregistrarea oricăror mențiuni finale la ONRC.', docs: ['Rezoluție finală ONRC'] },
+      { name: 'Confirmare tranzacție', desc: 'Confirmarea formală a finalizării tranzacției de ambele părți.', docs: ['Confirmare finalizare tranzacție'] },
+      { name: 'Arhivare & Finalizare', desc: 'Arhivarea completă a dosarului.', docs: ['Dosar complet arhivat'] }
+    ],
+    exit_cesiune: [
+      { name: 'Intake & Analiză dosar', desc: 'Analiza situației firmei și a structurii acționariatului.', docs: ['Act constitutiv', 'Registru asociați', 'Certificat constatator'] },
+      { name: 'Evaluare părți sociale', desc: 'Stabilirea valorii juste a părților sociale ce urmează a fi cedate.', docs: ['Raport evaluare sau acord de preț'] },
+      { name: 'Negociere între asociați', desc: 'Negocierea condițiilor de cesiune între asociații cedent și cesionar.', docs: ['Scrisoare intenție'] },
+      { name: 'Drept de preempțiune', desc: 'Notificarea celorlalți asociați pentru exercitarea dreptului de preempțiune.', docs: ['Notificare preempțiune', 'Confirmare primire'] },
+      { name: 'Pregătire act de cesiune', desc: 'Redactarea contractului de cesiune a părților sociale.', docs: ['Draft act cesiune'] },
+      { name: 'Hotărâre AGA cesiune', desc: 'Adoptarea hotărârii AGA de aprobare a cesiunii.', docs: ['Hotărâre AGA semnată'] },
+      { name: 'Autentificare act cesiune', desc: 'Autentificarea actului de cesiune la notarul public.', docs: ['Act cesiune autentificat'] },
+      { name: 'Depunere cesiune ONRC', desc: 'Depunerea documentelor de cesiune la ONRC.', docs: ['Cerere ONRC', 'Act cesiune', 'Hotărâre AGA', 'Taxă ONRC'] },
+      { name: 'Publicare mențiune', desc: 'Publicarea mențiunii privind modificarea structurii acționariatului.', docs: ['Dovadă publicare'] },
+      { name: 'Actualizare registru asociați', desc: 'Actualizarea registrului asociaților societății.', docs: ['Registru asociați actualizat'] },
+      { name: 'Actualizare act constitutiv', desc: 'Modificarea actului constitutiv pentru a reflecta noua structură.', docs: ['Act constitutiv actualizat'] },
+      { name: 'Depunere act constitutiv', desc: 'Depunerea actului constitutiv actualizat la ONRC.', docs: ['Rezoluție ONRC act constitutiv'] },
+      { name: 'Înregistrare noi asociați', desc: 'Confirmarea înregistrării noilor asociați în Registrul Comerțului.', docs: ['Rezoluție ONRC finală'] },
+      { name: 'Verificare acte ONRC', desc: 'Verificarea corectitudinii actelor emise de ONRC.', docs: ['Certificat constatator actualizat'] },
+      { name: 'Notificare bănci & parteneri', desc: 'Informarea băncilor și partenerilor principali despre schimbarea acționariatului.', docs: ['Confirmări primite'] },
+      { name: 'Transfer drepturi & obligații', desc: 'Predarea formală a drepturilor și obligațiilor asociate.', docs: ['Proces verbal predare'] },
+      { name: 'Predare documentație contabilă', desc: 'Predarea arhivei contabile și financiare.', docs: ['Confirmare predare contabilitate'] },
+      { name: 'Clarificări fiscale', desc: 'Rezolvarea oricăror aspecte fiscale legate de cesiune.', docs: ['Confirmare ANAF (dacă e cazul)'] },
+      { name: 'Confirmare cesiune finalizată', desc: 'Confirmarea formală de la ONRC a finalizării cesiunii.', docs: ['Certificat constatator final'] },
+      { name: 'Arhivare & Finalizare', desc: 'Arhivarea dosarului complet și predare documente cliente.', docs: ['Dosar complet'] }
+    ],
+    altul: [
+      { name: 'Intake & Analiză situație', desc: 'Colectare informații și documente inițiale.', docs: ['Documente inițiale'] },
+      { name: 'Definire obiectiv dosar', desc: 'Clarificarea obiectivului principal și scopului procedurii.', docs: ['Fișă obiectiv'] },
+      { name: 'Analiză juridică preliminară', desc: 'Analiza cadrului legal aplicabil.', docs: ['Raport juridic preliminar'] },
+      { name: 'Analiză fiscală preliminară', desc: 'Verificarea situației fiscale curente.', docs: ['Raport fiscal preliminar'] },
+      { name: 'Plan de acțiune', desc: 'Stabilirea planului de acțiune și termenelor.', docs: ['Plan acțiune semnat'] },
+      { name: 'Pregătire documente inițiale', desc: 'Redactarea documentelor necesare fazei inițiale.', docs: ['Documente faza 1'] },
+      { name: 'Consultare specialiști', desc: 'Consultarea specialiștilor externi (dacă e cazul).', docs: ['Avize specialiști'] },
+      { name: 'Inițiere proceduri legale', desc: 'Inițierea formală a procedurilor la autorități.', docs: ['Confirmare inițiere'] },
+      { name: 'Comunicări autorități', desc: 'Comunicările necesare cu autoritățile implicate.', docs: ['Copii corespondență'] },
+      { name: 'Monitorizare proceduri', desc: 'Urmărirea și monitorizarea stadiului procedurilor.', docs: [] },
+      { name: 'Verificare conformitate', desc: 'Verificarea conformității cu cerințele legale.', docs: ['Raport conformitate'] },
+      { name: 'Rezolvare obstacole', desc: 'Identificarea și rezolvarea oricăror obstacole apărute.', docs: ['Dovezi rezolvare obstacole'] },
+      { name: 'Pregătire acte finale', desc: 'Redactarea setului complet de acte finale.', docs: ['Documente faza finală'] },
+      { name: 'Verificare și aprobare', desc: 'Verificarea finală și aprobarea documentelor de către client.', docs: ['Aprobare client'] },
+      { name: 'Depunere finală autorități', desc: 'Depunerea setului final de documente la autorități.', docs: ['Confirmare depunere'] },
+      { name: 'Așteptare răspuns autorități', desc: 'Așteptarea răspunsului oficial de la autoritățile competente.', docs: [] },
+      { name: 'Recepție documente finale', desc: 'Primirea documentelor finale de la autorități.', docs: ['Documente finale primite'] },
+      { name: 'Verificare corectitudine', desc: 'Verificarea că documentele primite sunt corecte și complete.', docs: [] },
+      { name: 'Confirmare client', desc: 'Confirmarea formală de finalizare cu clientul.', docs: ['Confirmare finalizare client'] },
+      { name: 'Arhivare & Finalizare', desc: 'Arhivarea completă a dosarului.', docs: ['Dosar complet arhivat'] }
+    ]
+  };
+
+  const SVC_LABELS = {
+    inchidere_voluntara: 'Închidere voluntară',
+    inchidere_cu_administrator: 'Închidere cu administrator',
+    inchidere_cu_vanzare: 'Închidere cu vânzare',
+    exit_cesiune: 'Exit cesiune',
+    altul: 'Altul'
+  };
+
+  function getStepTemplate(serviceType) {
+    return PROCESS_TEMPLATES[serviceType] || PROCESS_TEMPLATES['altul'];
+  }
+
+  function getSteps(dosar) {
+    if (dosar.steps && Array.isArray(dosar.steps) && dosar.steps.length === 20) {
+      return dosar.steps;
     }
-    function formatDateShort(iso) {
-      return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
+    return getStepTemplate(dosar.service_type);
+  }
+
+  function getCurrentStepIndex(dosar) {
+    const idx = parseInt(dosar.current_step || 1, 10);
+    return Math.max(1, Math.min(idx, 20));
+  }
+
+  function cleanCUI(raw) {
+    if (!raw) return '';
+    return raw.replace(/^RO/i, '').trim();
+  }
+
+  function formatDate(iso) {
+    return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function formatDateShort(iso) {
+    return new Date(iso).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
+  }
+
+  let allDosare = [];
+  let currentEditDosarId = null;
+  let currentEditSteps = [];
+
+  /* ========== INIT ========== */
+  async function init() {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) { window.location.href = 'login.html'; return; }
+    const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+    if (profile?.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
+    document.getElementById('admin-email').textContent = session.user.email;
+    await loadDosare();
+  }
+
+  async function loadDosare() {
+    const { data: dosare } = await db.from('dosare').select('*').order('created_at', { ascending: false });
+    allDosare = dosare || [];
+    renderStats(allDosare);
+    renderDosare(allDosare);
+  }
+
+  function renderStats(dosare) {
+    const today = new Date().toISOString().slice(0, 10);
+    document.getElementById('stat-total').textContent = dosare.length;
+    document.getElementById('stat-active').textContent = dosare.filter(d => d.status !== 'finalizat').length;
+    document.getElementById('stat-finalizat').textContent = dosare.filter(d => d.status === 'finalizat').length;
+    db.from('documente').select('id', { count: 'exact', head: true })
+      .gte('created_at', today + 'T00:00:00').eq('uploaded_by', 'client')
+      .then(({ count }) => { document.getElementById('stat-docs').textContent = count ?? 0; });
+  }
+
+  /* ========== RENDER CARDS ========== */
+  function renderDosare(dosare) {
+    const list = document.getElementById('dosare-list');
+    if (!dosare.length) {
+      list.innerHTML = '<div class="loading-full">Niciun dosar. Creează primul dosar cu butonul de mai sus.</div>';
+      return;
     }
+    list.innerHTML = dosare.map(d => renderDosarCard(d)).join('');
+  }
 
-    let allDosare = [];
-
-    async function init() {
-      const { data: { session } } = await db.auth.getSession();
-      if (!session) { window.location.href = 'login.html'; return; }
-      const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
-      if (profile?.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
-      document.getElementById('admin-email').textContent = session.user.email;
-      await loadDosare();
-    }
-
-    async function loadDosare() {
-      const { data: dosare } = await db.from('dosare').select('*').order('created_at', { ascending: false });
-      allDosare = dosare || [];
-      renderStats(allDosare);
-      renderDosare(allDosare);
-    }
-
-    function renderStats(dosare) {
-      const today = new Date().toISOString().slice(0, 10);
-      document.getElementById('stat-total').textContent = dosare.length;
-      document.getElementById('stat-active').textContent = dosare.filter(d => d.status !== 'finalizat').length;
-      document.getElementById('stat-finalizat').textContent = dosare.filter(d => d.status === 'finalizat').length;
-      db.from('documente').select('id', { count: 'exact', head: true }).gte('created_at', today + 'T00:00:00').eq('uploaded_by', 'client').then(({ count }) => {
-        document.getElementById('stat-docs').textContent = count ?? 0;
-      });
-    }
-
-    function renderDosare(dosare) {
-      const list = document.getElementById('dosare-list');
-      if (!dosare.length) {
-        list.innerHTML = '<div class="loading-full" style="padding:3rem;">Niciun dosar încă. Creează primul dosar cu butonul de mai sus.</div>';
-        return;
-      }
-      list.innerHTML = dosare.map(d => renderDosarCard(d)).join('');
-    }
-
-    function renderDosarCard(d) {
-      const statusOpts = STATUSES.map(s => `<option value="${s}" ${d.status === s ? 'selected' : ''}>${STATUS_LABELS[s]}</option>`).join('');
-      const safeId = d.id;
-      const safeFirm = (d.firm_name || '').replace(/'/g, "\\'");
-      const safeEmail = (d.client_email || '').replace(/'/g, "\\'");
-      return `<div class="dosar-card" id="adm-card-${safeId}">
-        <div class="dosar-card-header" onclick="toggleDosar('${safeId}')">
-          <div class="dosar-info">
-            <div class="dosar-firm">${d.firm_name || '—'} <span style="font-weight:400;color:var(--text-secondary);font-size:13px;">${d.cui ? '· RO' + d.cui : ''}</span></div>
-            <div class="dosar-sub">${d.client_email || ''} · ${formatDate(d.created_at)}</div>
+  function renderDosarCard(d) {
+    const cui = cleanCUI(d.cui || '');
+    const stepIdx = getCurrentStepIndex(d);
+    const steps = getSteps(d);
+    const currentStep = steps[stepIdx - 1] || steps[0];
+    const svcLabel = SVC_LABELS[d.service_type] || d.service_type || '—';
+    const customLabel = (d.service_type === 'altul' && d.service_custom) ? `: ${d.service_custom}` : '';
+    const firmDisplay = d.client_name || '—';
+    const safeFirm = firmDisplay.replace(/'/g, "\\'");
+    const safeEmail = (d.client_email || '').replace(/'/g, "\\'");
+    const safeId = d.id;
+    return `<div class="dosar-card" id="adm-card-${safeId}">
+      <div class="dosar-card-header">
+        <div class="dosar-info" onclick="toggleDosar('${safeId}')" style="cursor:pointer;flex:1;min-width:0;">
+          <div class="dosar-firm">${firmDisplay}</div>
+          <div class="dosar-sub">
+            <span class="svc-badge">${svcLabel}${customLabel}</span>
+            ${cui ? `<span>RO${cui}</span><span>·</span>` : ''}
+            <span>${d.client_email || ''}</span>
+            <span>·</span>
+            <span>${formatDate(d.created_at)}</span>
+            <span class="step-badge">Pas ${stepIdx}/20 — ${currentStep.name}</span>
           </div>
-          <div class="dosar-actions" onclick="event.stopPropagation()">
-            <select class="status-select" onchange="updateStatus('${safeId}', this.value)">
-              ${statusOpts}
-            </select>
-          </div>
-          <span class="expand-icon" id="icon-${safeId}">▼</span>
         </div>
-        <div class="dosar-details" id="details-${safeId}">
+        <div class="dosar-actions">
+          <button class="expand-btn" onclick="event.stopPropagation(); toggleDosar('${safeId}')">
+            Detalii <span class="expand-icon" id="icon-${safeId}">▼</span>
+          </button>
+        </div>
+      </div>
+      <div class="dosar-details" id="details-${safeId}">
+        ${renderStepTracker(d, safeId, safeFirm, safeEmail)}
+        <div class="details-body">
           <div class="details-grid">
             <div class="details-col">
               <h4>Informații client</h4>
               <table class="client-info-table">
-                <tr><td>Firmă</td><td>${d.firm_name || '—'}</td></tr>
-                <tr><td>CUI</td><td>${d.cui ? 'RO' + d.cui : '—'}</td></tr>
+                <tr><td>Firmă</td><td>${d.client_name || '—'}</td></tr>
+                <tr><td>CUI</td><td>${cui ? 'RO' + cui : '—'}</td></tr>
                 <tr><td>Email</td><td>${d.client_email || '—'}</td></tr>
                 <tr><td>Telefon</td><td>${d.phone || '—'}</td></tr>
-                <tr><td>Serviciu</td><td>${SERVICE_LABELS[d.service_type] || d.service_type || '—'}</td></tr>
+                <tr><td>Serviciu</td><td>${svcLabel}${customLabel}</td></tr>
               </table>
+              <div style="margin-top:1rem;">
+                <button class="invite-btn" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${d.client_email ? '' : 'disabled'}>
+                  ✉ Trimite invitație cont
+                </button>
+                <span class="invite-status" id="invite-status-${safeId}"></span>
+              </div>
               <h4 style="margin-top:1.25rem;">Notă pentru client</h4>
-              <textarea class="note-area" id="note-${safeId}" placeholder="Notă vizibilă de client în dashboard...">${d.notes || ''}</textarea>
-              <button class="save-note-btn" id="save-note-btn-${safeId}" onclick="saveNote('${safeId}')">Salvează nota</button>
+              <textarea class="note-area" id="note-${safeId}" placeholder="Notă vizibilă clientului în dashboard...">${d.notes || ''}</textarea>
+              <button class="save-note-btn" onclick="saveNote('${safeId}')">Salvează nota</button>
             </div>
             <div class="details-col">
               <h4>Documente de la client</h4>
-              <div id="client-docs-${safeId}"><div class="doc-empty">Se încarcă...</div></div>
+              <div id="client-docs-${safeId}"><div class="doc-empty" style="font-style:italic;">Se încarcă...</div></div>
               <h4 style="margin-top:1.25rem;">Documente pentru client</h4>
-              <div id="cabinet-docs-${safeId}"><div class="doc-empty">Se încarcă...</div></div>
+              <div id="cabinet-docs-${safeId}"><div class="doc-empty" style="font-style:italic;">Se încarcă...</div></div>
               <label class="doc-upload-label">
                 <input type="file" id="adm-file-${safeId}" onchange="onAdmFileSelected('${safeId}')" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
                 + Încarcă document pentru client
               </label>
               <div class="doc-selected-name" id="adm-file-name-${safeId}"></div>
-              <button class="doc-upload-send-btn" id="adm-upload-btn-${safeId}" onclick="adminUploadDoc('${safeId}','${safeFirm}','${safeEmail}')">
-                Trimite documentul
-              </button>
+              <button class="doc-upload-send-btn" id="adm-upload-btn-${safeId}" onclick="adminUploadDoc('${safeId}','${safeFirm}','${safeEmail}')">Trimite documentul</button>
             </div>
           </div>
         </div>
-      </div>`;
+      </div>
+    </div>`;
+  }
+
+  function renderStepTracker(d, safeId, safeFirm, safeEmail) {
+    const stepIdx = getCurrentStepIndex(d);
+    const steps = getSteps(d);
+    const progressPct = Math.round((stepIdx / 20) * 100);
+    const currentStep = steps[stepIdx - 1] || steps[0];
+    const docSlots = (currentStep.docs || []).map((docName, i) =>
+      `<div class="step-doc-slot">
+        <div class="step-doc-slot-name">📎 <span>${docName}</span></div>
+        <label class="step-doc-upload-label">
+          <input type="file" onchange="uploadStepDoc('${safeId}','${safeFirm}','${safeEmail}', this, '${docName.replace(/'/g,"\\'")}', ${stepIdx})" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"/>
+          Încarcă
+        </label>
+      </div>`
+    ).join('');
+
+    const pillsHtml = steps.map((s, i) => {
+      const n = i + 1;
+      const cls = n < stepIdx ? 'done' : n === stepIdx ? 'active' : '';
+      return `<span class="step-pill ${cls}" onclick="jumpToStep('${safeId}', ${n})" title="${s.name}">P${n}</span>`;
+    }).join('');
+
+    return `<div class="step-tracker">
+      <div class="step-tracker-header">
+        <span class="step-tracker-title">Progres dosar — Pas ${stepIdx} din 20</span>
+        <div class="step-nav-btns">
+          <button class="step-edit-btn" onclick="openStepsModal('${safeId}')">✏️ Editează pași</button>
+          <button class="step-nav-btn" onclick="changeStep('${safeId}', ${stepIdx - 1})" ${stepIdx <= 1 ? 'disabled' : ''}>← Pas anterior</button>
+          <button class="step-nav-btn primary" onclick="changeStep('${safeId}', ${stepIdx + 1})" ${stepIdx >= 20 ? 'disabled' : ''}>Pas următor →</button>
+        </div>
+      </div>
+      <div class="step-progress-bar"><div class="step-progress-fill" style="width:${progressPct}%"></div></div>
+      <div class="step-list">${pillsHtml}</div>
+      <div class="step-detail-box">
+        <div class="step-detail-name">Pas ${stepIdx}: ${currentStep.name}</div>
+        <div class="step-detail-desc">${currentStep.desc}</div>
+        ${currentStep.docs && currentStep.docs.length ? `<div class="step-docs-title">Documente necesare la acest pas</div>${docSlots}` : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;">Niciun document necesar la acest pas.</div>'}
+      </div>
+    </div>`;
+  }
+
+  /* ========== STEP MANAGEMENT ========== */
+  async function changeStep(dosarId, newStep) {
+    if (newStep < 1 || newStep > 20) return;
+    await db.from('dosare').update({ current_step: newStep }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) { allDosare[idx].current_step = newStep; }
+    refreshDosarCard(dosarId);
+  }
+
+  async function jumpToStep(dosarId, step) {
+    const confirmed = confirm(`Mergi la Pasul ${step}? Aceasta va actualiza progresul dosarului.`);
+    if (!confirmed) return;
+    await changeStep(dosarId, step);
+  }
+
+  function refreshDosarCard(dosarId) {
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const card = document.getElementById(`adm-card-${dosarId}`);
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    if (card) {
+      card.outerHTML = renderDosarCard(dosar);
     }
-
-    async function toggleDosar(dosarId) {
-      const details = document.getElementById(`details-${dosarId}`);
-      const icon = document.getElementById(`icon-${dosarId}`);
-      const isOpen = details.classList.contains('open');
-      details.classList.toggle('open', !isOpen);
-      icon.classList.toggle('open', !isOpen);
-      if (!isOpen) await loadDosarDocs(dosarId);
-    }
-
-    async function loadDosarDocs(dosarId) {
-      const { data: docs } = await db.from('documente').select('*').eq('dosar_id', dosarId).order('created_at', { ascending: false });
-      const all = docs || [];
-      const clientEl = document.getElementById(`client-docs-${dosarId}`);
-      const cabinetEl = document.getElementById(`cabinet-docs-${dosarId}`);
-      const clientDocs = all.filter(d => d.uploaded_by === 'client');
-      const cabinetDocs = all.filter(d => d.uploaded_by === 'cabinet');
-
-      clientEl.innerHTML = clientDocs.length
-        ? clientDocs.map(d => `<div class="doc-item">
-            <div class="doc-item-name">📄 <span>${d.name}</span> <span class="doc-item-date">${formatDateShort(d.created_at)}</span></div>
-            <button class="doc-download-btn" onclick="adminDownloadDoc('${d.path}','${d.name}')">Descarcă</button>
-          </div>`).join('')
-        : '<div class="doc-empty">Niciun document de la client.</div>';
-
-      cabinetEl.innerHTML = cabinetDocs.length
-        ? cabinetDocs.map(d => `<div class="doc-item">
-            <div class="doc-item-name">📄 <span>${d.name}</span> <span class="doc-item-date">${formatDateShort(d.created_at)}</span></div>
-            <button class="doc-download-btn" onclick="adminDownloadDoc('${d.path}','${d.name}')">Descarcă</button>
-          </div>`).join('')
-        : '<div class="doc-empty">Niciun document încărcat pentru client.</div>';
-    }
-
-    async function updateStatus(dosarId, newStatus) {
-      await db.from('dosare').update({ status: newStatus }).eq('id', dosarId);
-    }
-
-    async function saveNote(dosarId) {
-      const note = document.getElementById(`note-${dosarId}`).value;
-      const btn = document.getElementById(`save-note-btn-${dosarId}`);
-      btn.disabled = true; btn.textContent = 'Se salvează...';
-      await db.from('dosare').update({ notes: note }).eq('id', dosarId);
-      btn.disabled = false; btn.textContent = 'Salvat ✓';
-      setTimeout(() => { btn.textContent = 'Salvează nota'; }, 2000);
-    }
-
-    function onAdmFileSelected(dosarId) {
-      const input = document.getElementById(`adm-file-${dosarId}`);
-      const nameEl = document.getElementById(`adm-file-name-${dosarId}`);
-      const btn = document.getElementById(`adm-upload-btn-${dosarId}`);
-      if (input.files[0]) {
-        nameEl.textContent = input.files[0].name;
-        btn.style.display = 'inline-block';
+    if (wasOpen) {
+      const newDetails = document.getElementById(`details-${dosarId}`);
+      if (newDetails) {
+        newDetails.classList.add('open');
+        document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+        loadDosarDocs(dosarId);
       }
     }
+  }
 
-    async function adminUploadDoc(dosarId, firmName, clientEmail) {
-      const input = document.getElementById(`adm-file-${dosarId}`);
-      const btn = document.getElementById(`adm-upload-btn-${dosarId}`);
-      const file = input.files[0];
-      if (!file) return;
-      btn.disabled = true; btn.textContent = 'Se încarcă...';
-      const path = `${dosarId}/${Date.now()}_${file.name}`;
-      const { error } = await db.storage.from('documente').upload(path, file);
-      if (error) { alert('Eroare upload: ' + error.message); btn.disabled = false; btn.textContent = 'Trimite documentul'; return; }
-      await db.from('documente').insert({ dosar_id: dosarId, name: file.name, path, size: file.size, uploaded_by: 'cabinet' });
-      await fetch('/.netlify/functions/notify-document', {
+  /* ========== STEP EDITOR MODAL ========== */
+  function openStepsModal(dosarId) {
+    currentEditDosarId = dosarId;
+    const dosar = allDosare.find(d => d.id === dosarId);
+    currentEditSteps = JSON.parse(JSON.stringify(getSteps(dosar)));
+    const editor = document.getElementById('steps-editor');
+    editor.innerHTML = currentEditSteps.map((s, i) =>
+      `<div class="step-row-edit">
+        <div class="step-num">${i + 1}</div>
+        <input value="${(s.name || '').replace(/"/g, '&quot;')}" placeholder="Denumire pas" id="se-name-${i}" />
+        <input value="${(s.docs || []).join(', ')}" placeholder="Document 1, Document 2..." class="step-docs-input" id="se-docs-${i}" />
+      </div>`
+    ).join('');
+    document.getElementById('modal-steps').classList.add('open');
+  }
+
+  function closeStepsModal() {
+    document.getElementById('modal-steps').classList.remove('open');
+    currentEditDosarId = null;
+  }
+
+  async function saveSteps() {
+    const steps = Array.from({ length: 20 }, (_, i) => {
+      const name = document.getElementById(`se-name-${i}`)?.value.trim() || `Pas ${i + 1}`;
+      const docsRaw = document.getElementById(`se-docs-${i}`)?.value || '';
+      const docs = docsRaw.split(',').map(d => d.trim()).filter(Boolean);
+      const orig = currentEditSteps[i] || {};
+      return { name, desc: orig.desc || '', docs };
+    });
+    await db.from('dosare').update({ steps }).eq('id', currentEditDosarId);
+    const idx = allDosare.findIndex(d => d.id === currentEditDosarId);
+    if (idx !== -1) allDosare[idx].steps = steps;
+    closeStepsModal();
+    refreshDosarCard(currentEditDosarId);
+  }
+
+  /* ========== TOGGLE DOSAR ========== */
+  async function toggleDosar(dosarId) {
+    const details = document.getElementById(`details-${dosarId}`);
+    const icon = document.getElementById(`icon-${dosarId}`);
+    const isOpen = details.classList.contains('open');
+    details.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+    if (!isOpen) await loadDosarDocs(dosarId);
+  }
+
+  /* ========== DOCUMENTS ========== */
+  async function loadDosarDocs(dosarId) {
+    const { data: docs } = await db.from('documente').select('*').eq('dosar_id', dosarId).order('created_at', { ascending: false });
+    const all = docs || [];
+    const clientEl = document.getElementById(`client-docs-${dosarId}`);
+    const cabinetEl = document.getElementById(`cabinet-docs-${dosarId}`);
+    const clientDocs = all.filter(d => d.uploaded_by === 'client');
+    const cabinetDocs = all.filter(d => d.uploaded_by === 'cabinet');
+    if (clientEl) {
+      clientEl.innerHTML = clientDocs.length
+        ? clientDocs.map(d => docItemHTML(d)).join('')
+        : '<div class="doc-empty">Niciun document de la client.</div>';
+    }
+    if (cabinetEl) {
+      cabinetEl.innerHTML = cabinetDocs.length
+        ? cabinetDocs.map(d => docItemHTML(d)).join('')
+        : '<div class="doc-empty">Niciun document încărcat pentru client.</div>';
+    }
+  }
+
+  function docItemHTML(d) {
+    const stepInfo = d.step_number ? `<span style="font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px;">P${d.step_number}</span>` : '';
+    return `<div class="doc-item">
+      <div class="doc-item-name">📄 ${stepInfo}<span>${d.name}</span></div>
+      <div class="doc-item-meta">${formatDateShort(d.created_at)}</div>
+      <button class="doc-download-btn" onclick="adminDownloadDoc('${d.path}','${d.name}')">Descarcă</button>
+    </div>`;
+  }
+
+  async function uploadStepDoc(dosarId, firmName, clientEmail, inputEl, docName, stepNumber) {
+    const file = inputEl.files[0];
+    if (!file) return;
+    const label = inputEl.parentElement;
+    label.textContent = 'Se încarcă...';
+    const path = `${dosarId}/step${stepNumber}_${Date.now()}_${file.name}`;
+    const { error } = await db.storage.from('documente').upload(path, file);
+    if (error) { alert('Eroare upload: ' + error.message); label.textContent = 'Încarcă'; return; }
+    await db.from('documente').insert({ dosar_id: dosarId, name: `[P${stepNumber}] ${file.name}`, path, size: file.size, uploaded_by: 'cabinet', step_number: stepNumber });
+    await fetch('/.netlify/functions/notify-document', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dosarId, firmName, clientEmail, fileName: file.name, uploadedBy: 'cabinet' })
+    }).catch(() => {});
+    label.textContent = '✓ Încărcat';
+    label.style.color = '#16a34a';
+    await loadDosarDocs(dosarId);
+  }
+
+  function onAdmFileSelected(dosarId) {
+    const input = document.getElementById(`adm-file-${dosarId}`);
+    const nameEl = document.getElementById(`adm-file-name-${dosarId}`);
+    const btn = document.getElementById(`adm-upload-btn-${dosarId}`);
+    if (input.files[0]) { nameEl.textContent = input.files[0].name; btn.style.display = 'inline-block'; }
+  }
+
+  async function adminUploadDoc(dosarId, firmName, clientEmail) {
+    const input = document.getElementById(`adm-file-${dosarId}`);
+    const btn = document.getElementById(`adm-upload-btn-${dosarId}`);
+    const file = input.files[0];
+    if (!file) return;
+    btn.disabled = true; btn.textContent = 'Se încarcă...';
+    const path = `${dosarId}/${Date.now()}_${file.name}`;
+    const { error } = await db.storage.from('documente').upload(path, file);
+    if (error) { alert('Eroare: ' + error.message); btn.disabled = false; btn.textContent = 'Trimite documentul'; return; }
+    await db.from('documente').insert({ dosar_id: dosarId, name: file.name, path, size: file.size, uploaded_by: 'cabinet' });
+    await fetch('/.netlify/functions/notify-document', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dosarId, firmName, clientEmail, fileName: file.name, uploadedBy: 'cabinet' })
+    }).catch(() => {});
+    btn.disabled = false; btn.textContent = 'Trimis ✓';
+    document.getElementById(`adm-file-name-${dosarId}`).textContent = '';
+    input.value = '';
+    setTimeout(() => { btn.textContent = 'Trimite documentul'; btn.style.display = 'none'; }, 2000);
+    await loadDosarDocs(dosarId);
+  }
+
+  async function adminDownloadDoc(path, name) {
+    const { data, error } = await db.storage.from('documente').createSignedUrl(path, 60);
+    if (error || !data?.signedUrl) { alert('Eroare la descărcare.'); return; }
+    const a = document.createElement('a');
+    a.href = data.signedUrl; a.download = name; a.target = '_blank';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+  /* ========== UPDATE STATUS / NOTE ========== */
+  async function updateStatus(dosarId, newStatus) {
+    await db.from('dosare').update({ status: newStatus }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].status = newStatus;
+    renderStats(allDosare);
+  }
+
+  async function inviteClient(dosarId, email, firmName) {
+    const btn = document.getElementById(`invite-btn-${dosarId}`);
+    const status = document.getElementById(`invite-status-${dosarId}`);
+    if (!email) { if (status) status.textContent = 'Email lipsă.'; return; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Se trimite...'; }
+    if (status) status.textContent = '';
+    try {
+      const res = await fetch('/.netlify/functions/invite-client', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dosarId, firmName, clientEmail, fileName: file.name, uploadedBy: 'cabinet' })
+        body: JSON.stringify({ email, firmName, dosarId })
       });
-      btn.disabled = false; btn.textContent = 'Trimis ✓';
-      document.getElementById(`adm-file-name-${dosarId}`).textContent = '';
-      input.value = '';
-      setTimeout(() => { btn.textContent = 'Trimite documentul'; btn.style.display = 'none'; }, 2000);
-      await loadDosarDocs(dosarId);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Eroare');
+      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Invitație trimisă'; }
+      if (status) status.textContent = `Email trimis la ${email}`;
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = '✉ Trimite invitație cont'; }
+      if (status) status.textContent = 'Eroare: ' + err.message;
+    }
+  }
+
+  async function saveNote(dosarId) {
+    const note = document.getElementById(`note-${dosarId}`)?.value;
+    const btn = document.querySelector(`#details-${dosarId} .save-note-btn`);
+    if (btn) { btn.disabled = true; btn.textContent = 'Se salvează...'; }
+    await db.from('dosare').update({ notes: note }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].notes = note;
+    if (btn) { btn.disabled = false; btn.textContent = 'Salvat ✓'; setTimeout(() => { btn.textContent = 'Salvează nota'; }, 2000); }
+  }
+
+  /* ========== CREATE DOSAR MODAL ========== */
+  function onServiceChange() {
+    const svc = document.getElementById('f-service').value;
+    document.getElementById('f-custom-wrap').style.display = svc === 'altul' ? 'block' : 'none';
+  }
+
+  function openCreateModal() {
+    document.getElementById('f-error').textContent = '';
+    document.getElementById('modal-create').classList.add('open');
+  }
+  function closeCreateModal() {
+    document.getElementById('modal-create').classList.remove('open');
+  }
+
+  async function createDosar() {
+    const firmName = document.getElementById('f-firm').value.trim();
+    const cuiRaw = document.getElementById('f-cui').value.trim();
+    const cui = cleanCUI(cuiRaw);
+    const email = document.getElementById('f-email').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const serviceType = document.getElementById('f-service').value;
+    const serviceCustom = document.getElementById('f-custom')?.value.trim() || '';
+    const errEl = document.getElementById('f-error');
+    errEl.textContent = '';
+
+    if (!firmName) { errEl.textContent = 'Numele firmei este obligatoriu.'; return; }
+    if (!cui) { errEl.textContent = 'CUI-ul este obligatoriu.'; return; }
+    if (!email || !email.includes('@')) { errEl.textContent = 'Email valid este obligatoriu.'; return; }
+    if (!phone) { errEl.textContent = 'Telefonul este obligatoriu.'; return; }
+    if (!serviceType) { errEl.textContent = 'Selectează tipul de serviciu.'; return; }
+    if (serviceType === 'altul' && !serviceCustom) { errEl.textContent = 'Descrie procesul pentru opțiunea Altul.'; return; }
+
+    const steps = getStepTemplate(serviceType);
+    const btn = document.getElementById('create-btn');
+    btn.disabled = true; btn.textContent = 'Se creează...';
+
+    const baseData = {
+      client_name: firmName,
+      cui,
+      client_email: email,
+      phone,
+      service_type: serviceType,
+      status: 'in_lucru'
+    };
+
+    // Try inserting with new columns first
+    const fullData = { ...baseData, service_custom: serviceCustom || null, current_step: 1, steps };
+    let { error } = await db.from('dosare').insert(fullData);
+
+    // If new columns don't exist yet, fall back to base fields
+    if (error && (error.message.includes('current_step') || error.message.includes('steps') || error.message.includes('service_custom'))) {
+      errEl.textContent = '⚠️ Rulează SQL-ul din instrucțiuni în Supabase pentru a activa toate funcțiile. Dosar creat cu câmpuri de bază.';
+      const fallback = await db.from('dosare').insert(baseData);
+      error = fallback.error;
     }
 
-    async function adminDownloadDoc(path, name) {
-      const { data, error } = await db.storage.from('documente').createSignedUrl(path, 60);
-      if (error || !data?.signedUrl) { alert('Eroare la descărcare.'); return; }
-      const a = document.createElement('a');
-      a.href = data.signedUrl; a.download = name; a.target = '_blank';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    }
-
-    function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
-    function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
-
-    async function createDosar() {
-      const firmName = document.getElementById('f-firm').value.trim();
-      const cui = document.getElementById('f-cui').value.trim();
-      const email = document.getElementById('f-email').value.trim();
-      const phone = document.getElementById('f-phone').value.trim();
-      const serviceType = document.getElementById('f-service').value;
-      if (!firmName || !email) { alert('Completează cel puțin numele firmei și emailul clientului.'); return; }
-      const btn = document.getElementById('create-btn');
-      btn.disabled = true; btn.textContent = 'Se creează...';
-      const { error } = await db.from('dosare').insert({ firm_name: firmName, cui, client_email: email, phone, service_type: serviceType, status: 'lead' });
-      if (error) { alert('Eroare: ' + error.message); btn.disabled = false; btn.textContent = 'Creează dosar'; return; }
-      closeModal();
-      ['f-firm','f-cui','f-email','f-phone'].forEach(id => document.getElementById(id).value = '');
+    if (error) {
+      errEl.textContent = 'Eroare: ' + error.message;
       btn.disabled = false; btn.textContent = 'Creează dosar';
-      await loadDosare();
+      return;
     }
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await db.auth.signOut();
-      window.location.href = 'login.html';
+    closeCreateModal();
+    ['f-firm','f-cui','f-email','f-phone','f-custom'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
     });
+    document.getElementById('f-service').value = '';
+    document.getElementById('f-custom-wrap').style.display = 'none';
+    btn.disabled = false; btn.textContent = 'Creează dosar';
+    await loadDosare();
+  }
 
-    document.getElementById('modal-overlay').addEventListener('click', e => {
-      if (e.target === e.currentTarget) closeModal();
-    });
+  /* ========== EVENTS ========== */
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await db.auth.signOut();
+    window.location.href = 'login.html';
+  });
 
-    init();
+  document.getElementById('modal-create').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeCreateModal();
+  });
+
+  document.getElementById('modal-steps').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeStepsModal();
+  });
+
+  init();
   </script>
 </body>
 </html>

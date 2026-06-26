@@ -350,7 +350,7 @@
                 <option value="+61">🇦🇺 +61</option>
                 <option value="+64">🇳🇿 +64</option>
               </select>
-              <input type="tel" id="ccs-phone" class="ccw-input" placeholder="07XX XXX XXX" style="flex:1;min-width:0"/>
+              <input type="tel" id="ccs-phone" class="ccw-input" placeholder="07XX XXX XXX sau 7XX XXX XXX" style="flex:1;min-width:0"/>
             </div>
             <div id="ccs-err-phone" class="ccs-error" style="display:none;margin-top:4px"></div>
           </div>
@@ -421,6 +421,12 @@
 <script>
 var ccFact = 'firma';
 
+function ccConfirmChanged() {
+  var cb = document.getElementById('ccs-confirm-check');
+  var nextBtn = document.getElementById('ccs-next-1');
+  if (nextBtn) nextBtn.disabled = !(cb && cb.checked);
+}
+
 function ccShowStep(n) {
   for (var i = 1; i <= 4; i++) {
     var row = document.getElementById('ccs-row-' + i);
@@ -460,17 +466,18 @@ function ccLookup() {
       var raw = d && d.found && d.found[0];
       var f = (raw && raw.date_generale) ? raw.date_generale : raw;
       if (f && f.denumire) {
-        var html = '<div style="display:flex;align-items:flex-start;gap:10px;">'
-          + '<span style="font-size:20px;flex-shrink:0;">✅</span>'
-          + '<div>'
-          + '<div style="font-size:13px;color:var(--text-secondary);margin-bottom:2px;">Am găsit firma:</div>'
-          + '<div style="font-size:15px;font-weight:600;color:var(--text-primary);">' + f.denumire + '</div>'
-          + '<div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">CUI: RO' + cui + (f.nrRegCom ? ' · ' + f.nrRegCom : '') + '</div>'
-          + (f.adresa ? '<div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">' + f.adresa + '</div>' : '')
-          + '<div style="font-size:12px;color:#16a34a;font-weight:500;margin-top:6px;">Aceasta este firma ta? Apasă Continuă ↓</div>'
-          + '</div></div>';
+        var html = '<div>'
+          + '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:6px;">Am găsit firma:</div>'
+          + '<div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px;"><strong>' + f.denumire + '</strong></div>'
+          + '<div style="font-size:12px;color:var(--text-secondary);">CUI: RO' + cui + (f.nrRegCom ? ' · ' + f.nrRegCom : '') + '</div>'
+          + (f.adresa ? '<div style="font-size:11px;color:var(--text-muted);margin-top:3px;">' + f.adresa + '</div>' : '')
+          + '<label style="display:flex;align-items:center;gap:9px;margin-top:12px;cursor:pointer;padding:10px 12px;background:var(--bg-white);border:1.5px solid var(--border);border-radius:8px;">'
+          + '<input type="checkbox" id="ccs-confirm-check" onchange="ccConfirmChanged()" style="width:16px;height:16px;cursor:pointer;accent-color:var(--green);flex-shrink:0"/>'
+          + '<span style="font-size:13px;color:var(--text-primary);font-weight:500;">Da, aceasta este firma mea</span>'
+          + '</label>'
+          + '</div>';
         if (infoEl) { infoEl.innerHTML = html; infoEl.style.display = 'block'; }
-        if (nextBtn) nextBtn.disabled = false;
+        if (nextBtn) nextBtn.disabled = true;
       } else {
         if (errEl) { errEl.textContent = 'Firma nu a fost găsită. Verifică CUI-ul.'; errEl.style.display = 'block'; }
       }
@@ -557,9 +564,12 @@ function ccSubmit() {
     ok = false;
   } else {
     var phoneDigits = phone.replace(/[\s\-\(\)]/g, '');
-    var roPhoneValid = /^(07[0-9]{8}|02[0-9]{8}|03[0-9]{8})$/.test(phoneDigits);
+    var isRo = prefix === '+40';
+    var roPhoneValid = isRo
+      ? /^0?(7[0-9]{8}|2[0-9]{8}|3[0-9]{8})$/.test(phoneDigits)
+      : phoneDigits.length >= 5;
     if (!roPhoneValid) {
-      if (errPhone) { errPhone.textContent = 'Format invalid. Exemplu corect: 0712 345 678'; errPhone.style.display = 'block'; }
+      if (errPhone) { errPhone.textContent = isRo ? 'Format invalid. Exemplu: 0712 345 678 sau 712 345 678' : 'Număr invalid.'; errPhone.style.display = 'block'; }
       ok = false;
     }
   }
