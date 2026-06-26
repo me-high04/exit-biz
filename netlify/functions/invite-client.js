@@ -21,7 +21,7 @@ exports.handler = async (event) => {
     },
     body: JSON.stringify({
       email,
-      redirect_to: 'https://exitbiz.ro/dashboard.html'
+      redirect_to: 'https://exitbiz.ro/set-password.html'
     })
   });
 
