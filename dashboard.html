@@ -132,49 +132,65 @@
       font-weight: 500;
     }
 
-    /* Documents needed */
-    .docs-needed-list { display: flex; flex-direction: column; gap: 8px; margin-top: 0.5rem; }
+    /* Documents needed — per-doc upload */
+    .docs-needed-list { display: flex; flex-direction: column; gap: 12px; margin-top: 0.5rem; }
     .doc-needed-item {
+      border: 1px solid #FDE68A;
+      border-radius: 10px;
+      background: #FFFBEB;
+      overflow: hidden;
+    }
+    .doc-needed-item.uploaded {
+      border-color: #86EFAC;
+      background: #F0FDF4;
+    }
+    .doc-needed-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 12px;
-      background: #FFFBEB;
-      border: 1px solid #FDE68A;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #92400E;
-    }
-    .doc-needed-item.uploaded {
-      background: #F0FDF4;
-      border-color: #86EFAC;
-      color: #166534;
+      padding: 11px 14px;
     }
     .doc-needed-icon { font-size: 16px; flex-shrink: 0; }
-
-    /* Doc upload */
-    .doc-upload-area { margin-top: 1rem; }
+    .doc-needed-name { font-size: 13px; font-weight: 500; color: #92400E; flex: 1; }
+    .doc-needed-item.uploaded .doc-needed-name { color: #166534; }
+    .doc-needed-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: #BBF7D0;
+      color: #166534;
+      white-space: nowrap;
+    }
+    .doc-needed-upload {
+      border-top: 1px solid #FDE68A;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .doc-needed-item.uploaded .doc-needed-upload { display: none; }
     .doc-upload-label {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 16px;
-      border: 1.5px dashed var(--border);
+      padding: 7px 14px;
+      border: 1.5px dashed #F59E0B;
       border-radius: 8px;
       cursor: pointer;
       font-size: 13px;
-      color: var(--text-secondary);
-      transition: border-color .2s, color .2s;
+      color: #92400E;
+      transition: border-color .2s, background .2s;
       font-family: inherit;
     }
-    .doc-upload-label:hover { border-color: var(--green); color: var(--green); }
+    .doc-upload-label:hover { border-color: #D97706; background: #FEF3C7; }
     .doc-upload-label input { display: none; }
-    .doc-selected-name { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+    .doc-selected-name { font-size: 12px; color: var(--text-secondary); }
     .doc-upload-btn {
-      margin-top: 8px;
       font-size: 13px;
       font-weight: 600;
-      padding: 9px 20px;
+      padding: 7px 16px;
       background: var(--green);
       color: #fff;
       border: none;
@@ -184,6 +200,14 @@
       display: none;
     }
     .doc-upload-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* General doc upload (non-needed) */
+    .doc-upload-area { margin-top: 1rem; }
+    .doc-upload-area .doc-upload-label {
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+    .doc-upload-area .doc-upload-label:hover { border-color: var(--green); color: var(--green); background: transparent; }
 
     /* Doc list */
     .doc-list { display: flex; flex-direction: column; gap: 8px; }
@@ -324,28 +348,41 @@
       if (btn) btn.textContent = isHidden ? '− Restrânge pașii' : `+ Vezi toți pașii`;
     }
 
-    function renderDocsNeeded(steps, currentStep) {
+    function renderDocsNeeded(steps, currentStep, clientDocs, dosarId) {
       if (!steps || !steps.length) return '';
       const step = steps[currentStep - 1];
       if (!step || !step.docs || !step.docs.length) return '';
-      const items = step.docs.map(doc =>
-        `<div class="doc-needed-item">
-          <span class="doc-needed-icon">📋</span>
-          <span>${doc}</span>
-        </div>`
-      ).join('');
+
+      const items = step.docs.map((docName, idx) => {
+        const slotId = `needed-${dosarId}-${idx}`;
+        // Check if already uploaded: match by name and step_number
+        const isUploaded = (clientDocs || []).some(d =>
+          d.step_number === currentStep && d.name === docName
+        );
+        return `<div class="doc-needed-item ${isUploaded ? 'uploaded' : ''}" id="slot-${slotId}">
+          <div class="doc-needed-header">
+            <span class="doc-needed-icon">${isUploaded ? '✅' : '📋'}</span>
+            <span class="doc-needed-name">${docName}</span>
+            ${isUploaded ? '<span class="doc-needed-badge">Încărcat ✓</span>' : ''}
+          </div>
+          <div class="doc-needed-upload">
+            <label class="doc-upload-label">
+              <input type="file" id="file-${slotId}" onchange="onNeededFileSelected('${slotId}')" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+              + Alege fișier
+            </label>
+            <span class="doc-selected-name" id="fname-${slotId}"></span>
+            <button class="doc-upload-btn" id="ubtn-${slotId}"
+              onclick="uploadNeededDoc('${dosarId}', '${docName.replace(/'/g,"\\'")}', ${currentStep}, '${slotId}')">
+              Trimite
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+
       return `
         <div class="db-card">
           <div class="db-card-title">Documente necesare la pasul curent</div>
           <div class="docs-needed-list">${items}</div>
-          <div class="doc-upload-area">
-            <label class="doc-upload-label">
-              <input type="file" id="file-input-needed" onchange="onFileSelectedNeeded()" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
-              + Încarcă document
-            </label>
-            <div class="doc-selected-name" id="file-name-needed"></div>
-            <button class="doc-upload-btn" id="upload-btn-needed">Trimite documentul</button>
-          </div>
         </div>`;
     }
 
@@ -439,7 +476,7 @@
         </div>
 
         <!-- Docs needed -->
-        ${renderDocsNeeded(steps, currentStep)}
+        ${renderDocsNeeded(steps, currentStep, clientDocs, d.id)}
 
         <!-- All documents -->
         ${renderDocs(cabinetDocs, clientDocs, d.id)}
@@ -448,6 +485,39 @@
         ${noteHtml}`;
     }
 
+    // Upload pentru un document necesar specific (cu step_number)
+    function onNeededFileSelected(slotId) {
+      const input = document.getElementById(`file-${slotId}`);
+      const nameEl = document.getElementById(`fname-${slotId}`);
+      const btn = document.getElementById(`ubtn-${slotId}`);
+      if (input?.files[0]) {
+        nameEl.textContent = input.files[0].name;
+        btn.style.display = 'inline-block';
+      }
+    }
+
+    async function uploadNeededDoc(dosarId, docName, stepNum, slotId) {
+      const input = document.getElementById(`file-${slotId}`);
+      const btn = document.getElementById(`ubtn-${slotId}`);
+      const file = input?.files[0];
+      if (!file) return;
+      btn.disabled = true;
+      btn.textContent = 'Se trimite...';
+      const path = `${dosarId}/step${stepNum}_${Date.now()}_${file.name}`;
+      const { error } = await db.storage.from('documente').upload(path, file);
+      if (error) { alert('Eroare upload: ' + error.message); btn.disabled = false; btn.textContent = 'Trimite'; return; }
+      await db.from('documente').insert({
+        dosar_id: dosarId,
+        name: docName,
+        path,
+        size: file.size,
+        uploaded_by: 'client',
+        step_number: stepNum
+      });
+      await loadPage();
+    }
+
+    // Upload general (din secțiunea "Documente trimise de tine")
     function onFileSelected(dosarId) {
       const input = document.getElementById(`file-input-${dosarId}`);
       const nameEl = document.getElementById(`file-name-${dosarId}`);
@@ -458,29 +528,13 @@
       }
     }
 
-    function onFileSelectedNeeded() {
-      const input = document.getElementById('file-input-needed');
-      const nameEl = document.getElementById('file-name-needed');
-      const btn = document.getElementById('upload-btn-needed');
-      if (input?.files[0]) {
-        nameEl.textContent = input.files[0].name;
-        btn.style.display = 'inline-block';
-      }
-    }
-
-    let currentDosarId = null;
-
     async function uploadDoc(dosarId) {
       const input = document.getElementById(`file-input-${dosarId}`);
       const btn = document.getElementById(`upload-btn-${dosarId}`);
-      await doUpload(dosarId, input, btn);
-    }
-
-    async function doUpload(dosarId, input, btn) {
       const file = input?.files[0];
       if (!file) return;
       btn.disabled = true;
-      btn.textContent = 'Se încarcă...';
+      btn.textContent = 'Se trimite...';
       const path = `${dosarId}/${Date.now()}_${file.name}`;
       const { error } = await db.storage.from('documente').upload(path, file);
       if (error) { alert('Eroare upload: ' + error.message); btn.disabled = false; btn.textContent = 'Trimite documentul'; return; }
