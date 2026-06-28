@@ -64,12 +64,15 @@
     .step-detail-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
     .step-detail-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1rem; }
     .step-docs-title { font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 0.75rem; }
-    .step-doc-slot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; background: var(--bg); flex-wrap: wrap; }
-    .step-doc-slot-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; min-width: 0; }
-    .step-doc-slot-uploaded { font-size: 11px; color: #16a34a; font-weight: 500; }
-    .step-doc-upload-label { font-size: 12px; padding: 4px 12px; border-radius: 6px; border: 1px dashed var(--border); cursor: pointer; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
-    .step-doc-upload-label:hover { border-color: var(--green); color: var(--green); }
-    .step-doc-upload-label input { display: none; }
+    .step-doc-slot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; background: var(--bg); flex-wrap: wrap; transition: border-color .2s, background .2s; }
+    .step-doc-slot.uploaded { border-color: #86efac; background: #f0fdf4; }
+    .step-doc-slot-name { font-size: 13px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+    .step-doc-slot.uploaded .step-doc-slot-name { color: #166534; }
+    .step-doc-pending { font-size: 11px; color: var(--text-secondary); font-style: italic; flex-shrink: 0; }
+    .step-doc-slot-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    /* Step-grouped client docs */
+    .step-docs-group { margin-bottom: 1rem; }
+    .step-docs-group-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-secondary); margin-bottom: 6px; padding: 4px 0; border-bottom: 1px solid var(--border); }
 
     /* DETAILS GRID */
     .details-body { padding: 1.5rem; }
@@ -491,12 +494,11 @@
     const progressPct = Math.round((stepIdx / 20) * 100);
     const currentStep = steps[stepIdx - 1] || steps[0];
     const docSlots = (currentStep.docs || []).map((docName, i) =>
-      `<div class="step-doc-slot">
-        <div class="step-doc-slot-name">📎 <span>${docName}</span></div>
-        <label class="step-doc-upload-label">
-          <input type="file" onchange="uploadStepDoc('${safeId}','${safeFirm}','${safeEmail}', this, '${docName.replace(/'/g,"\\'")}', ${stepIdx})" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"/>
-          Încarcă
-        </label>
+      `<div class="step-doc-slot" id="adm-slot-${safeId}-${stepIdx}-${i}">
+        <div class="step-doc-slot-name">📋 <span>${docName}</span></div>
+        <div class="step-doc-slot-actions" id="adm-slot-actions-${safeId}-${stepIdx}-${i}">
+          <span class="step-doc-pending">Așteptare client...</span>
+        </div>
       </div>`
     ).join('');
 
@@ -606,17 +608,62 @@
 
   /* ========== DOCUMENTS ========== */
   async function loadDosarDocs(dosarId) {
-    const { data: docs } = await db.from('documente').select('*').eq('dosar_id', dosarId).order('created_at', { ascending: false });
+    const { data: docs } = await db.from('documente').select('*').eq('dosar_id', dosarId).order('created_at', { ascending: true });
     const all = docs || [];
-    const clientEl = document.getElementById(`client-docs-${dosarId}`);
-    const cabinetEl = document.getElementById(`cabinet-docs-${dosarId}`);
-    const clientDocs = all.filter(d => d.uploaded_by === 'client');
+    const clientDocs  = all.filter(d => d.uploaded_by === 'client');
     const cabinetDocs = all.filter(d => d.uploaded_by === 'cabinet');
-    if (clientEl) {
-      clientEl.innerHTML = clientDocs.length
-        ? clientDocs.map(d => docItemHTML(d)).join('')
-        : '<div class="doc-empty">Niciun document de la client.</div>';
+
+    // Update step tracker doc slots for current step
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (dosar) {
+      const stepIdx = getCurrentStepIndex(dosar);
+      const steps = getSteps(dosar);
+      const currentStepDocs = steps[stepIdx - 1]?.docs || [];
+      currentStepDocs.forEach((docName, i) => {
+        const slot = document.getElementById(`adm-slot-${dosarId}-${stepIdx}-${i}`);
+        const actions = document.getElementById(`adm-slot-actions-${dosarId}-${stepIdx}-${i}`);
+        if (!slot || !actions) return;
+        const uploaded = clientDocs.find(d => d.step_number === stepIdx && d.name === docName);
+        if (uploaded) {
+          slot.classList.add('uploaded');
+          slot.querySelector('.step-doc-slot-name').innerHTML = `✅ <span>${docName}</span>`;
+          actions.innerHTML = `<button class="doc-download-btn" onclick="adminDownloadDoc('${uploaded.path}','${uploaded.name}')">Descarcă</button>`;
+        } else {
+          slot.classList.remove('uploaded');
+          slot.querySelector('.step-doc-slot-name').innerHTML = `📋 <span>${docName}</span>`;
+          actions.innerHTML = `<span class="step-doc-pending">Așteptare client...</span>`;
+        }
+      });
     }
+
+    // Render client docs grouped by step
+    const clientEl = document.getElementById(`client-docs-${dosarId}`);
+    if (clientEl) {
+      if (!clientDocs.length) {
+        clientEl.innerHTML = '<div class="doc-empty">Niciun document de la client.</div>';
+      } else {
+        // Group by step_number
+        const byStep = {};
+        clientDocs.forEach(d => {
+          const key = d.step_number || 0;
+          if (!byStep[key]) byStep[key] = [];
+          byStep[key].push(d);
+        });
+        clientEl.innerHTML = Object.keys(byStep)
+          .sort((a, b) => Number(a) - Number(b))
+          .map(stepNum => {
+            const label = stepNum == 0 ? 'Fără pas asociat' : `Pasul ${stepNum}`;
+            const docsHtml = byStep[stepNum].map(d => docItemHTML(d)).join('');
+            return `<div class="step-docs-group">
+              <div class="step-docs-group-label">${label}</div>
+              ${docsHtml}
+            </div>`;
+          }).join('');
+      }
+    }
+
+    // Render cabinet docs (flat, pentru client)
+    const cabinetEl = document.getElementById(`cabinet-docs-${dosarId}`);
     if (cabinetEl) {
       cabinetEl.innerHTML = cabinetDocs.length
         ? cabinetDocs.map(d => docItemHTML(d)).join('')
@@ -625,34 +672,14 @@
   }
 
   function docItemHTML(d) {
-    const stepInfo = d.step_number ? `<span style="font-size:10px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px;">P${d.step_number}</span>` : '';
     return `<div class="doc-item">
-      <div class="doc-item-name">📄 ${stepInfo}<span>${d.name}</span></div>
+      <div class="doc-item-name">📄 <span>${d.name}</span></div>
       <div class="doc-item-meta">${formatDateShort(d.created_at)}</div>
       <button class="doc-download-btn" onclick="adminDownloadDoc('${d.path}','${d.name}')">Descarcă</button>
     </div>`;
   }
 
-  async function uploadStepDoc(dosarId, firmName, clientEmail, inputEl, docName, stepNumber) {
-    const file = inputEl.files[0];
-    if (!file) return;
-    const label = inputEl.parentElement;
-    label.textContent = 'Se încarcă...';
-    const path = `${dosarId}/step${stepNumber}_${Date.now()}_${file.name}`;
-    const { error } = await db.storage.from('documente').upload(path, file);
-    if (error) { alert('Eroare upload: ' + error.message); label.textContent = 'Încarcă'; return; }
-    await db.from('documente').insert({ dosar_id: dosarId, name: `[P${stepNumber}] ${file.name}`, path, size: file.size, uploaded_by: 'cabinet', step_number: stepNumber });
-    await fetch('/.netlify/functions/notify-document', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ dosarId, firmName, clientEmail, fileName: file.name, uploadedBy: 'cabinet' })
-    }).catch(() => {});
-    label.textContent = '✓ Încărcat';
-    label.style.color = '#16a34a';
-    await loadDosarDocs(dosarId);
-  }
-
-  function onAdmFileSelected(dosarId) {
+function onAdmFileSelected(dosarId) {
     const input = document.getElementById(`adm-file-${dosarId}`);
     const nameEl = document.getElementById(`adm-file-name-${dosarId}`);
     const btn = document.getElementById(`adm-upload-btn-${dosarId}`);
