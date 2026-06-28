@@ -53,17 +53,17 @@ exports.handler = async (event) => {
     }
   }
 
-  // Set role = 'profesionist' in profiles table
+  // Set role = 'profesionist' in profiles table (upsert — works even if row doesn't exist yet)
   if (userId) {
-    await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
-      method: 'PATCH',
+    await fetch(`${supabaseUrl}/rest/v1/profiles`, {
+      method: 'POST',
       headers: {
         'apikey': serviceKey,
         'Authorization': `Bearer ${serviceKey}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
       },
-      body: JSON.stringify({ role: 'profesionist' })
+      body: JSON.stringify({ id: userId, role: 'profesionist' })
     });
   }
 
