@@ -513,10 +513,40 @@
               </table>
               <div style="margin-top:1rem;">
                 <button class="invite-btn" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${d.client_email ? '' : 'disabled'}>
-                  ✉ Trimite invitație cont
+                  ✉ Invită client
                 </button>
                 <span class="invite-status" id="invite-status-${safeId}"></span>
               </div>
+              ${(() => {
+                const profs = d.profesionisti || [];
+                const extraClients = d.clienti_extra || [];
+                let html = '';
+                if (profs.length > 0) {
+                  html += `<h4 style="margin-top:1.25rem;">Profesioniști asignați</h4>
+                  <div style="display:flex;flex-direction:column;gap:6px;">
+                  ${profs.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
+                    <div>
+                      <span style="font-size:12px;font-weight:600;color:var(--green);">${p.role}</span>
+                      <span style="font-size:13px;color:var(--text-primary);margin-left:6px;">${p.email}</span>
+                    </div>
+                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)">✉ Invită</button>
+                  </div>`).join('')}
+                  </div>`;
+                }
+                if (extraClients.length > 0) {
+                  html += `<h4 style="margin-top:1.25rem;">Clienți suplimentari</h4>
+                  <div style="display:flex;flex-direction:column;gap:6px;">
+                  ${extraClients.map(c => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
+                    <div>
+                      <span style="font-size:13px;font-weight:500;color:var(--text-primary);">${c.name}</span>
+                      <span style="font-size:12px;color:var(--text-secondary);margin-left:6px;">${c.email}</span>
+                    </div>
+                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;" onclick="inviteClient('${safeId}','${c.email}','${safeFirm}', this)">✉ Invită</button>
+                  </div>`).join('')}
+                  </div>`;
+                }
+                return html;
+              })()}
               <h4 style="margin-top:1.25rem;">Notă pentru client</h4>
               <textarea class="note-area" id="note-${safeId}" placeholder="Notă vizibilă clientului în dashboard...">${d.notes || ''}</textarea>
               <button class="save-note-btn" onclick="saveNote('${safeId}')">Salvează nota</button>
@@ -837,8 +867,26 @@ function onAdmFileSelected(dosarId) {
     renderStats(allDosare);
   }
 
-  async function inviteClient(dosarId, email, firmName) {
-    const btn = document.getElementById(`invite-btn-${dosarId}`);
+  async function inviteProfessional(email, role, firmName, btnEl) {
+    const btn = btnEl || null;
+    if (btn) { btn.disabled = true; btn.textContent = 'Se trimite...'; }
+    try {
+      const res = await fetch('/.netlify/functions/invite-professional', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role, firmName })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Eroare');
+      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Trimis'; }
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = '✉ Invită'; }
+      alert('Eroare: ' + err.message);
+    }
+  }
+
+  async function inviteClient(dosarId, email, firmName, btnEl) {
+    const btn = btnEl || document.getElementById(`invite-btn-${dosarId}`);
     const status = document.getElementById(`invite-status-${dosarId}`);
     if (!email) { if (status) status.textContent = 'Email lipsă.'; return; }
     if (btn) { btn.disabled = true; btn.textContent = 'Se trimite...'; }
@@ -851,10 +899,10 @@ function onAdmFileSelected(dosarId) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Eroare');
-      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Invitație trimisă'; }
+      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Trimis'; }
       if (status) status.textContent = `Email trimis la ${email}`;
     } catch (err) {
-      if (btn) { btn.disabled = false; btn.textContent = '✉ Trimite invitație cont'; }
+      if (btn) { btn.disabled = false; btn.textContent = '✉ Invită client'; }
       if (status) status.textContent = 'Eroare: ' + err.message;
     }
   }
