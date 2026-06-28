@@ -570,7 +570,7 @@
       const { data: dosare, error } = await db
         .from('dosare')
         .select('*')
-        .eq('client_email', user.email)
+        .or(`client_email.eq.${user.email},clienti_extra.cs.${JSON.stringify([{ email: user.email }])}`)
         .order('created_at', { ascending: false });
 
       const container = document.getElementById('dosare-container');

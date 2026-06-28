@@ -106,6 +106,20 @@
     .doc-upload-send-btn:disabled { opacity: .6; cursor: not-allowed; }
     .doc-selected-name { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
 
+    /* TAGS (profesioniști / clienți extra) */
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; min-height: 4px; }
+    .tag-item { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--green-light); border: 1px solid var(--green-mid); border-radius: 99px; font-size: 12px; color: var(--green); font-weight: 500; }
+    .tag-remove { background: none; border: none; cursor: pointer; color: var(--green); font-size: 14px; line-height: 1; padding: 0; font-weight: 700; }
+    .tag-input-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag-input-row input { flex: 1; min-width: 140px; }
+    .tag-input-row select { width: 130px; }
+    /* APPROVAL */
+    .approval-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .approval-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
+    .approval-badge.approved { background: #dcfce7; color: #166534; }
+    .approval-badge.pending { background: #fef3c7; color: #92400e; }
+    .approve-btn { font-size: 12px; font-weight: 600; padding: 5px 14px; background: var(--green); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; }
+    .approve-btn.already { background: #dcfce7; color: #166534; cursor: default; }
     /* MODALS */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 500; display: none; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
     .modal-overlay.open { display: flex; }
@@ -193,6 +207,33 @@
         <label>Descrie procesul <span class="form-req">*</span></label>
         <input id="f-custom" placeholder="Ex: Dizolvare judiciară, Insolventă etc." />
       </div>
+
+      <div class="form-group">
+        <label>Profesioniști asignați <span style="font-size:11px;color:var(--text-secondary);font-weight:400;">(opțional — pot colabora pe același dosar)</span></label>
+        <div class="tag-list" id="prof-list"></div>
+        <div class="tag-input-row">
+          <input id="f-prof-email" type="email" placeholder="email@profesionist.ro" />
+          <select id="f-prof-role">
+            <option value="Avocat">Avocat</option>
+            <option value="Contabil">Contabil</option>
+            <option value="Consultant">Consultant</option>
+            <option value="Notar">Notar</option>
+            <option value="Alt rol">Alt rol</option>
+          </select>
+          <button type="button" onclick="addProf()" class="btn-ghost btn-sm">+ Adaugă</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Clienți suplimentari <span style="font-size:11px;color:var(--text-secondary);font-weight:400;">(ex: al 2-lea asociat al firmei)</span></label>
+        <div class="tag-list" id="extra-clients-list"></div>
+        <div class="tag-input-row">
+          <input id="f-extra-email" type="email" placeholder="asociat2@firma.ro" />
+          <input id="f-extra-name" placeholder="Nume" style="max-width:140px;" />
+          <button type="button" onclick="addExtraClient()" class="btn-ghost btn-sm">+ Adaugă</button>
+        </div>
+      </div>
+
       <div id="f-error" style="font-size:13px;color:#e53e3e;min-height:18px;margin-bottom:4px;"></div>
       <div class="modal-actions">
         <button class="btn-ghost btn-sm" onclick="closeCreateModal()">Anulează</button>
@@ -379,19 +420,29 @@
   let allDosare = [];
   let currentEditDosarId = null;
   let currentEditSteps = [];
+  let currentUserEmail = '';
+  let modalProfs = [];
+  let modalExtraClients = [];
 
   /* ========== INIT ========== */
   async function init() {
     const { data: { session } } = await db.auth.getSession();
     if (!session) { window.location.href = 'login.html'; return; }
     const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
-    if (profile?.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
-    document.getElementById('admin-email').textContent = session.user.email;
+    if (profile?.role !== 'admin' && profile?.role !== 'profesionist') { window.location.href = 'dashboard.html'; return; }
+    currentUserEmail = session.user.email;
+    document.getElementById('admin-email').textContent = currentUserEmail;
     await loadDosare();
   }
 
   async function loadDosare() {
-    const { data: dosare } = await db.from('dosare').select('*').order('created_at', { ascending: false });
+    const { data: { session } } = await db.auth.getSession();
+    const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+    let query = db.from('dosare').select('*').order('created_at', { ascending: false });
+    if (profile?.role !== 'admin') {
+      query = query.filter('profesionisti', 'cs', JSON.stringify([{ email: currentUserEmail }]));
+    }
+    const { data: dosare } = await query;
     allDosare = dosare || [];
     renderStats(allDosare);
     renderDosare(allDosare);
@@ -508,13 +559,37 @@
       return `<span class="step-pill ${cls}" onclick="jumpToStep('${safeId}', ${n})" title="${s.name}">P${n}</span>`;
     }).join('');
 
+    // Approval logic
+    const profs = d.profesionisti || [];
+    const approvals = d.step_approvals || {};
+    const stepApprovals = approvals[String(stepIdx)] || [];
+    const allApproved = profs.length === 0 || profs.every(p => stepApprovals.includes(p.email));
+    const iAmProf = profs.some(p => p.email === currentUserEmail);
+    const iApproved = stepApprovals.includes(currentUserEmail);
+
+    let approvalHtml = '';
+    if (profs.length > 0) {
+      const badges = profs.map(p => {
+        const ok = stepApprovals.includes(p.email);
+        return `<span class="approval-badge ${ok ? 'approved' : 'pending'}">${p.role} — ${p.email.split('@')[0]} ${ok ? '✓' : '⏳'}</span>`;
+      }).join('');
+      approvalHtml = `<div class="approval-row">
+        <span style="font-size:11px;color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:.4px;">Aprobări:</span>
+        ${badges}
+        ${iAmProf ? `<button class="approve-btn ${iApproved ? 'already' : ''}" onclick="${iApproved ? '' : `approveStep('${safeId}', ${stepIdx})`}">${iApproved ? '✓ Ai aprobat' : 'Aprobă pasul meu'}</button>` : ''}
+      </div>`;
+    }
+
+    const nextDisabled = stepIdx >= 20 || (!allApproved && profs.length > 0);
+    const nextTitle = !allApproved && profs.length > 0 ? 'Necesită aprobarea tuturor profesioniștilor' : '';
+
     return `<div class="step-tracker">
       <div class="step-tracker-header">
         <span class="step-tracker-title">Progres dosar — Pas ${stepIdx} din 20</span>
         <div class="step-nav-btns">
           <button class="step-edit-btn" onclick="openStepsModal('${safeId}')">✏️ Editează pași</button>
           <button class="step-nav-btn" onclick="changeStep('${safeId}', ${stepIdx - 1})" ${stepIdx <= 1 ? 'disabled' : ''}>← Pas anterior</button>
-          <button class="step-nav-btn primary" onclick="changeStep('${safeId}', ${stepIdx + 1})" ${stepIdx >= 20 ? 'disabled' : ''}>Pas următor →</button>
+          <button class="step-nav-btn primary" onclick="advanceStep('${safeId}', ${stepIdx})" ${nextDisabled ? 'disabled' : ''} title="${nextTitle}">Pas următor →</button>
         </div>
       </div>
       <div class="step-progress-bar"><div class="step-progress-fill" style="width:${progressPct}%"></div></div>
@@ -523,6 +598,7 @@
         <div class="step-detail-name">Pas ${stepIdx}: ${currentStep.name}</div>
         <div class="step-detail-desc">${currentStep.desc}</div>
         ${currentStep.docs && currentStep.docs.length ? `<div class="step-docs-title">Documente necesare la acest pas</div>${docSlots}` : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;">Niciun document necesar la acest pas.</div>'}
+        ${approvalHtml}
       </div>
     </div>`;
   }
@@ -530,14 +606,52 @@
   /* ========== STEP MANAGEMENT ========== */
   async function changeStep(dosarId, newStep) {
     if (newStep < 1 || newStep > 20) return;
-    await db.from('dosare').update({ current_step: newStep }).eq('id', dosarId);
+    await db.from('dosare').update({ current_step: newStep, step_approvals: {} }).eq('id', dosarId);
     const idx = allDosare.findIndex(d => d.id === dosarId);
-    if (idx !== -1) { allDosare[idx].current_step = newStep; }
+    if (idx !== -1) { allDosare[idx].current_step = newStep; allDosare[idx].step_approvals = {}; }
     refreshDosarCard(dosarId);
   }
 
+  async function advanceStep(dosarId, currentStepIdx) {
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    // Check doc completeness
+    const { data: docs } = await db.from('documente').select('name, step_number')
+      .eq('dosar_id', dosarId).eq('uploaded_by', 'client');
+    const steps = getSteps(dosar);
+    const requiredDocs = steps[currentStepIdx - 1]?.docs || [];
+    const uploaded = (docs || []).filter(d => d.step_number === currentStepIdx).map(d => d.name);
+    const missing = requiredDocs.filter(name => !uploaded.includes(name));
+    if (missing.length > 0) {
+      const ok = confirm(
+        `Lipsesc ${missing.length} document(e) de la client la pasul curent:\n• ${missing.join('\n• ')}\n\nEști sigur că vrei să avansezi la pasul următor?`
+      );
+      if (!ok) return;
+    }
+    await changeStep(dosarId, currentStepIdx + 1);
+  }
+
+  async function approveStep(dosarId, stepIdx) {
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const approvals = JSON.parse(JSON.stringify(dosar.step_approvals || {}));
+    const key = String(stepIdx);
+    if (!approvals[key]) approvals[key] = [];
+    if (!approvals[key].includes(currentUserEmail)) approvals[key].push(currentUserEmail);
+    await db.from('dosare').update({ step_approvals: approvals }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].step_approvals = approvals;
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    refreshDosarCard(dosarId);
+    if (wasOpen) {
+      document.getElementById(`details-${dosarId}`)?.classList.add('open');
+      document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+      loadDosarDocs(dosarId);
+    }
+  }
+
   async function jumpToStep(dosarId, step) {
-    const confirmed = confirm(`Mergi la Pasul ${step}? Aceasta va actualiza progresul dosarului.`);
+    const confirmed = confirm(`Mergi la Pasul ${step}? Aprobările pasului curent se resetează.`);
     if (!confirmed) return;
     await changeStep(dosarId, step);
   }
@@ -761,8 +875,49 @@ function onAdmFileSelected(dosarId) {
     document.getElementById('f-custom-wrap').style.display = svc === 'altul' ? 'block' : 'none';
   }
 
+  function addProf() {
+    const email = document.getElementById('f-prof-email').value.trim();
+    const role = document.getElementById('f-prof-role').value;
+    if (!email || !email.includes('@')) return;
+    if (modalProfs.some(p => p.email === email)) return;
+    modalProfs.push({ email, role });
+    document.getElementById('f-prof-email').value = '';
+    renderModalProfs();
+  }
+  function removeProf(email) {
+    modalProfs = modalProfs.filter(p => p.email !== email);
+    renderModalProfs();
+  }
+  function renderModalProfs() {
+    document.getElementById('prof-list').innerHTML = modalProfs.map(p =>
+      `<div class="tag-item"><span>${p.role}: ${p.email}</span><button class="tag-remove" onclick="removeProf('${p.email}')">×</button></div>`
+    ).join('');
+  }
+
+  function addExtraClient() {
+    const email = document.getElementById('f-extra-email').value.trim();
+    const name = document.getElementById('f-extra-name').value.trim();
+    if (!email || !email.includes('@')) return;
+    if (modalExtraClients.some(c => c.email === email)) return;
+    modalExtraClients.push({ email, name: name || email.split('@')[0] });
+    document.getElementById('f-extra-email').value = '';
+    document.getElementById('f-extra-name').value = '';
+    renderModalExtraClients();
+  }
+  function removeExtraClient(email) {
+    modalExtraClients = modalExtraClients.filter(c => c.email !== email);
+    renderModalExtraClients();
+  }
+  function renderModalExtraClients() {
+    document.getElementById('extra-clients-list').innerHTML = modalExtraClients.map(c =>
+      `<div class="tag-item"><span>${c.name} (${c.email})</span><button class="tag-remove" onclick="removeExtraClient('${c.email}')">×</button></div>`
+    ).join('');
+  }
+
   function openCreateModal() {
     document.getElementById('f-error').textContent = '';
+    modalProfs = []; modalExtraClients = [];
+    renderModalProfs(); renderModalExtraClients();
     document.getElementById('modal-create').classList.add('open');
   }
   function closeCreateModal() {
@@ -801,7 +956,7 @@ function onAdmFileSelected(dosarId) {
     };
 
     // Try inserting with new columns first
-    const fullData = { ...baseData, service_custom: serviceCustom || null, current_step: 1, steps };
+    const fullData = { ...baseData, service_custom: serviceCustom || null, current_step: 1, steps, profesionisti: modalProfs, clienti_extra: modalExtraClients, step_approvals: {} };
     let { error } = await db.from('dosare').insert(fullData);
 
     // If new columns don't exist yet, fall back to base fields
@@ -818,6 +973,7 @@ function onAdmFileSelected(dosarId) {
     }
 
     closeCreateModal();
+    modalProfs = []; modalExtraClients = [];
     ['f-firm','f-cui','f-email','f-phone','f-custom'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = '';
