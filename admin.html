@@ -409,6 +409,25 @@
     currentUserRole = profile?.role || 'profesionist';
     document.getElementById('admin-email').textContent = currentUserEmail;
     await loadDosare();
+
+    db.channel('admin-realtime')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'dosare' }, payload => {
+        const idx = allDosare.findIndex(d => d.id === payload.new.id);
+        if (idx !== -1) {
+          allDosare[idx] = payload.new;
+          refreshDosarCard(payload.new.id);
+        }
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'dosare' }, () => {
+        loadDosare();
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'documente' }, payload => {
+        const dosarId = payload.new.dosar_id;
+        if (document.getElementById(`details-${dosarId}`)?.classList.contains('open')) {
+          loadDosarDocs(dosarId);
+        }
+      })
+      .subscribe();
   }
 
   async function loadDosare() {
