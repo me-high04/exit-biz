@@ -438,11 +438,14 @@
   async function loadDosare() {
     const { data: { session } } = await db.auth.getSession();
     const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
-    let query = db.from('dosare').select('*').order('created_at', { ascending: false });
+    let dosare, dosareError;
     if (profile?.role !== 'admin') {
-      query = query.filter('profesionisti', 'cs', JSON.stringify([{ email: currentUserEmail }]));
+      const { data, error } = await db.rpc('get_dosare_for_profesionist', { p_email: currentUserEmail });
+      dosare = data; dosareError = error;
+    } else {
+      const { data, error } = await db.from('dosare').select('*').order('created_at', { ascending: false });
+      dosare = data; dosareError = error;
     }
-    const { data: dosare } = await query;
     allDosare = dosare || [];
     renderStats(allDosare);
     renderDosare(allDosare);
