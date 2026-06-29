@@ -738,19 +738,25 @@
                   <button class="btn-ghost btn-sm" style="font-size:12px;padding:5px 12px;" onclick="addProfToDosar('${safeId}','${safeFirm}')">+ Adaugă</button>
                 </div>`;
 
-                // Clienți suplimentari
-                if (extraClients.length > 0) {
-                  html += `<h4 style="margin-top:1.25rem;">Clienți suplimentari</h4>
-                  <div style="display:flex;flex-direction:column;gap:6px;">
-                  ${extraClients.map(c => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
-                    <div>
-                      <span style="font-size:13px;font-weight:500;color:var(--text-primary);">${c.name}</span>
-                      <span style="font-size:12px;color:var(--text-secondary);margin-left:6px;">${c.email}</span>
-                    </div>
+                // Clienți suplimentari — mereu vizibil cu form de adăugare
+                html += `<h4 style="margin-top:1.25rem;">Clienți suplimentari (asociați)</h4>
+                <div id="extra-clients-cards-${safeId}" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;">
+                ${extraClients.length ? extraClients.map(c => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
+                  <div>
+                    <span style="font-size:13px;font-weight:500;color:var(--text-primary);">${c.name || c.email.split('@')[0]}</span>
+                    <span style="font-size:12px;color:var(--text-secondary);margin-left:6px;">${c.email}</span>
+                  </div>
+                  <div style="display:flex;gap:6px;">
                     <button class="invite-btn ${wasInvited(c.email, d) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteClient('${safeId}','${c.email}','${safeFirm}', this)" ${wasInvited(c.email, d) ? 'disabled' : ''}>${wasInvited(c.email, d) ? '✓ Invitat' : '✉ Invită'}</button>
-                  </div>`).join('')}
-                  </div>`;
-                }
+                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeExtraClientFromDosar('${safeId}','${c.email}', this)">✕</button>
+                  </div>
+                </div>`).join('') : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;padding:4px 0;">Niciun asociat adăugat.</div>'}
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input id="add-extra-email-${safeId}" type="email" placeholder="email@asociat.ro" style="flex:1;min-width:160px;font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:7px;" />
+                  <input id="add-extra-name-${safeId}" type="text" placeholder="Nume (opțional)" style="flex:1;min-width:120px;font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:7px;" />
+                  <button class="btn-ghost btn-sm" style="font-size:12px;padding:5px 12px;" onclick="addExtraClientToDosar('${safeId}','${safeFirm}')">+ Adaugă</button>
+                </div>`;
                 return html;
               })()}
               <h4 style="margin-top:1.25rem;">Notă pentru client</h4>
@@ -1114,6 +1120,43 @@ function onAdmFileSelected(dosarId) {
     await db.from('dosare').update({ profesionisti: profs }).eq('id', dosarId);
     const idx = allDosare.findIndex(d => d.id === dosarId);
     if (idx !== -1) allDosare[idx].profesionisti = profs;
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    refreshDosarCard(dosarId);
+    if (wasOpen) {
+      document.getElementById(`details-${dosarId}`)?.classList.add('open');
+      document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+      loadDosarDocs(dosarId);
+    }
+  }
+
+  async function addExtraClientToDosar(dosarId, firmName) {
+    const email = document.getElementById(`add-extra-email-${dosarId}`)?.value.trim();
+    const name = document.getElementById(`add-extra-name-${dosarId}`)?.value.trim();
+    if (!email || !email.includes('@')) return alert('Introduceți un email valid.');
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const clients = dosar.clienti_extra || [];
+    if (clients.some(c => c.email === email)) return alert('Emailul există deja.');
+    clients.push({ email, name: name || email.split('@')[0] });
+    await db.from('dosare').update({ clienti_extra: clients }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].clienti_extra = clients;
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    refreshDosarCard(dosarId);
+    if (wasOpen) {
+      document.getElementById(`details-${dosarId}`)?.classList.add('open');
+      document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+      loadDosarDocs(dosarId);
+    }
+  }
+
+  async function removeExtraClientFromDosar(dosarId, email, btnEl) {
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const clients = (dosar.clienti_extra || []).filter(c => c.email !== email);
+    await db.from('dosare').update({ clienti_extra: clients }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].clienti_extra = clients;
     const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
     refreshDosarCard(dosarId);
     if (wasOpen) {
