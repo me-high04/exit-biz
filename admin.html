@@ -144,17 +144,197 @@
     .step-edit-col-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .4px; }
 
     .loading-full { text-align: center; padding: 4rem; color: var(--text-secondary); }
+
+    /* ── Account Drawer ─────────────────────────── */
+    .drawer-overlay {
+      position: fixed; inset: 0; background: rgba(15,23,42,.35);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity .25s;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+    .account-drawer {
+      position: fixed; top: 0; right: 0; width: 340px; max-width: 100vw;
+      height: 100%; background: #fff; border-left: 1px solid var(--border);
+      z-index: 201; transform: translateX(100%);
+      transition: transform .28s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto; display: flex; flex-direction: column;
+    }
+    .account-drawer.open { transform: translateX(0); }
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: #fff; z-index: 1;
+    }
+    .drawer-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+    .drawer-close {
+      width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 8px;
+      background: none; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; color: var(--text-secondary); font-size: 16px; transition: background .15s;
+    }
+    .drawer-close:hover { background: #F8FAFC; }
+    .drawer-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; flex: 1; }
+    .drawer-avatar-section { display: flex; align-items: center; gap: 1rem; padding-bottom: 0.25rem; }
+    .drawer-avatar {
+      width: 52px; height: 52px; border-radius: 50%; background: var(--green); color: #fff;
+      font-size: 18px; font-weight: 600; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; letter-spacing: 1px;
+    }
+    .drawer-user-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+    .drawer-user-email { font-size: 13px; color: var(--text-secondary); margin-top: 2px; word-break: break-all; }
+    .drawer-section { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .drawer-section-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px;
+      color: var(--text-secondary); padding: 10px 14px; background: #F8FAFC;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-section-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .drawer-field label { font-size: 12px; font-weight: 500; color: var(--text-secondary); display: block; margin-bottom: 5px; }
+    .drawer-field input {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: inherit; background: #fff; color: var(--text-primary);
+      transition: border-color .15s; box-sizing: border-box;
+    }
+    .drawer-field input:focus { outline: none; border-color: var(--green); }
+    .drawer-field input[readonly] { background: #F8FAFC; color: var(--text-secondary); cursor: default; }
+    .drawer-btn {
+      padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit; border: none; transition: all .15s;
+    }
+    .drawer-btn-primary { background: var(--green); color: #fff; }
+    .drawer-btn-primary:hover { opacity: .9; }
+    .drawer-btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .drawer-btn-ghost { background: #fff; color: var(--text-primary); border: 1px solid var(--border) !important; }
+    .drawer-btn-ghost:hover { border-color: #aaa !important; background: #F8FAFC; }
+    .drawer-btn-danger { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA !important; width: 100%; }
+    .drawer-btn-danger:hover { background: #FEE2E2; }
+    .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .lang-toggle button {
+      flex: 1; padding: 9px; border: none; background: none; font-family: inherit;
+      font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-secondary); transition: all .15s;
+    }
+    .lang-toggle button.active { background: var(--green); color: #fff; }
+    .role-card {
+      background: linear-gradient(135deg,#EFF6FF 0%,#F0F7FF 100%);
+      border: 1px solid #BFDBFE; border-radius: 10px; padding: 12px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .role-card-name { font-size: 14px; font-weight: 600; color: var(--green); }
+    .role-card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .role-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: var(--green); color: #fff; }
+    .drawer-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); background: #fff; }
+    .drawer-logout {
+      width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 10px;
+      background: none; font-family: inherit; font-size: 14px; font-weight: 500;
+      color: var(--text-secondary); cursor: pointer; transition: all .15s;
+    }
+    .drawer-logout:hover { border-color: #aaa; color: var(--text-primary); background: #F8FAFC; }
+    .nav-avatar-btn {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #fff;
+      font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .15s; flex-shrink: 0; letter-spacing: 1px;
+    }
+    .nav-avatar-btn:hover { opacity: .85; }
+    .drawer-msg { font-size: 12px; padding: 8px 12px; border-radius: 8px; display: none; }
+    .drawer-msg.show { display: block; }
+    .drawer-msg.ok { background: #F0FDF4; color: #166534; border: 1px solid #86EFAC; }
+    .drawer-msg.err { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
   </style>
 </head>
 <body>
 
   <nav class="adm-nav">
-    <a href="/" class="logo">exit<span>biz</span> <span style="font-size:12px;color:var(--text-secondary);font-weight:400;margin-left:4px;">admin</span></a>
+    <a href="/" class="logo">exit<span>biz</span> <span style="font-size:12px;color:var(--text-secondary);font-weight:400;margin-left:4px;" id="admin-role-badge">admin</span></a>
     <div class="adm-nav-right">
-      <span style="font-size:13px;color:var(--text-secondary);" id="admin-email"></span>
-      <button class="btn-ghost btn-sm" id="logout-btn">Ieși din cont</button>
+      <button class="nav-avatar-btn" id="nav-avatar" onclick="openDrawer()">?</button>
     </div>
   </nav>
+
+  <!-- Drawer overlay -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+  <!-- Account drawer -->
+  <div class="account-drawer" id="account-drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">Contul meu</span>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-avatar-section">
+        <div class="drawer-avatar" id="drawer-avatar">?</div>
+        <div>
+          <div class="drawer-user-name" id="drawer-name-display">—</div>
+          <div class="drawer-user-email" id="drawer-email-display">—</div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Profil</div>
+        <div class="drawer-section-body">
+          <div class="drawer-field">
+            <label>Nume complet</label>
+            <input type="text" id="drawer-name-input" placeholder="Ion Popescu" />
+          </div>
+          <div class="drawer-field">
+            <label>Email</label>
+            <input type="text" id="drawer-email-input" readonly />
+          </div>
+          <div class="drawer-msg" id="profile-msg"></div>
+          <button class="drawer-btn drawer-btn-primary" onclick="saveProfile()">Salvează modificările</button>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Schimbă parola</div>
+        <div class="drawer-section-body">
+          <div class="drawer-field">
+            <label>Parolă nouă</label>
+            <input type="password" id="drawer-pw1" placeholder="Minim 6 caractere" />
+          </div>
+          <div class="drawer-field">
+            <label>Confirmă parola</label>
+            <input type="password" id="drawer-pw2" placeholder="Repetă parola" />
+          </div>
+          <div class="drawer-msg" id="pw-msg"></div>
+          <button class="drawer-btn drawer-btn-primary" onclick="changePassword()">Actualizează parola</button>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Limbă / Language</div>
+        <div class="drawer-section-body">
+          <div class="lang-toggle">
+            <button id="lang-ro-btn" onclick="setLang('ro')">🇷🇴 Română</button>
+            <button id="lang-en-btn" onclick="setLang('en')">🇬🇧 English</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Rol & Acces</div>
+        <div class="drawer-section-body">
+          <div class="role-card">
+            <div>
+              <div class="role-card-name" id="drawer-role-name">—</div>
+              <div class="role-card-sub">Panou ExitBiz</div>
+            </div>
+            <span class="role-badge" id="drawer-role-badge">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title" style="color:#DC2626;background:#FEF2F2;border-bottom-color:#FECACA;">Zonă periculoasă</div>
+        <div class="drawer-section-body">
+          <p style="font-size:13px;color:var(--text-secondary);margin:0;">Ștergerea contului este permanentă și nu poate fi anulată.</p>
+          <div class="drawer-msg" id="delete-msg"></div>
+          <button class="drawer-btn drawer-btn-danger" onclick="confirmDeleteAccount()">Șterge contul</button>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <button class="drawer-logout" onclick="doLogout()">← Ieși din cont</button>
+    </div>
+  </div>
 
   <div class="adm-main">
     <div class="adm-header">
@@ -407,7 +587,18 @@
     if (profile?.role !== 'admin' && profile?.role !== 'profesionist') { window.location.href = 'dashboard.html'; return; }
     currentUserEmail = session.user.email;
     currentUserRole = profile?.role || 'profesionist';
-    document.getElementById('admin-email').textContent = currentUserEmail;
+    // Init drawer
+    const drawerName = profile?.full_name || currentUserEmail.split('@')[0];
+    setInitials(drawerName);
+    document.getElementById('drawer-name-display').textContent = drawerName;
+    document.getElementById('drawer-email-display').textContent = currentUserEmail;
+    document.getElementById('drawer-name-input').value = drawerName;
+    document.getElementById('drawer-email-input').value = currentUserEmail;
+    const roleLabel = currentUserRole === 'admin' ? 'Administrator' : 'Profesionist';
+    document.getElementById('drawer-role-name').textContent = roleLabel;
+    document.getElementById('drawer-role-badge').textContent = roleLabel;
+    document.getElementById('admin-role-badge').textContent = currentUserRole;
+    initLang();
     await loadDosare();
 
     db.channel('admin-realtime')
@@ -1010,7 +1201,9 @@ function onAdmFileSelected(dosarId) {
     renderModalProfs();
   }
   function renderModalProfs() {
-    document.getElementById('prof-list').innerHTML = modalProfs.map(p =>
+    const el = document.getElementById('prof-list');
+    if (!el) return;
+    el.innerHTML = modalProfs.map(p =>
       `<div class="tag-item"><span>${p.role}: ${p.email}</span><button class="tag-remove" onclick="removeProf('${p.email}')">×</button></div>`
     ).join('');
   }
@@ -1030,7 +1223,9 @@ function onAdmFileSelected(dosarId) {
     renderModalExtraClients();
   }
   function renderModalExtraClients() {
-    document.getElementById('extra-clients-list').innerHTML = modalExtraClients.map(c =>
+    const el = document.getElementById('extra-clients-list');
+    if (!el) return;
+    el.innerHTML = modalExtraClients.map(c =>
       `<div class="tag-item"><span>${c.name} (${c.email})</span><button class="tag-remove" onclick="removeExtraClient('${c.email}')">×</button></div>`
     ).join('');
   }
@@ -1105,11 +1300,87 @@ function onAdmFileSelected(dosarId) {
     await loadDosare();
   }
 
-  /* ========== EVENTS ========== */
-  document.getElementById('logout-btn').addEventListener('click', async () => {
+  /* ========== DRAWER ========== */
+  let _deleteConfirmed = false;
+
+  function openDrawer() {
+    document.getElementById('account-drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('account-drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function setInitials(name) {
+    const parts = name.trim().split(/\s+/);
+    const ini = parts.length >= 2
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : name.slice(0, 2).toUpperCase();
+    document.getElementById('nav-avatar').textContent = ini;
+    document.getElementById('drawer-avatar').textContent = ini;
+  }
+  function setLang(lang) {
+    localStorage.setItem('lang', lang);
+    document.getElementById('lang-ro-btn').classList.toggle('active', lang === 'ro');
+    document.getElementById('lang-en-btn').classList.toggle('active', lang === 'en');
+  }
+  function initLang() { setLang(localStorage.getItem('lang') || 'ro'); }
+
+  function showDrawerMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = `drawer-msg show ${type}`;
+    setTimeout(() => el.classList.remove('show'), 4000);
+  }
+
+  async function saveProfile() {
+    const name = document.getElementById('drawer-name-input').value.trim();
+    if (!name) { showDrawerMsg('profile-msg', 'Introduceți un nume.', 'err'); return; }
+    const { data: { session } } = await db.auth.getSession();
+    const { error } = await db.from('profiles').upsert({ id: session.user.id, full_name: name });
+    if (error) { showDrawerMsg('profile-msg', 'Eroare la salvare.', 'err'); return; }
+    document.getElementById('drawer-name-display').textContent = name;
+    setInitials(name);
+    showDrawerMsg('profile-msg', 'Profil actualizat!', 'ok');
+  }
+
+  async function changePassword() {
+    const pw1 = document.getElementById('drawer-pw1').value;
+    const pw2 = document.getElementById('drawer-pw2').value;
+    if (!pw1 || pw1.length < 6) { showDrawerMsg('pw-msg', 'Parola trebuie să aibă minim 6 caractere.', 'err'); return; }
+    if (pw1 !== pw2) { showDrawerMsg('pw-msg', 'Parolele nu coincid.', 'err'); return; }
+    const { error } = await db.auth.updateUser({ password: pw1 });
+    if (error) { showDrawerMsg('pw-msg', 'Eroare la schimbarea parolei.', 'err'); return; }
+    document.getElementById('drawer-pw1').value = '';
+    document.getElementById('drawer-pw2').value = '';
+    showDrawerMsg('pw-msg', 'Parola a fost schimbată!', 'ok');
+  }
+
+  async function confirmDeleteAccount() {
+    if (!_deleteConfirmed) {
+      _deleteConfirmed = true;
+      showDrawerMsg('delete-msg', 'Apasă din nou pentru a confirma ștergerea permanentă.', 'err');
+      setTimeout(() => { _deleteConfirmed = false; }, 5000);
+      return;
+    }
+    const { data: { session } } = await db.auth.getSession();
+    const res = await fetch('/.netlify/functions/delete-account', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${session.access_token}` }
+    });
+    if (!res.ok) { showDrawerMsg('delete-msg', 'Eroare. Contactați suportul la contact@exitbiz.ro.', 'err'); return; }
     await db.auth.signOut();
     window.location.href = 'login.html';
-  });
+  }
+
+  async function doLogout() {
+    await db.auth.signOut();
+    window.location.href = 'login.html';
+  }
+
+  /* ========== EVENTS ========== */
 
   document.getElementById('modal-create').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeCreateModal();
