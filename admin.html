@@ -421,6 +421,7 @@
   let currentEditDosarId = null;
   let currentEditSteps = [];
   let currentUserEmail = '';
+  let currentUserRole = 'admin';
   let modalProfs = [];
   let modalExtraClients = [];
 
@@ -431,6 +432,7 @@
     const { data: profile } = await db.from('profiles').select('role').eq('id', session.user.id).single();
     if (profile?.role !== 'admin' && profile?.role !== 'profesionist') { window.location.href = 'dashboard.html'; return; }
     currentUserEmail = session.user.email;
+    currentUserRole = profile?.role || 'profesionist';
     document.getElementById('admin-email').textContent = currentUserEmail;
     await loadDosare();
   }
@@ -515,8 +517,8 @@
                 <tr><td>Serviciu</td><td>${svcLabel}${customLabel}</td></tr>
               </table>
               <div style="margin-top:1rem;">
-                <button class="invite-btn" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${d.client_email ? '' : 'disabled'}>
-                  ✉ Invită client
+                <button class="invite-btn ${wasInvited(d.client_email) ? 'sent' : ''}" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${(!d.client_email || wasInvited(d.client_email)) ? 'disabled' : ''}>
+                  ${wasInvited(d.client_email) ? '✓ Invitat' : '✉ Invită client'}
                 </button>
                 <span class="invite-status" id="invite-status-${safeId}"></span>
               </div>
@@ -534,8 +536,8 @@
                     <span style="font-size:13px;color:var(--text-primary);margin-left:6px;">${p.email}</span>
                   </div>
                   <div style="display:flex;gap:6px;">
-                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)">✉ Invită</button>
-                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeProfFromDosar('${safeId}','${p.email}', this)">✕</button>
+                    <button class="invite-btn ${wasInvited(p.email) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)" ${wasInvited(p.email) ? 'disabled' : ''}>${wasInvited(p.email) ? '✓ Invitat' : '✉ Invită'}</button>
+                    ${currentUserRole === 'admin' ? `<button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeProfFromDosar('${safeId}','${p.email}', this)">✕</button>` : ''}
                   </div>
                 </div>`).join('') : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;padding:4px 0;">Niciun profesionist asignat.</div>'}
                 </div>
@@ -927,6 +929,13 @@ function onAdmFileSelected(dosarId) {
     }
   }
 
+  function markInvited(email) {
+    localStorage.setItem(`exitbiz_invited_${email}`, '1');
+  }
+  function wasInvited(email) {
+    return localStorage.getItem(`exitbiz_invited_${email}`) === '1';
+  }
+
   async function inviteProfessional(email, role, firmName, btnEl) {
     const btn = btnEl || null;
     if (btn) { btn.disabled = true; btn.textContent = 'Se trimite...'; }
@@ -938,7 +947,8 @@ function onAdmFileSelected(dosarId) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Eroare');
-      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Trimis'; }
+      markInvited(email);
+      if (btn) { btn.classList.add('sent'); btn.disabled = true; btn.textContent = '✓ Invitat'; }
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = '✉ Invită'; }
       alert('Eroare: ' + err.message);
@@ -959,7 +969,8 @@ function onAdmFileSelected(dosarId) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Eroare');
-      if (btn) { btn.classList.add('sent'); btn.textContent = '✓ Trimis'; }
+      markInvited(email);
+      if (btn) { btn.classList.add('sent'); btn.disabled = true; btn.textContent = '✓ Invitat'; }
       if (status) status.textContent = `Email trimis la ${email}`;
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = '✉ Invită client'; }
