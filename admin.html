@@ -701,8 +701,8 @@
                 <tr><td>Serviciu</td><td>${svcLabel}${customLabel}</td></tr>
               </table>
               <div style="margin-top:1rem;">
-                <button class="invite-btn ${wasInvited(d.client_email) ? 'sent' : ''}" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${(!d.client_email || wasInvited(d.client_email)) ? 'disabled' : ''}>
-                  ${wasInvited(d.client_email) ? '✓ Invitat' : '✉ Invită client'}
+                <button class="invite-btn ${wasInvited(d.client_email, d) ? 'sent' : ''}" id="invite-btn-${safeId}" onclick="inviteClient('${safeId}','${safeEmail}','${safeFirm}')" ${(!d.client_email || wasInvited(d.client_email, d)) ? 'disabled' : ''}>
+                  ${wasInvited(d.client_email, d) ? '✓ Invitat' : '✉ Invită client'}
                 </button>
                 <span class="invite-status" id="invite-status-${safeId}"></span>
               </div>
@@ -720,7 +720,7 @@
                     <span style="font-size:13px;color:var(--text-primary);margin-left:6px;">${p.email}</span>
                   </div>
                   <div style="display:flex;gap:6px;">
-                    <button class="invite-btn ${wasInvited(p.email) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)" ${wasInvited(p.email) ? 'disabled' : ''}>${wasInvited(p.email) ? '✓ Invitat' : '✉ Invită'}</button>
+                    <button class="invite-btn ${wasInvited(p.email, d) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}','${safeId}', this)" ${wasInvited(p.email, d) ? 'disabled' : ''}>${wasInvited(p.email, d) ? '✓ Invitat' : '✉ Invită'}</button>
                     ${currentUserRole === 'admin' ? `<button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#d97706;border-color:#fcd34d;" onclick="resetProfPassword('${p.email}','${p.role}','${safeFirm}', this)" title="Trimite parolă nouă">↺ Resetează parola</button>` : ''}
                     ${currentUserRole === 'admin' ? `<button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeProfFromDosar('${safeId}','${p.email}', this)">✕</button>` : ''}
                   </div>
@@ -747,7 +747,7 @@
                       <span style="font-size:13px;font-weight:500;color:var(--text-primary);">${c.name}</span>
                       <span style="font-size:12px;color:var(--text-secondary);margin-left:6px;">${c.email}</span>
                     </div>
-                    <button class="invite-btn ${wasInvited(c.email) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteClient('${safeId}','${c.email}','${safeFirm}', this)" ${wasInvited(c.email) ? 'disabled' : ''}>${wasInvited(c.email) ? '✓ Invitat' : '✉ Invită'}</button>
+                    <button class="invite-btn ${wasInvited(c.email, d) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteClient('${safeId}','${c.email}','${safeFirm}', this)" ${wasInvited(c.email, d) ? 'disabled' : ''}>${wasInvited(c.email, d) ? '✓ Invitat' : '✉ Invită'}</button>
                   </div>`).join('')}
                   </div>`;
                 }
@@ -1126,11 +1126,19 @@ function onAdmFileSelected(dosarId) {
   function markInvited(email) {
     localStorage.setItem(`exitbiz_invited_${email}`, '1');
   }
-  function wasInvited(email) {
+  function wasInvited(email, dosar) {
+    if (dosar?.invites_sent?.[email]) return true;
     return localStorage.getItem(`exitbiz_invited_${email}`) === '1';
   }
+  async function saveInvitedToDB(dosarId, email) {
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const invites = { ...(dosar.invites_sent || {}), [email]: true };
+    await db.from('dosare').update({ invites_sent: invites }).eq('id', dosarId);
+    dosar.invites_sent = invites;
+  }
 
-  async function inviteProfessional(email, role, firmName, btnEl) {
+  async function inviteProfessional(email, role, firmName, dosarId, btnEl) {
     const btn = btnEl || null;
     if (btn) { btn.disabled = true; btn.textContent = 'Se trimite...'; }
     try {
@@ -1142,6 +1150,7 @@ function onAdmFileSelected(dosarId) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Eroare');
       markInvited(email);
+      await saveInvitedToDB(dosarId, email);
       if (btn) { btn.classList.add('sent'); btn.disabled = true; btn.textContent = '✓ Invitat'; }
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = '✉ Invită'; }
@@ -1183,6 +1192,7 @@ function onAdmFileSelected(dosarId) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Eroare');
       markInvited(email);
+      await saveInvitedToDB(dosarId, email);
       if (btn) { btn.classList.add('sent'); btn.disabled = true; btn.textContent = '✓ Invitat'; }
       if (status) status.textContent = `Email trimis la ${email}`;
     } catch (err) {
@@ -1359,7 +1369,7 @@ function onAdmFileSelected(dosarId) {
     const name = document.getElementById('drawer-name-input').value.trim();
     if (!name) { showDrawerMsg('profile-msg', 'Introduceți un nume.', 'err'); return; }
     const { data: { session } } = await db.auth.getSession();
-    const { error } = await db.from('profiles').upsert({ id: session.user.id, full_name: name });
+    const { error } = await db.from('profiles').update({ full_name: name }).eq('id', session.user.id);
     if (error) { showDrawerMsg('profile-msg', 'Eroare la salvare.', 'err'); return; }
     document.getElementById('drawer-name-display').textContent = name;
     setInitials(name);

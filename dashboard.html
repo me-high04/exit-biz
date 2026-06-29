@@ -866,7 +866,7 @@
     async function saveProfile() {
       const name = document.getElementById('drawer-name-input').value.trim();
       if (!name) { showDrawerMsg('profile-msg', 'Introduceți un nume.', 'err'); return; }
-      const { error } = await db.from('profiles').upsert({ id: currentUser.id, full_name: name });
+      const { error } = await db.from('profiles').update({ full_name: name }).eq('id', currentUser.id);
       if (error) { showDrawerMsg('profile-msg', 'Eroare la salvare.', 'err'); return; }
       document.getElementById('drawer-name-display').textContent = name;
       document.getElementById('greeting-name').textContent = name;
