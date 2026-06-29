@@ -721,6 +721,7 @@
                   </div>
                   <div style="display:flex;gap:6px;">
                     <button class="invite-btn ${wasInvited(p.email) ? 'sent' : ''}" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)" ${wasInvited(p.email) ? 'disabled' : ''}>${wasInvited(p.email) ? '✓ Invitat' : '✉ Invită'}</button>
+                    ${currentUserRole === 'admin' ? `<button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#d97706;border-color:#fcd34d;" onclick="resetProfPassword('${p.email}','${p.role}','${safeFirm}', this)" title="Trimite parolă nouă">↺ Resetează parola</button>` : ''}
                     ${currentUserRole === 'admin' ? `<button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeProfFromDosar('${safeId}','${p.email}', this)">✕</button>` : ''}
                   </div>
                 </div>`).join('') : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;padding:4px 0;">Niciun profesionist asignat.</div>'}
@@ -1144,6 +1145,25 @@ function onAdmFileSelected(dosarId) {
       if (btn) { btn.classList.add('sent'); btn.disabled = true; btn.textContent = '✓ Invitat'; }
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = '✉ Invită'; }
+      alert('Eroare: ' + err.message);
+    }
+  }
+
+  async function resetProfPassword(email, role, firmName, btnEl) {
+    if (!confirm(`Trimiți o parolă nouă la ${email}?`)) return;
+    btnEl.disabled = true; btnEl.textContent = 'Se trimite...';
+    try {
+      const res = await fetch('/.netlify/functions/invite-professional', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role, firmName })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Eroare');
+      btnEl.textContent = '✓ Trimis!';
+      setTimeout(() => { btnEl.disabled = false; btnEl.textContent = '↺ Resetează parola'; }, 3000);
+    } catch (err) {
+      btnEl.disabled = false; btnEl.textContent = '↺ Resetează parola';
       alert('Eroare: ' + err.message);
     }
   }
