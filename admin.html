@@ -521,18 +521,34 @@
                 const profs = d.profesionisti || [];
                 const extraClients = d.clienti_extra || [];
                 let html = '';
-                if (profs.length > 0) {
-                  html += `<h4 style="margin-top:1.25rem;">Profesioniști asignați</h4>
-                  <div style="display:flex;flex-direction:column;gap:6px;">
-                  ${profs.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
-                    <div>
-                      <span style="font-size:12px;font-weight:600;color:var(--green);">${p.role}</span>
-                      <span style="font-size:13px;color:var(--text-primary);margin-left:6px;">${p.email}</span>
-                    </div>
+
+                // Profesioniști — mereu vizibil, cu form de adăugare
+                html += `<h4 style="margin-top:1.25rem;">Profesioniști asignați</h4>
+                <div id="prof-cards-${safeId}" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;">
+                ${profs.length ? profs.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;">
+                  <div>
+                    <span style="font-size:12px;font-weight:600;color:var(--green);">${p.role}</span>
+                    <span style="font-size:13px;color:var(--text-primary);margin-left:6px;">${p.email}</span>
+                  </div>
+                  <div style="display:flex;gap:6px;">
                     <button class="invite-btn" style="font-size:11px;padding:4px 10px;" onclick="inviteProfessional('${p.email}','${p.role}','${safeFirm}', this)">✉ Invită</button>
-                  </div>`).join('')}
-                  </div>`;
-                }
+                    <button class="invite-btn" style="font-size:11px;padding:4px 10px;color:#dc2626;border-color:#fca5a5;" onclick="removeProfFromDosar('${safeId}','${p.email}', this)">✕</button>
+                  </div>
+                </div>`).join('') : '<div style="font-size:13px;color:var(--text-secondary);font-style:italic;padding:4px 0;">Niciun profesionist asignat.</div>'}
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input id="add-prof-email-${safeId}" type="email" placeholder="email@profesionist.ro" style="flex:1;min-width:160px;font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:7px;" />
+                  <select id="add-prof-role-${safeId}" style="font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:7px;">
+                    <option value="Avocat">Avocat</option>
+                    <option value="Contabil">Contabil</option>
+                    <option value="Consultant">Consultant</option>
+                    <option value="Notar">Notar</option>
+                    <option value="Alt rol">Alt rol</option>
+                  </select>
+                  <button class="btn-ghost btn-sm" style="font-size:12px;padding:5px 12px;" onclick="addProfToDosar('${safeId}','${safeFirm}')">+ Adaugă</button>
+                </div>`;
+
+                // Clienți suplimentari
                 if (extraClients.length > 0) {
                   html += `<h4 style="margin-top:1.25rem;">Clienți suplimentari</h4>
                   <div style="display:flex;flex-direction:column;gap:6px;">
@@ -865,6 +881,47 @@ function onAdmFileSelected(dosarId) {
     const idx = allDosare.findIndex(d => d.id === dosarId);
     if (idx !== -1) allDosare[idx].status = newStatus;
     renderStats(allDosare);
+  }
+
+  async function addProfToDosar(dosarId, firmName) {
+    const emailEl = document.getElementById(`add-prof-email-${dosarId}`);
+    const roleEl = document.getElementById(`add-prof-role-${dosarId}`);
+    const email = emailEl?.value.trim();
+    const role = roleEl?.value || 'Avocat';
+    if (!email || !email.includes('@')) { alert('Introdu un email valid.'); return; }
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const profs = [...(dosar.profesionisti || [])];
+    if (profs.some(p => p.email === email)) { alert('Profesionistul e deja adăugat.'); return; }
+    profs.push({ email, role });
+    await db.from('dosare').update({ profesionisti: profs }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].profesionisti = profs;
+    if (emailEl) emailEl.value = '';
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    refreshDosarCard(dosarId);
+    if (wasOpen) {
+      document.getElementById(`details-${dosarId}`)?.classList.add('open');
+      document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+      loadDosarDocs(dosarId);
+    }
+  }
+
+  async function removeProfFromDosar(dosarId, email, btnEl) {
+    if (!confirm(`Elimini profesionistul ${email} de pe acest dosar?`)) return;
+    const dosar = allDosare.find(d => d.id === dosarId);
+    if (!dosar) return;
+    const profs = (dosar.profesionisti || []).filter(p => p.email !== email);
+    await db.from('dosare').update({ profesionisti: profs }).eq('id', dosarId);
+    const idx = allDosare.findIndex(d => d.id === dosarId);
+    if (idx !== -1) allDosare[idx].profesionisti = profs;
+    const wasOpen = document.getElementById(`details-${dosarId}`)?.classList.contains('open');
+    refreshDosarCard(dosarId);
+    if (wasOpen) {
+      document.getElementById(`details-${dosarId}`)?.classList.add('open');
+      document.getElementById(`icon-${dosarId}`)?.classList.add('open');
+      loadDosarDocs(dosarId);
+    }
   }
 
   async function inviteProfessional(email, role, firmName, btnEl) {
