@@ -1098,6 +1098,7 @@ function onAdmFileSelected(dosarId) {
     if (!dosar) return;
     const profs = [...(dosar.profesionisti || [])];
     if (profs.some(p => p.email === email)) { alert('Profesionistul e deja adăugat.'); return; }
+    if (profs.length >= 2) { alert('Maxim 2 profesioniști per dosar.'); return; }
     profs.push({ email, role });
     await db.from('dosare').update({ profesionisti: profs }).eq('id', dosarId);
     const idx = allDosare.findIndex(d => d.id === dosarId);
@@ -1137,6 +1138,7 @@ function onAdmFileSelected(dosarId) {
     if (!dosar) return;
     const clients = dosar.clienti_extra || [];
     if (clients.some(c => c.email === email)) return alert('Emailul există deja.');
+    if (clients.length >= 2) return alert('Maxim 2 clienți suplimentari per dosar.');
     clients.push({ email, name: name || email.split('@')[0] });
     await db.from('dosare').update({ clienti_extra: clients }).eq('id', dosarId);
     const idx = allDosare.findIndex(d => d.id === dosarId);
